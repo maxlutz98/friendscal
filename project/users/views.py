@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -7,30 +7,55 @@ from django.views import generic
 
 from users.models import MyUser
 
-from users.admin import UserCreationForm, UserChangeForm, UserChangePassword
+from users.admin import UserCreationForm
+
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'users/signup.html'
 
+
+@method_decorator(login_required, name='dispatch')
 class MyUserDetailView(generic.DetailView):
     model = MyUser
     template_name = "users/detail.html"
-    context_object_name = 'user'
+    #context_object_name = 'datauser'
 
+    def get_object(self):
+        return self.request.user
+
+
+@method_decorator(login_required, name='dispatch')
 class MyUserUpdateView(generic.UpdateView):
-    form_class = UserChangeForm
     model = MyUser
-    success_url = reverse_lazy('login')
+    fields = ('first_name', 'last_name', 'email',)
+    success_url = reverse_lazy('myuserdetail')
     template_name = 'users/update.html'
-
-class MyUserPWUpdateView(generic.UpdateView):
-    form_class = UserChangePassword
-    model = MyUser
-    success_url = reverse_lazy('login')
-    template_name = 'users/pw_update.html'
+    
+    def get_object(self):
+        return self.request.user
 
 
-
-# TODO: show and change
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'users/change_password.html', {
+        'form': form
+    })

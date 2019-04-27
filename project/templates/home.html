@@ -4,9 +4,5 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  <p><a href="{% url 'password_reset' %}">reset password</a></p>
-{% else %}
-  <p class="flow-text">You are not logged in.</p>
-{% endif %}
+<p class="flow-text center-align">Welcome!</p>
 {% endblock %}
