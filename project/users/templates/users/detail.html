@@ -1,0 +1,15 @@
+<!-- templates/detail.html -->
+{% extends 'layout.html' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+<h2>Detail</h2>
+{% csrf_token %}
+<p class="flow-text">E-Mail Addresse <span>{{ user.email }}</span></p>
+<p class="flow-text">Vorname <span>{{ user.first_name }}</span></p>
+<p class="flow-text">Nachname <span>{{ user.last_name }}</span></p>
+
+<a class="btn blue lighten-2" href="{% url 'myuserupdate' user.id %}">Nutzerinformationen ändern</a>
+<a class="btn blue lighten-2" href="{% url 'myuserpwupdate' user.id %}">Passwort ändern</a>
+{% endblock %}

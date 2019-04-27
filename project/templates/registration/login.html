@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<table>
+  <tr>
+    <td>
+      <h2>Einloggen</h2>
+    </td>
+    <td>
+      <h2>Noch nicht registriert?</h2>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn blue lighten-2" type="submit">Einloggen<i class="material-icons right">send</i></button>
+        <a class="btn blue lighten-2" href="{% url 'password_reset' %}">Passwort vergessen?</a>
+      </form>
+    </td>
+    <td>
+      <a class="btn blue lighten-2" href="{% url 'signup' %}">Registrieren</a>
+    </td>
+  </tr>
+</table>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+    - ./db:/var/lib/mysql
+    networks:
+    - django-network
+    environment:
+      MYSQL_DATABASE: django_db
+      MYSQL_ROOT_PASSWORD: VM^r7m63tDkqGH4@
+      MYSQL_DATABASE: django_db
+      MYSQL_USER: djangouser
+      MYSQL_PASSWORD: pw4djangouser
+
+  web:
+    build: build
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./project:/code
+    command: python manage.py runserver 0.0.0.0:8000
+    networks:
+    - django-network
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - django-network
+
+
+networks:
+  django-network:
+    driver: bridge
