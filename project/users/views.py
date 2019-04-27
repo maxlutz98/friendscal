@@ -1,20 +1,17 @@
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views import generic
+
+from users.admin import UserCreationForm
+from users.models import MyUser
 
 # Create your views here.
 
-from django.urls import reverse_lazy
-from django.views import generic
-
-from users.models import MyUser
-
-from users.admin import UserCreationForm
-
-from django.contrib.auth.decorators import login_required, permission_required
-from django.utils.decorators import method_decorator
-
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib import messages
 
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
@@ -36,7 +33,7 @@ class MyUserDetailView(generic.DetailView):
 class MyUserUpdateView(generic.UpdateView):
     model = MyUser
     fields = ('first_name', 'last_name', 'email',)
-    success_url = reverse_lazy('myuserdetail')
+    success_url = reverse_lazy('userdetail')
     template_name = 'users/update.html'
     
     def get_object(self):

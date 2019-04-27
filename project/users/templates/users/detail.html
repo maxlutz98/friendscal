@@ -13,7 +13,7 @@
             <p class="flow-text">{{ object.first_name }}</p>
         </td>
         <td>
-            <a href="{% url 'myuserupdate' %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'userchange' %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
     <tr>
@@ -22,7 +22,7 @@
             <p class="flow-text">{{ object.last_name }}</p>
         </td>
         <td>
-            <a href="{% url 'myuserupdate' %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'userchange' %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
     <tr>
@@ -31,11 +31,11 @@
             <p class="flow-text">{{ object.email }}</p>
         </td>
         <td>
-            <a href="{% url 'myuserupdate' %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'userchange' %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
 </table>
 
 <label>Passwort</label>
-<p><a class="btn blue lighten-2" href="{% url 'myuserpwupdate' %}">Passwort ändern</a></p>
+<p><a class="btn blue lighten-2" href="{% url 'change_password' %}">Passwort ändern</a></p>
 {% endblock %}
