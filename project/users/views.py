@@ -33,9 +33,19 @@ class MyUserDetailView(generic.DetailView):
 class MyUserUpdateView(generic.UpdateView):
     model = MyUser
     fields = ('first_name', 'last_name', 'email',)
-    success_url = reverse_lazy('userdetail')
-    template_name = 'users/update.html'
+    success_url = reverse_lazy('user-detail')
+    template_name = 'users/edit.html'
     
+    def get_object(self):
+        return self.request.user
+
+
+@method_decorator(login_required, name='dispatch')
+class MyUserDeleteView(generic.DeleteView):
+    model = MyUser
+    template_name = 'users/delete.html'
+    success_url = reverse_lazy('user-deleted')
+
     def get_object(self):
         return self.request.user
 

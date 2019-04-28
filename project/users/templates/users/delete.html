@@ -1,0 +1,17 @@
+<!-- templates/delete.html -->
+{% extends 'layout.html' %}
+
+{% block title %}Delete{% endblock %}
+
+{% block content %}
+    <h2>Delete</h2>
+
+    <p class="flow-text">Wollen Sie ihren Account wirklich löschen?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <a class="btn blue lighten-2" href="{% url 'user-detail' %}">Zurück</a>
+        <button class="btn red" type="submit">Löschen</button>
+    </form>
+{% endblock %}
