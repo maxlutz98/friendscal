@@ -1,4 +1,5 @@
-<!-- templates/home.html -->
+<!-- templates/users/deleted.html -->
+
 {% extends 'layout.html' %}
 
 {% block title %}Home{% endblock %}
@@ -6,7 +7,7 @@
 {% block content %}
 <p class="flow-text center-align">Account was successfully deleted!</p>
 <div class="center-align">
-    <a class="btn blue lighten-2 center-align" href="{% url 'home' %}">Zurück zur Startseite</a>
+    <a class="btn blue lighten-2 center-align" href="{% url 'index' %}">Zurück zur Startseite</a>
 </div>
 
 {% endblock %}

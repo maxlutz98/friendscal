@@ -20,9 +20,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 
 urlpatterns = [
-    path('', login_required(TemplateView.as_view(template_name='home.html')), name='home'),
     path('admin/', admin.site.urls),
     path('accounts/', include('users.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('friendscal', include('friendscal.urls')),
+    path('', include('friendscal.urls')),
 ]
