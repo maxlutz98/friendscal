@@ -24,4 +24,5 @@ urlpatterns = [
     path('accounts/', include('users.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('friendscal.urls')),
+    path('friendscal/', include('friendscal.urls'))
 ]
