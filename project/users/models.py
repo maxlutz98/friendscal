@@ -54,6 +54,8 @@ class MyUser(AbstractBaseUser):
     last_name = models.CharField(_('last name'), max_length=150)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    shares = models.ManyToManyField("users.MyUser", blank=True)
+    #shares = models.ManyToManyField("users.MyUser", through="ShareDetail", through_fields=("from_user", "to_user"), blank=True)
 
     objects = MyUserManager()
 

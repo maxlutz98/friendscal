@@ -23,25 +23,3 @@ class Appointment(models.Model):
 
     def get_absolute_url(self):
         return reverse("_detail", kwargs={"pk": self.pk})
-
-
-
-class Share(models.Model):
-#    shares = models.ManyToManyField("users.MyUser")
-    shares = models.ManyToManyField("users.MyUser", through="ShareDetail", through_fields=("share", "from_user"))
-
-#    class Meta:
-#        verbose_name = _("Share")
-#        verbose_name_plural = _("s")
-
-#    def __str__(self):
-#        return self
-
-    def get_absolute_url(self):
-        return reverse("_detail", kwargs={"pk": self.pk})
-
-
-class ShareDetail(models.Model):
-    share = models.ForeignKey("Share", on_delete=models.CASCADE)
-    from_user = models.ForeignKey("users.MyUser", on_delete=models.CASCADE)
-    to_user = models.ForeignKey("users.MyUser", on_delete=models.CASCADE, related_name="to_user")
