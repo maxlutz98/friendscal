@@ -11,7 +11,8 @@
     <tr>
         <td>
             <label>Profilbild</label>
-            <p class="flow-text">{{ object.avatar }}</p>
+            <br>
+            <img src="{{ object.avatar.url }}" width=160>
         </td>
         <td>
             <a href="{% url 'user-change' %}"><i class="material-icons right">edit</i></a>

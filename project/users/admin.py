@@ -43,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('avatar', 'email', 'first_name', 'last_name', 'share')
+        fields = ('avatar', 'email', 'first_name', 'last_name', 'share', 'avatar')
 
 
 class UserAdmin(BaseUserAdmin):
@@ -57,7 +57,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'is_admin')
     list_filter = ('is_admin',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', 'avatar')}),
         ('Personal info', {'fields': ('first_name', 'last_name',)}),
         ('Permissions', {'fields': ('is_admin',)}),
     )

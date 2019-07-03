@@ -1,8 +1,12 @@
+from __future__ import unicode_literals
+
 from django.db import models
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
-from django.utils.translation import gettext_lazy as _
+from django.core.mail import send_mail
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.utils.translation import ugettext_lazy as _
+
+from django.contrib.auth.base_user import BaseUserManager
 
 
 class UserManager(BaseUserManager):
@@ -44,18 +48,14 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
-    email = models.EmailField(
-        verbose_name=_('email address'),
-        max_length=255,
-        unique=True,
-    )
-    first_name = models.CharField(_('first name'), max_length=50)
-    last_name = models.CharField(_('last name'), max_length=150)
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_('email address'), unique=True)
+    first_name = models.CharField(_('first name'), max_length=30)
+    last_name = models.CharField(_('last name'), max_length=30)
+    share = models.ManyToManyField("users.User", blank=True)
+    avatar = models.ImageField(_("profile picture"), upload_to='avatars', default='avatars/default-profile.jpg')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    share = models.ManyToManyField("users.User", blank=True)
-    avatar = models.ImageField(_("profile picture"), upload_to='avatars/', blank=True)
 
     objects = UserManager()
 
@@ -74,6 +74,24 @@ class User(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
+    def get_full_name(self):
+        '''
+        Returns the first_name plus the last_name, with a space in between.
+        '''
+        return self.first_name + " " + self.last_name
+    
+    def get_short_name(self):
+        '''
+        Returns the short name for the user.
+        '''
+        return self.first_name
+
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        '''
+        Sends an email to this User.
+        '''
+        send_mail(subject, message, from_email, [self.email], **kwargs)
 
     @property
     def is_staff(self):
