@@ -7,7 +7,7 @@ import uuid
 
 class Appointment(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey("users.MyUser", on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     start = models.DateTimeField(auto_now=False, auto_now_add=False)
     end = models.DateTimeField(auto_now=False, auto_now_add=False)

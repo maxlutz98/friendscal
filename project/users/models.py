@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 from django.utils.translation import gettext_lazy as _
 
 
-class MyUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
         """
         Creates and saves a User with the given email, date of
@@ -44,7 +44,7 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-class MyUser(AbstractBaseUser):
+class User(AbstractBaseUser):
     email = models.EmailField(
         verbose_name=_('email address'),
         max_length=255,
@@ -54,10 +54,10 @@ class MyUser(AbstractBaseUser):
     last_name = models.CharField(_('last name'), max_length=150)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    shares = models.ManyToManyField("users.MyUser", blank=True)
-    #shares = models.ManyToManyField("users.MyUser", through="ShareDetail", through_fields=("from_user", "to_user"), blank=True)
+    share = models.ManyToManyField("users.User", blank=True)
+    avatar = models.ImageField(_("profile picture"), upload_to='avatars/', blank=True)
 
-    objects = MyUserManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']

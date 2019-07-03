@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 
 from users.admin import UserCreationForm
-from users.models import MyUser
+from users.models import User
 
 # Create your views here.
 
@@ -20,8 +20,8 @@ class SignUp(generic.CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class MyUserDetailView(generic.DetailView):
-    model = MyUser
+class UserDetailView(generic.DetailView):
+    model = User
     template_name = "users/detail.html"
     #context_object_name = 'datauser'
 
@@ -30,9 +30,9 @@ class MyUserDetailView(generic.DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
-class MyUserUpdateView(generic.UpdateView):
-    model = MyUser
-    fields = ('first_name', 'last_name', 'email',)
+class UserUpdateView(generic.UpdateView):
+    model = User
+    fields = ('avatar', 'first_name', 'last_name', 'email', 'share')
     success_url = reverse_lazy('user-detail')
     template_name = 'users/edit.html'
     
@@ -41,8 +41,8 @@ class MyUserUpdateView(generic.UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class MyUserDeleteView(generic.DeleteView):
-    model = MyUser
+class UserDeleteView(generic.DeleteView):
+    model = User
     template_name = 'users/delete.html'
     success_url = reverse_lazy('user-deleted')
 

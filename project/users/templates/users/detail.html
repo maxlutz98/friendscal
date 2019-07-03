@@ -10,6 +10,15 @@
 <table>
     <tr>
         <td>
+            <label>Profilbild</label>
+            <p class="flow-text">{{ object.avatar }}</p>
+        </td>
+        <td>
+            <a href="{% url 'user-change' %}"><i class="material-icons right">edit</i></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <label>Vorname</label>
             <p class="flow-text">{{ object.first_name }}</p>
         </td>
