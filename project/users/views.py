@@ -15,7 +15,7 @@ from users.models import User
 
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('users:login')
     template_name = 'users/signup.html'
 
 
@@ -33,7 +33,7 @@ class UserDetailView(generic.DetailView):
 class UserUpdateView(generic.UpdateView):
     model = User
     fields = ('avatar', 'first_name', 'last_name', 'email', 'share')
-    success_url = reverse_lazy('user-detail')
+    success_url = reverse_lazy('users:detail')
     template_name = 'users/edit.html'
     
     def get_object(self):
@@ -44,7 +44,7 @@ class UserUpdateView(generic.UpdateView):
 class UserDeleteView(generic.DeleteView):
     model = User
     template_name = 'users/delete.html'
-    success_url = reverse_lazy('user-deleted')
+    success_url = reverse_lazy('users:deleted')
 
     def get_object(self):
         return self.request.user

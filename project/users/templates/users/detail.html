@@ -12,10 +12,10 @@
         <td>
             <label>Profilbild</label>
             <br>
-            <img src="{{ object.avatar.url }}" width=160>
+            <img src="{{ object.avatar.url }}" width=100>
         </td>
         <td>
-            <a href="{% url 'user-change' %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'users:change' %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
     <tr>
@@ -24,7 +24,7 @@
             <p class="flow-text">{{ object.first_name }}</p>
         </td>
         <td>
-            <a href="{% url 'user-change' %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'users:change' %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
     <tr>
@@ -33,7 +33,7 @@
             <p class="flow-text">{{ object.last_name }}</p>
         </td>
         <td>
-            <a href="{% url 'user-change' %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'users:change' %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
     <tr>
@@ -42,18 +42,18 @@
             <p class="flow-text">{{ object.email }}</p>
         </td>
         <td>
-            <a href="{% url 'user-change' %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'users:change' %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
     <tr>
         <td>
             <label>Passwort</label>
-            <p><a class="btn blue lighten-2" href="{% url 'change_password' %}">Passwort ändern</a></p>
+            <p><a class="btn blue lighten-2" href="{% url 'users:change_password' %}">Passwort ändern</a></p>
         </td>
     </tr>
     <tr>
         <td>
-            <a class="btn red" href="{% url 'user-delete' %}">Meinen Account löschen</a>
+            <a class="btn red" href="{% url 'users:delete' %}">Meinen Account löschen</a>
         </td>
     </tr>
 </table>

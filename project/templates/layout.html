@@ -72,14 +72,14 @@
   <nav class="blue lighten-2">
     <div class="container">
       <div class="nav-wrapper">
-        <a href="{% url 'index' %}" class="brand-logo">Friendscal</a>
+        <a href="{% url 'friendscal:index' %}" class="brand-logo">Friendscal</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           {% if user.is_authenticated %}
-          <li><a href="{% url 'user-detail' %}">Hi {{ user.first_name }}!</a></li>
+          <li><a href="{% url 'users:detail' %}">Hi {{ user.first_name }}!</a></li>
           <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
           {% else %}
-          <li><a href="{% url 'login' %}">Login</a></li>
-          <li><a href="{% url 'user-signup' %}">Signup</a></li>
+          <li><a href="{% url 'users:login' %}">Login</a></li>
+          <li><a href="{% url 'users:signup' %}">Signup</a></li>
           {% endif %}
         </ul>
       </div>
