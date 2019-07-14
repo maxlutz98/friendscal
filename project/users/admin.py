@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.translation import gettext_lazy as _
 
-from users.models import User
+from .models import User
 
 
 class UserCreationForm(forms.ModelForm):
@@ -16,7 +16,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'avatar')
+        fields = ('email', 'first_name', 'last_name')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -43,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('avatar', 'email', 'first_name', 'last_name', 'share', 'avatar')
+        fields = ('avatar', 'email', 'first_name', 'last_name', 'share')
 
 
 class UserAdmin(BaseUserAdmin):

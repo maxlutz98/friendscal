@@ -47,15 +47,33 @@
     </tr>
     <tr>
         <td>
+            <label>Shares</label>
+            {% for share in object.share.all %}
+                <ul>
+                    <li>{{ share.get_full_name }}</li>
+                </ul>
+            {% endfor %}
+        </td>
+        <td>
+            <a href="{% url 'users:change' %}"><i class="material-icons right">edit</i></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <label>Passwort</label>
             <p><a class="btn blue lighten-2" href="{% url 'users:change_password' %}">Passwort ändern</a></p>
+        </td>
+        <td>
         </td>
     </tr>
     <tr>
         <td>
             <a class="btn red" href="{% url 'users:delete' %}">Meinen Account löschen</a>
         </td>
+        <td>
+        </td>
     </tr>
 </table>
+
 
 {% endblock %}

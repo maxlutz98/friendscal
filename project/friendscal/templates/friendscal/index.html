@@ -2,6 +2,51 @@
 
 {% extends 'layout.html' %}
 
+{% block head %}
+
+{% load static %}
+<!-- fullcalendar.io -->
+<link href="{% static "fullcalendar/core/main.min.css" %}" rel='stylesheet' />
+<link href="{% static "fullcalendar/daygrid/main.min.css" %}" rel='stylesheet' />
+<link href="{% static "fullcalendar/bootstrap/main.min.css" %}" rel='stylesheet' />
+
+<script src="{% static "fullcalendar/core/main.min.js" %}"></script>
+<script src="{% static "fullcalendar/daygrid/main.min.js" %}"></script>
+<script src="{% static "fullcalendar/interaction/main.min.js" %}"></script>
+<script src="{% static "fullcalendar/bootstrap/main.min.js" %}"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: [ 'dayGrid', 'interaction', 'bootstrap' ],
+        defaultView: 'dayGridMonth',
+        locale: 'de',
+        firstDay: 1,
+        height: "auto",
+        header: {
+          left: 'dayGridMonth,dayGridWeek',
+          center: 'title',
+          right: 'today prev,next',
+        },
+        buttonText: {
+          today: 'heute',
+          month: 'Monat',
+          week: 'Woche'
+        },
+        weekNumbers: true,
+        weekNumbersWithinDays: true,
+        selectable: true
+      });
+
+      calendar.render();
+    });
+
+</script>
+{% endblock %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}

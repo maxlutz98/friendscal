@@ -16,7 +16,7 @@
   </tr>
   <tr>
     <td>
-      <form method="post">
+      <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn blue lighten-2" type="submit">Einloggen<i class="material-icons right">send</i></button>
