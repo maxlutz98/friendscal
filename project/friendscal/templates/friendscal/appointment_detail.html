@@ -1,0 +1,68 @@
+<!-- templates/friendscal/appointment_detail.html -->
+
+{% extends 'layout.html' %}
+
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+<h3>Detail</h3>
+
+<table>
+    <tr>
+        <td>
+            <label>Termin von:</label>
+            <p class="flow-text">{{ object.user }}</p>
+        </td>
+        <td>
+        </td>
+        <td>
+            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Titel</label>
+            <p class="flow-text">{{ object.title }}</p>
+        </td>
+        <td></td>
+        <td>
+            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Anfang</label>
+            <p class="flow-text">{{ object.start }}</p>
+        </td>
+        <td>
+            <label>Ende</label>
+            <p class="flow-text">{{ object.end }}</p>
+        </td>
+        <td>
+            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Beschreibung</label>
+            <p class="flow-text">{{ object.description }}</p>
+        </td>
+        <td></td>
+        <td>
+            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Ort</label>
+            <p class="flow-text">{{ object.location }}</p>
+        </td>
+        <td></td>
+        <td>
+            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+        </td>
+    </tr>
+</table>
+
+
+{% endblock %}

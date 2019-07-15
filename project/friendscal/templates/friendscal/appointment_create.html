@@ -1,0 +1,28 @@
+<!-- templates/users/signup.html -->
+
+{% extends 'layout.html' %}
+
+
+{% block head %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems, {format: 'yyyy-mm-dd'});
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.timepicker');
+            var instances = M.Timepicker.init(elems);
+        });
+    </script>
+{% endblock %}
+
+{% block title %}Create Appointment{% endblock %}
+
+{% block content %}
+<h2>Create Appointment</h2>
+<form action="{% url 'friendscal:create' %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn blue lighten-2" type="submit">Create</button>
+</form>
+{% endblock %}

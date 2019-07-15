@@ -9,7 +9,6 @@ from django.views import generic
 
 from .admin import UserCreationForm
 from .models import User
-from .forms import ProfilePictureUpdateForm
 
 # Create your views here.
 
@@ -17,14 +16,13 @@ from .forms import ProfilePictureUpdateForm
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
-    template_name = 'users/signup.html'
+    template_name = 'users/user_create.html'
 
 
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(generic.DetailView):
     model = User
-    template_name = "users/detail.html"
-    #context_object_name = 'datauser'
+    template_name = 'users/user_detail.html'
 
     def get_object(self):
         return self.request.user
@@ -35,7 +33,7 @@ class UserUpdateView(generic.UpdateView):
     model = User
     fields = ('avatar', 'first_name', 'last_name', 'email', 'share')
     success_url = reverse_lazy('users:detail')
-    template_name = 'users/edit.html'
+    template_name = 'users/user_update.html'
     
     def get_object(self):
         return self.request.user
@@ -44,7 +42,7 @@ class UserUpdateView(generic.UpdateView):
 @method_decorator(login_required, name='dispatch')
 class UserDeleteView(generic.DeleteView):
     model = User
-    template_name = 'users/delete.html'
+    template_name = 'users/user_delete.html'
     success_url = reverse_lazy('users:deleted')
 
     def get_object(self):
@@ -64,6 +62,6 @@ def change_password(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'users/change_password.html', {
+    return render(request, 'users/user_password_update.html', {
         'form': form
     })

@@ -5,9 +5,9 @@ from . import views
 app_name = 'users'
 urlpatterns = [
     path('signup/', views.SignUp.as_view(), name='signup'),
-    re_path(r'^detail/$', views.UserDetailView.as_view(), name='detail'),
-    re_path(r'^edit/$', views.UserUpdateView.as_view(), name='change'),
-    re_path(r'^update_password/$', views.change_password, name='change_password'),
+    path('detail/', views.UserDetailView.as_view(), name='detail'),
+    path('change/', views.UserUpdateView.as_view(), name='change'),
+    path('password_change/', views.change_password, name='password_change'),
     path('delete/', views.UserDeleteView.as_view(), name='delete'),
-    path('deleted/', TemplateView.as_view(template_name='users/deleted.html'), name='deleted'),
+    path('deleted/', TemplateView.as_view(template_name='users/user_deleted.html'), name='deleted'),
 ]
