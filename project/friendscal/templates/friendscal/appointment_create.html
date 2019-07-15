@@ -21,8 +21,8 @@
 {% block content %}
 <h2>Create Appointment</h2>
 <form action="{% url 'friendscal:create' %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn blue lighten-2" type="submit">Create</button>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn blue lighten-2" type="submit">Create</button>
 </form>
 {% endblock %}

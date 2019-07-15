@@ -5,14 +5,14 @@
 {% block title %}Delete{% endblock %}
 
 {% block content %}
-    <h2>Delete</h2>
+<h2>Delete</h2>
 
-    <p class="flow-text">Wollen Sie ihren Account wirklich löschen?</p>
+<p class="flow-text">Wollen Sie ihren Account wirklich löschen?</p>
 
-    <form action="{% url 'users:delete' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <a class="btn blue lighten-2" href="{% url 'users:detail' %}">Zurück</a>
-        <button class="btn red" type="submit">Löschen</button>
-    </form>
+<form action="{% url 'users:delete' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a class="btn blue lighten-2" href="{% url 'users:detail' %}">Zurück</a>
+    <button class="btn red" type="submit">Löschen</button>
+</form>
 {% endblock %}
