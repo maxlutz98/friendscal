@@ -36,6 +36,7 @@
           <a href="{% url 'friendscal:index' %}" class="brand-logo">Friendscal</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             {% if user.is_authenticated %}
+            <li><a href="{% url 'friendscal:list' %}">Deine Termine</a></li>
             <li><a href="{% url 'users:detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
             <li>
               <div class="chip">

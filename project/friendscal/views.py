@@ -7,6 +7,8 @@ from django.views import generic
 
 from .models import Appointment
 
+import datetime
+
 # Create your views here.
 def index(request):
     return HttpResponse("HELLO FROM FRIENDSCAL")
@@ -48,4 +50,13 @@ class AppointmentUpdateView(generic.UpdateView):
 class AppointmentDeleteView(generic.DeleteView):
     model = Appointment
     success_url = reverse_lazy("friendscal:index")
+
+@method_decorator(login_required, name="dispatch")
+class AppointmentListView(generic.ListView):
+    model = Appointment
+
+    def get_queryset(self):
+        # queryset = Appointment.objects.filter(user=self.request.user).filter(end__gte=datetime.datetime.today()).order_by('start')
+        queryset = self.request.user.appointment_set.all().filter(end__gte=datetime.datetime.today()).order_by('start')
+        return queryset
 
