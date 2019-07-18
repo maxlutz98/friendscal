@@ -9,4 +9,5 @@ urlpatterns = [
     path('create/', views.AppointmentCreateView.as_view(), name='create'),
     path('<uuid:pk>/update/', views.AppointmentUpdateView.as_view(), name='change'),
     path('<uuid:pk>/detail/', views.AppointmentDetailView.as_view(), name='detail'),
+    path('<uuid:pk>/delete/', views.AppointmentDeleteView.as_view(), name='delete'),
 ]

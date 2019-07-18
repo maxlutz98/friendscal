@@ -2,6 +2,15 @@
 
 {% extends 'layout.html' %}
 
+{% block head %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    });
+</script>
+{% endblock %}
+
 {% block title %}Detail{% endblock %}
 
 {% block content %}
@@ -16,7 +25,6 @@
         <td>
         </td>
         <td>
-            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
     <tr>
@@ -32,11 +40,11 @@
     <tr>
         <td>
             <label>Anfang</label>
-            <p class="flow-text">{{ object.start }}</p>
+            <p class="flow-text">{{ object.start | date:"d.m.Y" }}</p>
         </td>
         <td>
             <label>Ende</label>
-            <p class="flow-text">{{ object.end }}</p>
+            <p class="flow-text">{{ object.end | date:"d.m.Y"}}</p>
         </td>
         <td>
             <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
@@ -62,7 +70,31 @@
             <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
     </tr>
+    <tr>
+        <td>
+            <!-- Modal Trigger -->
+            <a class="btn red modal-trigger" href="#modal1">Termin löschen</a>
+            <!-- Modal Structure -->
+            <div id="modal1" class="modal">
+                <form action="{% url 'friendscal:delete' pk=object.uuid %}" method="post">
+                    <div class="modal-content">
+                        <h4>Delete Appointment</h4>
+                        <p>Wollen Sie den Termin wirklich löschen?</p>
+                        {% csrf_token %}
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn-flat modal-close" href="#!">Zurück</a>
+                        <button class="btn-flat red waves-effect waves-light" type="submit">Löschen</button>
+                    </div>
+                </form>
+
+            </div>
+        </td>
+        <td></td>
+    </tr>
 </table>
+
+
 
 
 {% endblock %}
