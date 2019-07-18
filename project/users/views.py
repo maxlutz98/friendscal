@@ -38,6 +38,11 @@ class UserUpdateView(generic.UpdateView):
     def get_object(self):
         return self.request.user
 
+    def get_form(self, form_class=None):
+        form = super(UserUpdateView, self).get_form(form_class)
+        form.fields["share"].queryset = User.objects.exclude(pk=self.request.user.id)
+        return form
+
 
 @method_decorator(login_required, name='dispatch')
 class UserDeleteView(generic.DeleteView):

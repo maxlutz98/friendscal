@@ -20,10 +20,10 @@ class AppointmentCreateView(generic.CreateView):
     success_url = reverse_lazy("friendscal:index")
     template_name = "friendscal/appointment_create.html"
 
-    def get_form(self):
-        form = super(AppointmentCreateView, self).get_form()
+    def get_form(self, form_class=None):
+        form = super(AppointmentCreateView, self).get_form(form_class)
         form.fields["start"].widget.attrs.update({"class": "datepicker"})
-        #        form.fields['start'].widget.attrs.update(input_format='%d.%m.%Y')
+        # form.fields['start'].widget.attrs.update(input_format='%d.%m.%Y')
         form.fields["end"].widget.attrs.update({"class": "datepicker"})
         return form
 
@@ -44,6 +44,13 @@ class AppointmentUpdateView(generic.UpdateView):
     fields = ("title", "start", "end", "description", "location")
     success_url = reverse_lazy("friendscal:index")
     template_name = "friendscal/appointment_update.html"
+
+    def get_form(self, form_class=None):
+        form = super(AppointmentUpdateView, self).get_form(form_class)
+        form.fields["start"].widget.attrs.update({"class": "datepicker"})
+        # form.fields['start'].widget.attrs.update(input_format='%d.%m.%Y')
+        form.fields["end"].widget.attrs.update({"class": "datepicker"})
+        return form
 
 
 @method_decorator(login_required, name="dispatch")
