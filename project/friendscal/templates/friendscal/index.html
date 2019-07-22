@@ -44,7 +44,22 @@
       listDayFormat: { weekday: 'long' },
       listDayAltFormat: { day: 'numeric', month: 'long', year: 'numeric'},
       noEventsMessage: "Keine Termine zum Anzeigen",
-      selectable: true
+      displayEventTime: false,
+      selectable: true,
+
+      eventSources: [
+
+    // your event source
+      {
+        url: '/events/',
+        method: 'GET',
+        failure: function() {
+          alert('there was an error while fetching events!');
+        },
+        color: 'green',   // a non-ajax option
+        textColor: 'black' // a non-ajax option
+      }
+    ]
     });
 
     calendar.render();
@@ -71,28 +86,30 @@
 
 <!-- Modal Structure -->
 <div id="modal1" class="modal bottom-sheet">
-  <div class="modal-content">
-    <ul class="collection with-header">
-      <li class="collection-header"><h4>Freigaben</h4></li>
-      <li class="collection-item">
-        <label>
-          <input type="checkbox">
-          <span><img src="{{ user.avatar.url }}" width="30" class="circle"> {{ user }}</span>
-        </label>
-      </li>
-      {% for sharedby in user.user_set.all %}
-      <li class="collection-item">
-        <label>
-          <input type="checkbox">
-          <span><img src="{{ sharedby.avatar.url }}" width="30" class="circle"> {{ sharedby }}</span>
-        </label>
-      </li>
-      {% empty %}
-      <li class="collection-item">Ihnen hat leider kein Nutzer eine Freigabe erteilt.</li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="modal-footer">
+  <div class="form">
+    <div class="modal-content">
+      <ul class="collection with-header">
+        <li class="collection-header"><h4>Freigaben</h4></li>
+        <li class="collection-item">
+          <label for="{{ user.id }}">
+            <input type="checkbox" checked="checked" id="{{ user.id }}">
+            <span><img src="{{ user.avatar.url }}" width="30" class="circle"> {{ user }}</span>
+          </label>
+        </li>
+        {% for sharedby in user.user_set.all %}
+        <li class="collection-item">
+          <label for="{{ sharedby.id }}">
+            <input type="checkbox" id="{{ sharedby.id }}">
+            <span><img src="{{ sharedby.avatar.url }}" width="30" class="circle"> {{ sharedby.get_full_name }}</span>
+          </label>
+        </li>
+        {% empty %}
+        <li class="collection-item">Ihnen hat leider kein Nutzer eine Freigabe erteilt.</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="modal-footer">
+    </div>
   </div>
 </div>
 

@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -66,4 +66,17 @@ class AppointmentListView(generic.ListView):
         # queryset = Appointment.objects.filter(user=self.request.user).filter(end__gte=datetime.datetime.today()).order_by('start')
         queryset = self.request.user.appointment_set.all().filter(end__gte=datetime.datetime.today()).order_by('start')
         return queryset
+
+def events(request):
+    start = request.GET.get('start')
+    end = request.GET.get('end')
+    # users = request.GET.getlist('users')
+
+    users = request.user.user_set.all()
+
+    data = Appointment.objects.filter(user__in=users, end__range=(start, end)).values() | Appointment.objects.filter(user=request.user, end__range=(start, end)).values()
+
+    data = [item for item in data]
+    #return JsonResponse(json.dumps(data, ensure_ascii=False), safe=False)
+    return JsonResponse(data, safe=False)
 
