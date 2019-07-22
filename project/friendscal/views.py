@@ -67,10 +67,12 @@ class AppointmentListView(generic.ListView):
         queryset = self.request.user.appointment_set.all().filter(end__gte=datetime.datetime.today()).order_by('start')
         return queryset
 
+
 def events(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
     # users = request.GET.getlist('users')
+    # if request.user.user_set.filter(pk=user) or request.user == user:
 
     users = request.user.user_set.all()
 
