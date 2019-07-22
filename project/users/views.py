@@ -40,7 +40,7 @@ class UserUpdateView(generic.UpdateView):
 
     def get_form(self, form_class=None):
         form = super(UserUpdateView, self).get_form(form_class)
-        form.fields["share"].queryset = User.objects.exclude(pk=self.request.user.id)
+        form.fields["share"].queryset = User.objects.exclude(pk=self.request.user.id).order_by('last_name')
         return form
 
 
