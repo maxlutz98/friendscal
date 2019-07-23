@@ -80,6 +80,9 @@ def events(request):
     data = Appointment.objects.filter(user__in=users, end__range=(start, end)).values() | Appointment.objects.filter(user=request.user, end__range=(start, end)).values()
 
     data = [item for item in data]
+    for counter, element in enumerate(data):
+        data[counter]['id'] = str(element['uuid'])
+        del data[counter]['uuid']
     #return JsonResponse(json.dumps(data, ensure_ascii=False), safe=False)
     return JsonResponse(data, safe=False)
 
