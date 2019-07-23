@@ -152,14 +152,14 @@
         <li class="collection-header"><h4>Freigaben</h4></li>
         <li class="collection-item">
           <label for="{{ user.id }}">
-            <input type="checkbox" checked="checked" id="{{ user.id }}" onclick="changeEventSources();">
+            <input type="checkbox" checked="checked" id="{{ user.id }}" onclick="changeEventSources(this);">
             <span><img src="{{ user.avatar.url }}" width="30" class="circle"> {{ user }}</span>
           </label>
         </li>
         {% for sharedby in user.user_set.all|dictsort:'last_name' %}
         <li class="collection-item">
           <label for="{{ sharedby.id }}">
-            <input type="checkbox" id="{{ sharedby.id }}" onclick="changeEventSources();">
+            <input type="checkbox" id="{{ sharedby.id }}" onclick="changeEventSources(this);">
             <span><img src="{{ sharedby.avatar.url }}" width="30" class="circle"> {{ sharedby.get_full_name }}</span>
           </label>
         </li>
