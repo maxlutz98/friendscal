@@ -96,7 +96,7 @@
             <span><img src="{{ user.avatar.url }}" width="30" class="circle"> {{ user }}</span>
           </label>
         </li>
-        {% for sharedby in user.user_set.all %}
+        {% for sharedby in user.user_set.all|dictsort:'last_name' %}
         <li class="collection-item">
           <label for="{{ sharedby.id }}">
             <input type="checkbox" id="{{ sharedby.id }}">
