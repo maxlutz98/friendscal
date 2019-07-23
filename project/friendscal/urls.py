@@ -11,5 +11,6 @@ urlpatterns = [
     path('<uuid:pk>/detail/', views.AppointmentDetailView.as_view(), name='detail'),
     path('<uuid:pk>/delete/', views.AppointmentDeleteView.as_view(), name='delete'),
     path('list/', views.AppointmentListView.as_view(), name='list'),
-    path('events/', views.events, name='events')
+    path('events/', views.events, name='events'),
+    path('description/', TemplateView.as_view(template_name='friendscal/description.html'), name='description')
 ]
