@@ -8,11 +8,29 @@
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.datepicker');
             var instances = M.Datepicker.init(elems, {format: 'yyyy-mm-dd', autoClose: true});
-        });
-        document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.timepicker');
             var instances = M.Timepicker.init(elems);
+            if (liste['start'] && liste['end']) {
+                document.getElementById('id_start').value = liste['start'];
+                document.getElementById('id_end').value = liste['end'];
+            };
         });
+
+        function Werteliste (querystring) {
+            if (querystring == '') return;
+            var wertestring = querystring.slice(1);
+            var paare = wertestring.split("&");
+            var paar, name, wert;
+            for (var i = 0; i < paare.length; i++) {
+                paar = paare[i].split("=");
+                name = paar[0];
+                wert = paar[1];
+                name = unescape(name).replace("+", " ");
+                wert = unescape(wert).replace("+", " ");
+                this[name] = wert;
+            }
+        }
+        var liste = new Werteliste(location.search);
     </script>
 {% endblock %}
 

@@ -28,8 +28,16 @@
       locale: 'de',
       firstDay: 1,
       height: "auto",
+      customButtons: {
+        addButton: {
+          text: 'Termin hinzufügen',
+          click: function() {
+            window.location = "{% url 'friendscal:create' %}";
+          }
+        }
+      },
       header: {
-        left: 'dayGridMonth,dayGridWeek,listMonth',
+        left: 'dayGridMonth,dayGridWeek,listMonth addButton',
         center: 'title',
         right: 'today prev,next',
       },
@@ -57,7 +65,19 @@
           color: 'green',   // a non-ajax option
           textColor: 'black' // a non-ajax option
         }
-      ]
+      ],
+
+      eventClick: function(info) {
+        var frame = document.getElementsByTagName('iframe');
+        frame[0].src = info.event.id + "/detail/"
+        var elem = document.getElementById('modal2');
+        var instance = M.Modal.getInstance(elem);
+        instance.open();
+        info.el.style.borderColor = 'red';
+      },
+      select: function(info) {
+        window.location = "{% url 'friendscal:create' %}" + "?start=" + info.startStr + "&end=" + info.endStr;
+      }
     });
 
     calendar.render();
@@ -148,7 +168,8 @@
   </div>
 </div>
 
-<!-- Modal Structure -->
+
+<!-- Modal Structure  - Freigaben -->
 <div id="modal1" class="modal bottom-sheet">
   <div class="form">
     <div class="modal-content">
@@ -174,6 +195,19 @@
     </div>
     <div class="modal-footer">
     </div>
+  </div>
+</div>
+
+
+<!-- Modal Structure - Detail Ansicht -->
+<div id="modal2" class="modal">
+  <div class="modal-content">
+    <p>
+      <iframe width="1000" height="400" src="ae26ec9e-10e3-4c15-9c65-2907effdf2e1/detail/" frameborder="0"></iframe>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
   </div>
 </div>
 
