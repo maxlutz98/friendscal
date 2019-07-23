@@ -1,3 +1,4 @@
+from django import forms
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect
@@ -29,6 +30,8 @@ class AppointmentCreateView(generic.CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if form.cleaned_data['end'] < form.cleaned_data['start']:
+            raise forms.ValidationError("End date must be later than start date")
         return super(AppointmentCreateView, self).form_valid(form)
 
 
@@ -51,6 +54,11 @@ class AppointmentUpdateView(generic.UpdateView):
         # form.fields['start'].widget.attrs.update(input_format='%d.%m.%Y')
         form.fields["end"].widget.attrs.update({"class": "datepicker"})
         return form
+
+    def form_valid(self, form):
+        if form.cleaned_data['end'] < form.cleaned_data['start']:
+            raise forms.ValidationError("End date must be later than start date")
+        return super(AppointmentUpdateView, self).form_valid(form)
 
 
 @method_decorator(login_required, name="dispatch")
