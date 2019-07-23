@@ -24,8 +24,10 @@
         </td>
         <td>
         </td>
+        {% if object.user == user %}
         <td>
         </td>
+        {% endif %}
     </tr>
     <tr>
         <td>
@@ -33,9 +35,11 @@
             <p class="flow-text">{{ object.title }}</p>
         </td>
         <td></td>
+        {% if object.user == user %}
         <td>
             <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
+        {% endif %}
     </tr>
     <tr>
         <td>
@@ -46,9 +50,11 @@
             <label>Ende</label>
             <p class="flow-text">{{ object.end | date:"d.m.Y"}}</p>
         </td>
+        {% if object.user == user %}
         <td>
             <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
+        {% endif %}
     </tr>
     <tr>
         <td>
@@ -56,9 +62,11 @@
             <p class="flow-text">{{ object.description }}</p>
         </td>
         <td></td>
+        {% if object.user == user %}
         <td>
             <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
+        {% endif %}
     </tr>
     <tr>
         <td>
@@ -66,10 +74,13 @@
             <p class="flow-text">{{ object.location }}</p>
         </td>
         <td></td>
+        {% if object.user == user %}
         <td>
             <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
+        {% endif %}
     </tr>
+    {% if object.user == user %}
     <tr>
         <td>
             <!-- Modal Trigger -->
@@ -92,6 +103,7 @@
         </td>
         <td></td>
     </tr>
+    {% endif %}
 </table>
 
 

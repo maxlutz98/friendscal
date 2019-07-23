@@ -6,15 +6,19 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 
+from django.contrib.auth.mixins import UserPassesTestMixin
+
 from .models import Appointment
 
 import datetime
+
 
 # Create your views here.
 def index(request):
     return HttpResponse("HELLO FROM FRIENDSCAL")
 
 
+@method_decorator(login_required, name="dispatch")
 class AppointmentCreateView(generic.CreateView):
     model = Appointment
     fields = ("title", "start", "end", "description", "location")
@@ -42,11 +46,14 @@ class AppointmentDetailView(generic.DetailView):
 
 
 @method_decorator(login_required, name="dispatch")
-class AppointmentUpdateView(generic.UpdateView):
+class AppointmentUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Appointment
     fields = ("title", "start", "end", "description", "location")
     success_url = reverse_lazy("friendscal:index")
     template_name = "friendscal/appointment_update.html"
+
+    def test_func(self):
+        return self.request.user == Appointment.objects.get(pk=self.kwargs['pk']).user
 
     def get_form(self, form_class=None):
         form = super(AppointmentUpdateView, self).get_form(form_class)
@@ -62,9 +69,13 @@ class AppointmentUpdateView(generic.UpdateView):
 
 
 @method_decorator(login_required, name="dispatch")
-class AppointmentDeleteView(generic.DeleteView):
+class AppointmentDeleteView(UserPassesTestMixin, generic.DeleteView):
     model = Appointment
     success_url = reverse_lazy("friendscal:index")
+
+    def test_func(self):
+        return self.request.user == Appointment.objects.get(pk=self.kwargs['pk']).user
+
 
 @method_decorator(login_required, name="dispatch")
 class AppointmentListView(generic.ListView):
@@ -93,4 +104,3 @@ def events(request):
         del data[counter]['uuid']
     #return JsonResponse(json.dumps(data, ensure_ascii=False), safe=False)
     return JsonResponse(data, safe=False)
-
