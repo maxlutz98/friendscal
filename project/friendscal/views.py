@@ -71,8 +71,9 @@ class AppointmentListView(generic.ListView):
 def events(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
-    # users = request.GET.getlist('users')
+    # user = request.GET.get('user')
     # if request.user.user_set.filter(pk=user) or request.user == user:
+        # data = Appointment.objects.filter(user=user, end__range=(start, end)).values()          
 
     users = request.user.user_set.all()
 
