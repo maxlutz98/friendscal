@@ -24,6 +24,13 @@
   {% block head %}
   {% endblock %}
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+  </script>
+
   <title>{% block title %} Django Title Name {% endblock %}</title>
 </head>
 
@@ -34,6 +41,7 @@
       <div class="container">
         <div class="nav-wrapper">
           <a href="{% url 'friendscal:index' %}" class="brand-logo">Friendscal</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             {% if user.is_authenticated %}
             <li><a href="{% url 'friendscal:list' %}">Deine Termine</a></li>
@@ -54,6 +62,23 @@
       </div>
     </nav>
   </div>
+
+  <ul class="sidenav" id="mobile-demo">
+  {% if user.is_authenticated %}
+    <li><a href="{% url 'friendscal:list' %}">Deine Termine</a></li>
+    <li><a href="{% url 'users:detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
+    <li>
+      <div class="chip">
+        <img src="{{ user.avatar.url }}">
+        Hi {{ user.first_name }}!
+      </div>
+    </li>
+    <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
+  {% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'users:signup' %}">Signup</a></li>
+  {% endif %}
+  </ul>
 
   <!-- content -->
   <div class="container">
