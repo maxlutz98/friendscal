@@ -9,9 +9,9 @@
 
 <p class="flow-text">Wollen Sie ihren Account wirklich löschen?</p>
 
-<form action="{% url 'users:delete' %}" method="post">
+<form action="{% url 'users:user-delete' %}" method="post">
     {% csrf_token %}
-    <a class="btn blue lighten-2" href="{% url 'users:detail' %}">Zurück</a>
+    <a class="btn blue lighten-2" href="{% url 'users:user-detail' %}">Zurück</a>
     <button class="btn red waves-effect waves-light" type="submit">Löschen</button>
 </form>
 {% endblock %}

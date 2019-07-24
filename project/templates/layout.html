@@ -44,8 +44,8 @@
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             {% if user.is_authenticated %}
-            <li><a href="{% url 'friendscal:list' %}">Deine Termine</a></li>
-            <li><a href="{% url 'users:detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
+            <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
+            <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
             <li>
               <div class="chip">
                 <img src="{{ user.avatar.url }}">
@@ -56,7 +56,7 @@
             {% else %}
             <li><a href="{% url 'friendscal:description' %}">Was ist das?</a></li>
             <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'users:signup' %}">Signup</a></li>
+            <li><a href="{% url 'users:user-signup' %}">Signup</a></li>
             {% endif %}
           </ul>
         </div<img>
@@ -66,8 +66,8 @@
 
   <ul class="sidenav" id="mobile-demo">
   {% if user.is_authenticated %}
-    <li><a href="{% url 'friendscal:list' %}">Deine Termine</a></li>
-    <li><a href="{% url 'users:detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
+    <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
+    <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
     <li>
       <div class="chip">
         <img src="{{ user.avatar.url }}">
@@ -78,7 +78,7 @@
   {% else %}
     <li><a href="{% url 'friendscal:description' %}">Was ist das?</li>
     <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="{% url 'users:signup' %}">Signup</a></li>
+    <li><a href="{% url 'users:user-signup' %}">Signup</a></li>
   {% endif %}
   </ul>
 

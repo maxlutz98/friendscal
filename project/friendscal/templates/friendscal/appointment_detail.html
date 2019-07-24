@@ -37,7 +37,7 @@
         <td></td>
         {% if object.user == user %}
         <td>
-            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
         {% endif %}
     </tr>
@@ -52,7 +52,7 @@
         </td>
         {% if object.user == user %}
         <td>
-            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
         {% endif %}
     </tr>
@@ -64,7 +64,7 @@
         <td></td>
         {% if object.user == user %}
         <td>
-            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
         {% endif %}
     </tr>
@@ -76,7 +76,7 @@
         <td></td>
         {% if object.user == user %}
         <td>
-            <a href="{% url 'friendscal:change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
         </td>
         {% endif %}
     </tr>
@@ -87,7 +87,7 @@
             <a class="btn red modal-trigger" href="#modal1">Termin löschen</a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
-                <form action="{% url 'friendscal:delete' pk=object.uuid %}" method="post">
+                <form action="{% url 'friendscal:appointment-delete' pk=object.uuid %}" method="post">
                     <div class="modal-content">
                         <h4>Delete Appointment</h4>
                         <p>Wollen Sie den Termin wirklich löschen?</p>
@@ -98,7 +98,6 @@
                         <button class="btn-flat red waves-effect waves-light" type="submit">Löschen</button>
                     </div>
                 </form>
-
             </div>
         </td>
         <td></td>

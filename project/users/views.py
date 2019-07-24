@@ -32,7 +32,7 @@ class UserDetailView(generic.DetailView):
 class UserUpdateView(generic.UpdateView):
     model = User
     fields = ('avatar', 'first_name', 'last_name', 'email', 'share')
-    success_url = reverse_lazy('users:detail')
+    success_url = reverse_lazy('users:user-detail')
     template_name = 'users/user_update.html'
     
     def get_object(self):
@@ -48,7 +48,7 @@ class UserUpdateView(generic.UpdateView):
 class UserDeleteView(generic.DeleteView):
     model = User
     template_name = 'users/user_delete.html'
-    success_url = reverse_lazy('users:deleted')
+    success_url = reverse_lazy('users:user-deleted')
 
     def get_object(self):
         return self.request.user

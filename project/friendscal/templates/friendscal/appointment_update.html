@@ -15,7 +15,7 @@
 
 {% block content %}
     <h2>Update</h2>
-    <form action="{% url 'friendscal:change' pk=object.uuid %}" method="post">
+    <form action="{% url 'friendscal:appointment-change' pk=object.uuid %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn blue lighten-2" type="submit">Update</button>

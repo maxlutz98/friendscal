@@ -32,7 +32,7 @@
         addButton: {
           text: 'Termin hinzufügen',
           click: function() {
-            window.location = "{% url 'friendscal:create' %}";
+            window.location = "{% url 'friendscal:appointment-create' %}";
           }
         }
       },
@@ -57,7 +57,7 @@
 
       eventSources: [
         {
-          url: '/events/',
+          url: '{% url 'friendscal:appointment-events' %}',
           method: 'GET',
           failure: function() {
             alert('there was an error while fetching events!');
@@ -69,14 +69,13 @@
 
       eventClick: function(info) {
         var frame = document.getElementsByTagName('iframe');
-        frame[0].src = info.event.id + "/detail/"
-        var elem = document.getElementById('modal2');
+        frame[0].src = "appointment/" + info.event.id + "/detail/"
+        var elem = document.getElementById('modal-detail');
         var instance = M.Modal.getInstance(elem);
         instance.open();
-        info.el.style.borderColor = 'red';
       },
       select: function(info) {
-        window.location = "{% url 'friendscal:create' %}" + "?start=" + info.startStr + "&end=" + info.endStr;
+        window.location = "{% url 'friendscal:appointment-create' %}" + "?start=" + info.startStr + "&end=" + info.endStr;
       }
     });
 
@@ -105,7 +104,7 @@
             extraParams: {
               user: element.id 
             },
-            color: 'yellow',   // an option!
+            color: '#'+Math.floor(Math.random()*16777215).toString(16),   // an option!
             textColor: 'black' // an option!
           })
         }
@@ -164,13 +163,13 @@
 <!-- Modal Trigger -->
 <div class="row">
   <div class="col s2 push-s5 center-align">
-    <a class="btn modal-trigger blue lighten-2" href="#modal1">Freigaben</a>
+    <a class="btn modal-trigger blue lighten-2" href="#modal-freigaben">Freigaben</a>
   </div>
 </div>
 
 
 <!-- Modal Structure  - Freigaben -->
-<div id="modal1" class="modal bottom-sheet">
+<div id="modal-freigaben" class="modal bottom-sheet">
   <div class="form">
     <div class="modal-content">
       <ul class="collection with-header">
@@ -200,10 +199,10 @@
 
 
 <!-- Modal Structure - Detail Ansicht -->
-<div id="modal2" class="modal">
+<div id="modal-detail" class="modal">
   <div class="modal-content">
     <p>
-      <iframe width="1000" height="400" src="ae26ec9e-10e3-4c15-9c65-2907effdf2e1/detail/" frameborder="0"></iframe>
+      <iframe width="1000" height="400" src="" frameborder="0"></iframe>
     </p>
   </div>
   <div class="modal-footer">

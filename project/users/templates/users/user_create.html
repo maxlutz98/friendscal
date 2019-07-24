@@ -6,7 +6,7 @@
 
 {% block content %}
 <h2>Sign up</h2>
-<form action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'users:user-signup' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   <button class="btn blue lighten-2" type="submit">Sign up</button>
