@@ -7,6 +7,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.datepicker');
             var instances = M.Datepicker.init(elems, {format: 'yyyy-mm-dd', autoClose: true});
+
+            var field = document.getElementById('id_description');
+            field.className = "materialize-textarea";
         });
     </script>
 {% endblock %}
@@ -18,6 +21,11 @@
     <form action="{% url 'friendscal:appointment-change' pk=object.uuid %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn blue lighten-2" type="submit">Update</button>
+        <div class="center-align">
+            <button class="btn blue lighten-2" type="submit">Update</button>
+        </div>
     </form>
+    
+    <div class="row">
+    </div>
 {% endblock %}

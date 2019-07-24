@@ -14,24 +14,17 @@
 {% block title %}Detail{% endblock %}
 
 {% block content %}
-<h2>Detail</h2>
+<div class="row">
+    <div class="col s12">
+        <h2>{{ object.title }}</h2>
+    </div>
+</div>
 
 {% if object.user == user %}
     <div class="row">
         <div class="col s11">
-            <label>Termin von</label>
+            <label>von</label>
             <p class="flow-text">{{ object.user }}</p>
-        </div>
-        <div class="col s1">
-            <div class="center-align">
-                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s11">
-            <label>Titel</label>
-            <p class="flow-text">{{ object.title }}</p>
         </div>
         <div class="col s1">
             <div class="center-align">
@@ -98,16 +91,10 @@
         </div>
     </div>
 {% else %}
-<div class="row">
+    <div class="row">
         <div class="col s12">
             <label>Termin von</label>
             <p class="flow-text">{{ object.user }}</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <label>Titel</label>
-            <p class="flow-text">{{ object.title }}</p>
         </div>
     </div>
     <div class="row">

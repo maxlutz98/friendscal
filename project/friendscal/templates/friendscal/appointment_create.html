@@ -14,6 +14,9 @@
                 document.getElementById('id_start').value = liste['start'];
                 document.getElementById('id_end').value = liste['end'];
             };
+
+            var field = document.getElementById('id_description');
+            field.className = "materialize-textarea";
         });
 
         function Werteliste (querystring) {
@@ -41,6 +44,11 @@
 <form action="{% url 'friendscal:appointment-create' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="btn blue lighten-2" type="submit">Create</button>
+    <div class="center-align">
+        <button class="btn blue lighten-2" type="submit">Create</button>
+    </div>
 </form>
+
+<div class="row">
+</div>
 {% endblock %}
