@@ -5,28 +5,32 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<table>
-  <tr>
-    <td>
-      <h2>Einloggen</h2>
-    </td>
-    <td>
-      <h2>Noch nicht registriert?</h2>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+<div class="row">
+  <div class="col s6">
+    <h2>Einloggen</h2>
+    
+  </div>
+  <div class="col s6">
+    <h2>Noch nicht registriert?</h2>
+    
+  </div>
+</div>
+<div class="row">
+  <div class="col s6">
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="center-align">
         <button class="btn blue lighten-2" type="submit">Einloggen<i class="material-icons right">send</i></button>
         <a class="btn blue lighten-2" href="{% url 'password_reset' %}">Passwort vergessen?</a>
-      </form>
-    </td>
-    <td class="center-align">
+      </div>
+    </form>
+  </div>
+  <div class="col s6">
+    <div class="center-align">
       <a class="btn blue lighten-2" href="{% url 'users:user-signup' %}">Registrieren</a>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

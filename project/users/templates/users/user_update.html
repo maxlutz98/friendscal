@@ -19,22 +19,53 @@
         {% csrf_token %}
         {% for field in form %}
             {% if field.label == 'Profile picture' %}
-                <p class="fieldWrapper">
-                    {{ field.errors }}
-                    {{ field.label_tag }}
-                    <br>
-                    <img src="{{ object.avatar.url }}" width=100>
-                    <br>
-                    <input id="id_avatar" type="file" accept="image/*" name="avatar">
-                </p>
-            {% elif field.label == 'Shares' %}
+                <div class="row">
+                    <div class="file-field input-field col s12">
+                        <p>
+                            {{ field.errors }}
+                            {{ field.label_tag }}
+                            <br>
+                            <img src="{{ object.avatar.url }}" width=100>
+                        </p>
+                        <div class="btn blue lighten-2">
+                            <span>Datei auswählen</span>
+                            <input id="id_avatar" type="file" accept="image/*" name="avatar">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+            {% elif field.label == 'Share' %}
+                <div class="row">
+                    <div class="col s12">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                </div>
+            {% elif field.label == 'First name' %}
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+            {% elif field.label == 'Last name' %}
+                    <div class="input-field col s6">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                </div>
             {% else %}
-                <p class="fieldWrapper">
-                    {{ field.errors }}
-                    {{ field.label_tag }} {{ field }}
-                </p>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                </div>
             {% endif %}
         {% endfor %}
-        <button class="btn blue lighten-2" type="submit">Update</button>
+        <div class="center-align">
+            <button class="btn blue lighten-2 center-align" type="submit">Update</button>
+        </div>
     </form>
 {% endblock %}

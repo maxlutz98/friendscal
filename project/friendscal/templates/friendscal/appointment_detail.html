@@ -16,75 +16,71 @@
 {% block content %}
 <h2>Detail</h2>
 
-<table>
-    <tr>
-        <td>
-            <label>Termin von:</label>
+{% if object.user == user %}
+    <div class="row">
+        <div class="col s11">
+            <label>Termin von</label>
             <p class="flow-text">{{ object.user }}</p>
-        </td>
-        <td>
-        </td>
-        {% if object.user == user %}
-        <td>
-        </td>
-        {% endif %}
-    </tr>
-    <tr>
-        <td>
+        </div>
+        <div class="col s1">
+            <div class="center-align">
+                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s11">
             <label>Titel</label>
             <p class="flow-text">{{ object.title }}</p>
-        </td>
-        <td></td>
-        {% if object.user == user %}
-        <td>
-            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
-        </td>
-        {% endif %}
-    </tr>
-    <tr>
-        <td>
+        </div>
+        <div class="col s1">
+            <div class="center-align">
+                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
             <label>Anfang</label>
             <p class="flow-text">{{ object.start | date:"d.m.Y" }}</p>
-        </td>
-        <td>
+        </div>
+        <div class="col s5">
             <label>Ende</label>
-            <p class="flow-text">{{ object.end | date:"d.m.Y"}}</p>
-        </td>
-        {% if object.user == user %}
-        <td>
-            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
-        </td>
-        {% endif %}
-    </tr>
-    <tr>
-        <td>
+            <p class="flow-text">{{ object.end | date:"d.m.Y" }}</p>
+        </div>
+        <div class="col s1">
+            <div class="center-align">
+                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s11">
             <label>Beschreibung</label>
             <p class="flow-text">{{ object.description }}</p>
-        </td>
-        <td></td>
-        {% if object.user == user %}
-        <td>
-            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
-        </td>
-        {% endif %}
-    </tr>
-    <tr>
-        <td>
+        </div>
+        <div class="col s1">
+            <div class="center-align">
+                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s11">
             <label>Ort</label>
             <p class="flow-text">{{ object.location }}</p>
-        </td>
-        <td></td>
-        {% if object.user == user %}
-        <td>
-            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons right">edit</i></a>
-        </td>
-        {% endif %}
-    </tr>
-    {% if object.user == user %}
-    <tr>
-        <td>
+        </div>
+        <div class="col s1">
+            <div class="center-align">
+                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <label>Termin löschen</label>
             <!-- Modal Trigger -->
-            <a class="btn red modal-trigger" href="#modal1">Termin löschen</a>
+            <p><a class="btn red modal-trigger" href="#modal1">Termin löschen</a></p>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
                 <form action="{% url 'friendscal:appointment-delete' pk=object.uuid %}" method="post">
@@ -99,13 +95,43 @@
                     </div>
                 </form>
             </div>
-        </td>
-        <td></td>
-    </tr>
-    {% endif %}
-</table>
-
-
-
+        </div>
+    </div>
+{% else %}
+<div class="row">
+        <div class="col s12">
+            <label>Termin von</label>
+            <p class="flow-text">{{ object.user }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <label>Titel</label>
+            <p class="flow-text">{{ object.title }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <label>Anfang</label>
+            <p class="flow-text">{{ object.start | date:"d.m.Y" }}</p>
+        </div>
+        <div class="col s6">
+            <label>Ende</label>
+            <p class="flow-text">{{ object.end | date:"d.m.Y" }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <label>Beschreibung</label>
+            <p class="flow-text">{{ object.description }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <label>Ort</label>
+            <p class="flow-text">{{ object.location }}</p>
+        </div>
+    </div>
+{% endif %}
 
 {% endblock %}
