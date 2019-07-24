@@ -8,6 +8,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+  </style>
 
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -35,60 +46,91 @@
 </head>
 
 <body>
-  <!-- navbar -->
-  <div class="navbar-fixed">
-    <nav class="blue lighten-2">
-      <div class="container">
-        <div class="nav-wrapper">
-          <a href="{% url 'friendscal:index' %}" class="brand-logo">Friendscal</a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
-            <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
-            <li>
-              <div class="chip">
-                <img src="{{ user.avatar.url }}">
-                Hi {{ user.first_name }}!
-              </div>
-            </li>
-            <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
-            {% else %}
-            <li><a href="{% url 'friendscal:description' %}">Was ist das?</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'users:user-signup' %}">Signup</a></li>
-            {% endif %}
-          </ul>
-        </div<img>
-      </div>
-    </nav>
-  </div>
+  <header>
+    <!-- navbar -->
+    <div class="navbar-fixed">
+      <nav class="blue lighten-2">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a href="{% url 'friendscal:index' %}" class="brand-logo">Friendscal</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
+              <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
+              <li>
+                <div class="chip">
+                  <img src="{{ user.avatar.url }}">
+                  Hi {{ user.first_name }}!
+                </div>
+              </li>
+              <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
+              {% else %}
+              <li><a href="{% url 'friendscal:description' %}">Was ist das?</a></li>
+              <li><a href="{% url 'login' %}">Login</a></li>
+              <li><a href="{% url 'users:user-signup' %}">Signup</a></li>
+              {% endif %}
+            </ul>
+          </div<img>
+        </div>
+      </nav>
+    </div>
 
-  <ul class="sidenav" id="mobile-demo">
-  {% if user.is_authenticated %}
-    <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
-    <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
-    <li>
-      <div class="chip">
-        <img src="{{ user.avatar.url }}">
-        Hi {{ user.first_name }}!
-      </div>
-    </li>
-    <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
-  {% else %}
-    <li><a href="{% url 'friendscal:description' %}">Was ist das?</li>
-    <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="{% url 'users:user-signup' %}">Signup</a></li>
-  {% endif %}
-  </ul>
+    <ul class="sidenav" id="mobile-demo">
+    {% if user.is_authenticated %}
+      <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
+      <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
+      <li>
+        <div class="chip">
+          <img src="{{ user.avatar.url }}">
+          Hi {{ user.first_name }}!
+        </div>
+      </li>
+      <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
+    {% else %}
+      <li><a href="{% url 'friendscal:description' %}">Was ist das?</li>
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'users:user-signup' %}">Signup</a></li>
+    {% endif %}
+    </ul>
+  </header>
 
   <!-- content -->
-  <div class="container">
-    <main>
+  <main>
+    <div class="container">
       {% block content %}
       {% endblock %}
-    </main>
-  </div>
+    </div>
+  </main>
+
+
+
+  <footer class="page-footer blue lighten-2">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Footer Content</h5>
+          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2019 Copyright Maximilian Lutz
+        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+      </div>
+    </div>
+  </footer>
+
 </body>
 
 </html>
