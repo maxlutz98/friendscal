@@ -1,10 +1,14 @@
-FROM ubuntu:18.04 as build
-ARG UPSTREAM_VERSION=1.22.8
-ADD https://github.com/sass/dart-sass/releases/download/${UPSTREAM_VERSION}/dart-sass-${UPSTREAM_VERSION}-linux-x64.tar.gz /opt/
-RUN tar -C /opt/ -xzvf /opt/dart-sass-${UPSTREAM_VERSION}-linux-x64.tar.gz
-COPY ./docker-entrypoint.sh /opt/dart-sass
+FROM ubuntu
 
-FROM ubuntu:18.04 as final
-COPY --from=build /opt/dart-sass /opt/dart-sass
-
-ENTRYPOINT [ "sh", "/opt/dart-sass/docker-entrypoint.sh" ]
+RUN mkdir /src && mkdir /work
+WORKDIR /work
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get -y install curl wget
+RUN curl -s https://api.github.com/repos/sass/dart-sass/releases/latest \
+    | grep browser_download_url \
+    | grep linux-x64 \
+    | cut -d '"' -f 4 \
+    | wget -qi -
+RUN tar -xzvf dart-sass*.tar.gz && rm dart-sass*.tar.gz && apt-get purge -y curl wget && apt autoremove -y --purge && apt-get clean -y
+COPY ./docker-entrypoint.sh /work/docker-entrypoint.sh
+ENTRYPOINT [ "sh", "/work/docker-entrypoint.sh" ]

@@ -1,1 +1,1 @@
-/opt/dart-sass/sass --watch /sass:/sass --style compressed
+/work/dart-sass/sass --watch /src:/src --style compressed

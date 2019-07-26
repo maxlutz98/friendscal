@@ -64,7 +64,7 @@ services:
     build: sass-container
     restart: always
     volumes:
-    - ./sass:/sass
+    - ./sass:/src
 
 
 
