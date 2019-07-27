@@ -9,6 +9,12 @@
 <form action="{% url 'users:user-signup' %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-  <button class="btn blue lighten-2" type="submit">Sign up</button>
+  <div class="center-align">
+    <button class="btn blue lighten-2" type="submit">Sign up</button>
+  </div>
 </form>
+
+<div class="row">
+</div>
+
 {% endblock %}
