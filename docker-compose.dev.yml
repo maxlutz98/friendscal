@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+  django:
+    build: django-container
+    restart: always
+    ports:
+      - "80:8000"
+    volumes:
+      - ./project:/code
+    command: python manage.py runserver 0.0.0.0:8000
+    networks:
+    - django-network
+    environment:
+      DEBUG: 1
+      SECRET_KEY: u9)pv@bhz6r0g7-)3kr=kopc6wx07&olo8f5qm1i2y1tr2+cj*
+      SQL_ENGINE: django.db.backends.postgresql
+      SQL_DATABASE: friendscal_dev
+      SQL_USER: djangouser
+      SQL_PASSWORD: pw4djangouser
+      SQL_HOST: db
+      SQL_PORT: 5432
+      DATABASE: postgres
+    depends_on:
+      - db
+
+  db:
+    image: postgres:11.4
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgresql/data/
+    networks:
+    - django-network
+    environment:
+      POSTGRES_USER: djangouser
+      POSTGRES_PASSWORD: pw4djangouser
+      POSTGRES_DB: friendscal_dev
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - django-network
+
+  sass-watcher:
+    build: sass-container
+    restart: always
+    volumes:
+    - ./sass:/src
+    network_mode: "none"
+
+
+networks:
+  django-network:
+    driver: bridge
