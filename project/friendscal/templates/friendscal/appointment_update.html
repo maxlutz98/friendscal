@@ -6,7 +6,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.datepicker');
-            var instances = M.Datepicker.init(elems, {format: 'yyyy-mm-dd', autoClose: true});
+            var instances = M.Datepicker.init(elems, {format: 'dd.mm.yyyy', autoClose: true});
+            var elems = document.querySelectorAll('.timepicker');
+            var instances = M.Timepicker.init(elems, {twelveHour: false, autoClose: true, defaultTime: '00:00'});
 
             var field = document.getElementById('id_description');
             field.className = "materialize-textarea";

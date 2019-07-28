@@ -5,6 +5,8 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
+
 
 from django.contrib.auth.base_user import BaseUserManager
 
@@ -52,7 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=30)
     last_name = models.CharField(_('last name'), max_length=30)
-    share = models.ManyToManyField("users.User", blank=True)
+    share = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     avatar = models.ImageField(_("profile picture"), upload_to='avatars', default='avatars/default-profile.jpg')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

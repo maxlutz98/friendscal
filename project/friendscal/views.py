@@ -5,8 +5,11 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
+from django.db.models import Q
 
 from django.contrib.auth.mixins import UserPassesTestMixin
+
+from django.conf import settings
 
 from .models import Appointment
 
@@ -27,9 +30,10 @@ class AppointmentCreateView(generic.CreateView):
 
     def get_form(self, form_class=None):
         form = super(AppointmentCreateView, self).get_form(form_class)
-        form.fields["start"].widget.attrs.update({"class": "datepicker"})
-        # form.fields['start'].widget.attrs.update(input_format='%d.%m.%Y')
-        form.fields["end"].widget.attrs.update({"class": "datepicker"})
+        form.fields['start'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
+        form.fields['end'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
+        form.fields["start"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
+        form.fields["end"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
         return form
 
     def form_valid(self, form):
@@ -57,9 +61,10 @@ class AppointmentUpdateView(UserPassesTestMixin, generic.UpdateView):
 
     def get_form(self, form_class=None):
         form = super(AppointmentUpdateView, self).get_form(form_class)
-        form.fields["start"].widget.attrs.update({"class": "datepicker"})
-        # form.fields['start'].widget.attrs.update(input_format='%d.%m.%Y')
-        form.fields["end"].widget.attrs.update({"class": "datepicker"})
+        form.fields['start'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
+        form.fields['end'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
+        form.fields["start"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
+        form.fields["end"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
         return form
 
     def form_valid(self, form):
@@ -96,7 +101,7 @@ def events(request):
 
     users = request.user.user_set.all()
 
-    data = Appointment.objects.filter(user__in=users, end__range=(start, end)).values() | Appointment.objects.filter(user=request.user, end__range=(start, end)).values()
+    data = Appointment.objects.filter(Q(user__in=users) | Q(user=request.user), Q(end__range=(start, end)) | Q(start__range=(start, end))).values()
 
     data = [item for item in data]
     for counter, element in enumerate(data):
