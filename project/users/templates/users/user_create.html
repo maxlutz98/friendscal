@@ -19,7 +19,6 @@
                     {% if field.label == 'Profile picture' %}
                         <div class="file-field input-field col s12">
                             <p>
-                                {{ field.errors }}
                                 <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
                                 <div class="btn blue lighten-2">
                                     <span>Datei auswählen</span>
@@ -29,6 +28,7 @@
                                     <input class="file-path validate" type="text">
                                 </div>
                                 {{ field.help_text }}
+                                {{ field.errors }}
                             </p>
                         </div>
                     {% else %}

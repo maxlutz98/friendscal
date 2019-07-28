@@ -27,7 +27,6 @@
                         {% if field.label == 'Profile picture' %}
                             <div class="file-field input-field col s12">
                                 <p>
-                                    {{ field.errors }}
                                     {{ field.label_tag }}
                                     <br>
                                     <img src="{{ object.avatar.url }}" width=100>
@@ -39,14 +38,15 @@
                                         <input class="file-path validate" type="text">
                                     </div>
                                     {{ field.help_text }}
+                                    {{ field.errors }}
                                 </p>
                             </div>
                         {% elif field.label == 'Share' %}
                             <div class="input-field col s12">
-                                {{ field.errors }}
                                 <label for="{{ field.id_for_label }}" class="active">{{ field.label }}:</label>
                                 {{ field }}
                                 {{ field.help_text }}
+                                {{ field.errors }}
                             </div>
                         {% elif field.label == 'First name' %}
                             {% include "field_snippet.html" with field=field size="s6" %}
