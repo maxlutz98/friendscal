@@ -12,8 +12,10 @@
             var instances = M.Timepicker.init(elems, {twelveHour: false, autoClose: true, defaultTime: '00:00'});
 
             if (liste['start'] && liste['end']) {
-                document.getElementById('id_start').value = liste['start'];
-                document.getElementById('id_end').value = liste['end'];
+                document.getElementById('id_start_0').value = liste['start'];
+                document.getElementById('id_start_1').value = '00:00';
+                document.getElementById('id_end_0').value = liste['end'];
+                document.getElementById('id_end_1').value = '00:00';
             };
 
             var field = document.getElementById('id_description');
@@ -41,15 +43,14 @@
 {% block title %}Create Appointment{% endblock %}
 
 {% block content %}
-<h2>Create Appointment</h2>
-<form action="{% url 'friendscal:appointment-create' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div class="center-align">
-        <button class="btn blue lighten-2" type="submit">Create</button>
-    </div>
-</form>
-
 <div class="row">
+    <h2>Create Appointment</h2>
+    <form action="{% url 'friendscal:appointment-create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="center-align">
+            <button class="btn blue lighten-2" type="submit">Create</button>
+        </div>
+    </form>
 </div>
 {% endblock %}
