@@ -5,9 +5,12 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<p class="flow-text center-align">Account was successfully deleted!</p>
-<div class="center-align">
-    <a class="btn blue lighten-2" href="{% url 'friendscal:index' %}">Zurück zur Startseite</a>
+<div class="row">
+    <div class="col s12 center-align">
+        <p class="flow-text">Account was successfully deleted!</p>
+    </div>
+    <div class="col s12 center-align">
+        <a class="btn blue lighten-2" href="{% url 'friendscal:index' %}">Zurück zur Startseite</a>
+    </div>
 </div>
-
 {% endblock %}

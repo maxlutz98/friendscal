@@ -4,53 +4,68 @@
 
 
 {% block head %}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.datepicker');
-            var instances = M.Datepicker.init(elems, {format: 'dd.mm.yyyy', autoClose: true});
-            var elems = document.querySelectorAll('.timepicker');
-            var instances = M.Timepicker.init(elems, {twelveHour: false, autoClose: true, defaultTime: '00:00'});
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, {format: 'dd.mm.yyyy', autoClose: true});
+        var elems = document.querySelectorAll('.timepicker');
+        var instances = M.Timepicker.init(elems, {twelveHour: false, autoClose: true, defaultTime: '00:00'});
 
-            if (liste['start'] && liste['end']) {
-                document.getElementById('id_start_0').value = liste['start'];
-                document.getElementById('id_start_1').value = '00:00';
-                document.getElementById('id_end_0').value = liste['end'];
-                document.getElementById('id_end_1').value = '00:00';
-            };
-
-            var field = document.getElementById('id_description');
-            field.className = "materialize-textarea";
-        });
-
-        function Werteliste (querystring) {
-            if (querystring == '') return;
-            var wertestring = querystring.slice(1);
-            var paare = wertestring.split("&");
-            var paar, name, wert;
-            for (var i = 0; i < paare.length; i++) {
-                paar = paare[i].split("=");
-                name = paar[0];
-                wert = paar[1];
-                name = unescape(name).replace("+", " ");
-                wert = unescape(wert).replace("+", " ");
-                this[name] = wert;
+        if (liste['start'] && liste['end']) {
+            document.getElementById('id_start_0').value = liste['start'];
+            document.getElementById('id_start_1').value = '00:00';
+            document.getElementById('id_end_0').value = liste['end'];
+            document.getElementById('id_end_1').value = '00:00';
+            labels = document.getElementsByTagName('label');
+            for (i = 0; i < labels.length; i++) {
+                if (labels[i].htmlFor == 'id_start_0' || labels[i].htmlFor == 'id_end_0') {
+                    labels[i].className = "active";
+                }
             }
+        };
+
+        var field = document.getElementById('id_description');
+        field.className = "materialize-textarea";
+    });
+
+    function Werteliste (querystring) {
+        if (querystring == '') return;
+        var wertestring = querystring.slice(1);
+        var paare = wertestring.split("&");
+        var paar, name, wert;
+        for (var i = 0; i < paare.length; i++) {
+            paar = paare[i].split("=");
+            name = paar[0];
+            wert = paar[1];
+            name = unescape(name).replace("+", " ");
+            wert = unescape(wert).replace("+", " ");
+            this[name] = wert;
         }
-        var liste = new Werteliste(location.search);
-    </script>
+    }
+    var liste = new Werteliste(location.search);
+</script>
 {% endblock %}
 
 {% block title %}Create Appointment{% endblock %}
 
 {% block content %}
 <div class="row">
-    <h2>Create Appointment</h2>
-    <form action="{% url 'friendscal:appointment-create' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="center-align">
-            <button class="btn blue lighten-2" type="submit">Create</button>
-        </div>
-    </form>
+    <div class="col s12">
+        <h2>Create Appointment</h2>
+        <form action="{% url 'friendscal:appointment-create' %}" method="post">
+            </div class="row">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                    {% include "field_snippet.html" with field=field size="s12" %}
+                {% endfor %}
+                <div class="col s12 center-align">
+                    <button class="btn blue lighten-2" type="submit">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

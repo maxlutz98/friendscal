@@ -18,107 +18,82 @@
     <div class="col s12">
         <h3>{{ object.title }}</h3>
     </div>
-</div>
 
-{% if object.user == user %}
-    <div class="row">
+    {% if object.user == user %}
         <div class="col s11">
-            <label>von</label>
+            <label>von:</label>
             <p class="flow-text">{{ object.user }}</p>
         </div>
-        <div class="col s1">
-            <div class="center-align">
-                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
-            </div>
+        <div class="col s1 center-align">
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
         </div>
-    </div>
-    <div class="row">
         <div class="col s6">
-            <label>Anfang</label>
+            <label>Beginn:</label>
             <p class="flow-text">{{ object.start | date:"d.m.Y" }} &ensp; {{ object.start | time:"H:i" }}</p>
         </div>
         <div class="col s5">
-            <label>Ende</label>
+            <label>Ende:</label>
             <p class="flow-text">{{ object.end | date:"d.m.Y" }} &ensp; {{ object.end | time:"H:i" }}</p>
         </div>
-        <div class="col s1">
-            <div class="center-align">
-                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
-            </div>
+        <div class="col s1 center-align">
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
         </div>
-    </div>
-    <div class="row">
         <div class="col s11">
-            <label>Beschreibung</label>
+            <label>Beschreibung:</label>
             <p class="flow-text">{{ object.description | default:"Keine Beschreibung angegeben" }}</p>
         </div>
-        <div class="col s1">
-            <div class="center-align">
-                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
-            </div>
+        <div class="col s1 center-align">
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
         </div>
-    </div>
-    <div class="row">
         <div class="col s11">
-            <label>Ort</label>
+            <label>Ort:</label>
             <p class="flow-text">{{ object.location | default:"Kein Ort angegeben" }}</p>
         </div>
-        <div class="col s1">
-            <div class="center-align">
-                <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
-            </div>
+        <div class="col s1 center-align">
+            <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
         </div>
-    </div>
-    <div class="row">
         <div class="col s12">
-            <label>Termin löschen</label>
+            <label>Termin löschen:</label>
             <!-- Modal Trigger -->
-            <p><a class="btn red modal-trigger" href="#modal1">Termin löschen</a></p>
-            <!-- Modal Structure -->
-            <div id="modal1" class="modal">
-                <form action="{% url 'friendscal:appointment-delete' pk=object.uuid %}" method="post">
-                    <div class="modal-content">
-                        <h4>Delete Appointment</h4>
-                        <p>Wollen Sie den Termin wirklich löschen?</p>
-                        {% csrf_token %}
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn-flat modal-close" href="#!">Zurück</a>
-                        <button class="btn-flat red waves-effect waves-light" type="submit">Löschen</button>
-                    </div>
-                </form>
-            </div>
+            <p><a class="btn red modal-trigger" href="#modal-delete">Termin löschen</a></p>
         </div>
-    </div>
-{% else %}
-    <div class="row">
+    {% else %}
         <div class="col s12">
-            <label>Termin von</label>
+            <label>Termin von:</label>
             <p class="flow-text">{{ object.user }}</p>
         </div>
-    </div>
-    <div class="row">
         <div class="col s6">
-            <label>Anfang</label>
+            <label>Anfang:</label>
             <p class="flow-text">{{ object.start | date:"d.m.Y" }} &ensp; {{ object.start | time:"H:i" }}</p>
         </div>
         <div class="col s6">
-            <label>Ende</label>
+            <label>Ende:</label>
             <p class="flow-text">{{ object.end | date:"d.m.Y" }} &ensp; {{ object.end | time:"H:i" }}</p>
         </div>
-    </div>
-    <div class="row">
         <div class="col s12">
-            <label>Beschreibung</label>
+            <label>Beschreibung:</label>
             <p class="flow-text">{{ object.description | default:"Keine Beschreibung angegeben" }}</p>
         </div>
-    </div>
-    <div class="row">
         <div class="col s12">
-            <label>Ort</label>
+            <label>Ort:</label>
             <p class="flow-text">{{ object.location | default:"Kein Ort angegeben" }}</p>
         </div>
-    </div>
-{% endif %}
+    {% endif %}
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-delete" class="modal">
+    <form action="{% url 'friendscal:appointment-delete' pk=object.uuid %}" method="post">
+        <div class="modal-content">
+            <h4>Termin löschen</h4>
+            <p>Wollen Sie den Termin wirklich löschen?</p>
+            {% csrf_token %}
+        </div>
+        <div class="modal-footer">
+            <a class="btn-flat modal-close" href="#!">Abbrechen</a>
+            <button class="btn-flat red waves-effect waves-light" type="submit">Löschen</button>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

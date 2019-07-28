@@ -5,16 +5,41 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<h2>Sign up</h2>
-<form action="{% url 'users:user-signup' %}" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <div class="center-align">
-    <button class="btn blue lighten-2" type="submit">Sign up</button>
-  </div>
-</form>
-
 <div class="row">
-</div>
+    <div class="col s12">
+        <h2>Sign up</h2>
+        <form action="{% url 'users:user-signup' %}" method="post" enctype="multipart/form-data">
+            <div class="row">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
 
+                {% for field in form.visible_fields %}
+                    {% if field.label == 'Profile picture' %}
+                        <div class="file-field input-field col s12">
+                            <p>
+                                {{ field.errors }}
+                                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                                <div class="btn blue lighten-2">
+                                    <span>Datei auswählen</span>
+                                    <input id="{{ field.id_for_label }}" type="file" accept="image/*" name="avatar">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                                {{ field.help_text }}
+                            </p>
+                        </div>
+                    {% else %}
+                        {% include "field_snippet.html" with field=field size="s12" %}
+                    {% endif %}
+                {% endfor %}
+                <div class="col s12 center-align">
+                    <button class="btn blue lighten-2" type="submit">Sign up</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

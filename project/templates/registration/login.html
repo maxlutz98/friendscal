@@ -6,31 +6,28 @@
 
 {% block content %}
 <div class="row">
-  <div class="col s6">
-    <h2>Einloggen</h2>
-    
-  </div>
-  <div class="col s6">
-    <h2>Noch nicht registriert?</h2>
-    
-  </div>
-</div>
-<div class="row">
-  <div class="col s6">
-    <form action="{% url 'login' %}" method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <div class="center-align">
-        <button class="btn blue lighten-2" type="submit">Einloggen<i class="material-icons right">send</i></button>
-        <a class="btn blue lighten-2" href="{% url 'password_reset' %}">Passwort vergessen?</a>
-      </div>
-    </form>
-  </div>
-  <div class="col s6">
-    <div class="center-align">
-      <a class="btn blue lighten-2" href="{% url 'users:user-signup' %}">Registrieren</a>
+    <div class="col s6">
+        <h2>Einloggen</h2>
+        <form action="{% url 'login' %}" method="post">
+            <div class="row">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                    {% include "field_snippet.html" with field=field size="s12" %}
+                {% endfor %}
+                <div class="col s12 center-align">
+                    <button class="btn blue lighten-2" type="submit">Einloggen<i class="material-icons right">send</i></button>
+                    <a class="btn blue lighten-2" href="{% url 'password_reset' %}">Passwort vergessen?</a>
+                </div>
+            </div>
+        </form>
     </div>
-  </div>
+    <div class="col s6 center-align">
+        <h2>Noch nicht registriert?</h2>
+        <a class="btn blue lighten-2" href="{% url 'users:user-signup' %}">Registrieren</a>
+    </div>
 </div>
 
 {% endblock %}
