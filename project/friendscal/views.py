@@ -91,6 +91,12 @@ class AppointmentListView(generic.ListView):
         queryset = self.request.user.appointment_set.all().filter(end__gte=datetime.datetime.today()).order_by('start')
         return queryset
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(AppointmentListView, self).get_context_data(*args, **kwargs)
+        context["past_list"] = self.request.user.appointment_set.all().filter(end__lte=datetime.datetime.today()).order_by('-end')
+        return context
+    
+
 
 def events(request):
     start = request.GET.get('start')
