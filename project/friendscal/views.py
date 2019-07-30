@@ -101,8 +101,9 @@ def events(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
     user = request.GET.get('user')
-    user = User.objects.get(pk=int(user))
-    if request.user.user_set.filter(pk=user.id) or request.user == user:
+    first, last = user.split('_')
+    user = User.objects.get(first_name=first, last_name=last)
+    if user in request.user.user_set.all() or request.user == user:
         data = Appointment.objects.filter(Q(user=user), Q(end__range=(start, end)) | Q(start__range=(start, end))).values()
     else:
         data = []
