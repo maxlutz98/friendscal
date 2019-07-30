@@ -5,6 +5,12 @@
 {% block head %}
 
 {% load static %}
+
+<!-- Color Picker -->
+<!-- http://themesanytime.com/products/colorpicker/#docs-events -->
+<link href="{% static "colorpicker/css/material-picker/light.css" %}" rel='stylesheet' />
+<script src="{% static "colorpicker/js/material-picker.js" %}"></script>
+
 <!-- fullcalendar.io -->
 <link href="{% static "fullcalendar/core/main.min.css" %}" rel='stylesheet' />
 <link href="{% static "fullcalendar/daygrid/main.min.css" %}" rel='stylesheet' />
@@ -18,6 +24,45 @@
 <script src="{% static "fullcalendar/list/main.min.js" %}"></script>
 
 <script>
+    var color{{ user.first_name }}{{ user.last_name }} = {};
+    {% for sharedby in user.user_set.all %}
+    var color{{ sharedby.first_name }}{{ sharedby.last_name }} = {};
+    {% endfor %}
+
+    document.addEventListener('DOMContentLoaded', function () {
+        color{{ user.first_name }}{{ user.last_name }} = new ColorPicker.Material("#color_{{ user.first_name }}_{{ user.last_name }}", {
+            format: 'hex',
+            color: '#64b5f6',
+            placement: 'top',
+        });
+
+        color{{ user.first_name }}{{ user.last_name }}.on('change', function(color) {
+            source = calendar.getEventSourceById('events_{{ user.first_name }}_{{ user.last_name }}');
+            if (source) {
+                source.internalEventSource.ui.backgroundColor = color.hex;
+                source.internalEventSource.ui.borderColor = color.hex;
+                source.refetch();
+            }
+        });
+
+        {% for sharedby in user.user_set.all %}
+        color{{ sharedby.first_name }}{{ sharedby.last_name }} = new ColorPicker.Material("#color_{{ sharedby.first_name }}_{{ sharedby.last_name }}", {
+            format: 'hex',
+            color: '#' + Math.floor(Math.random() * 16777215).toString(16),
+            placement: 'top'
+        });
+
+        color{{ sharedby.first_name }}{{ sharedby.last_name }}.on('change', function(color) {
+            source = calendar.getEventSourceById('events_{{ sharedby.first_name }}_{{ sharedby.last_name }}');
+            if (source) {
+                source.internalEventSource.ui.backgroundColor = color.hex;
+                source.internalEventSource.ui.borderColor = color.hex;
+                source.refetch();
+            }
+        });
+        {% endfor %}
+    });
+
     var calendar = {};
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
@@ -98,7 +143,7 @@
                         extraParams: {
                             user: element.id.replace(/events_/, '')
                         },
-                        color: '#' + Math.floor(Math.random() * 16777215).toString(16), // an option!
+                        color: eval('color' + element.id.replace(/_/, '')).getColor(), // an option!
                         textColor: 'black' // an option!
                     })
                 }
@@ -144,14 +189,15 @@
                         <input type="checkbox" id="{{ user.first_name }}_{{ user.last_name }}" onclick="changeEventSources(this);">
                         <span><img src="{{ user.avatar.url }}" width="30" class="circle"> {{ user }}</span>
                     </label>
+                    <div id="color_{{ user.first_name }}_{{ user.last_name }}" class="secondary-content colorpicker-custom-anchor colorpicker-circle-anchor"><div class="colorpicker-circle-anchor__color" data-color></div></div>
                 </li>
                 {% for sharedby in user.user_set.all|dictsort:'last_name' %}
                     <li class="collection-item">
                         <label for="{{ sharedby.first_name }}_{{ sharedby.last_name }}">
                             <input type="checkbox" id="{{ sharedby.first_name }}_{{ sharedby.last_name }}" onclick="changeEventSources(this);">
-                            <span><img src="{{ sharedby.avatar.url }}" width="30" class="circle">
-                                {{ sharedby.get_full_name }}</span>
+                            <span><img src="{{ sharedby.avatar.url }}" width="30" class="circle">{{ sharedby.get_full_name }}</span>
                         </label>
+                        <div id="color_{{ sharedby.first_name }}_{{ sharedby.last_name }}" class="secondary-content colorpicker-custom-anchor colorpicker-circle-anchor"><div class="colorpicker-circle-anchor__color" data-color></div></div>
                     </li>
                 {% empty %}
                     <li class="collection-item">Ihnen hat leider kein weiterer Nutzer eine Freigabe erteilt.</li>

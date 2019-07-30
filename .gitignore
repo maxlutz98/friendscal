@@ -1,8 +1,3 @@
-### project specific ###
-db
-*.env
-
-
 ### Django ###
 *.log
 *.pot
@@ -10,7 +5,7 @@ db
 __pycache__/
 local_settings.py
 db.sqlite3
-media
+project/media/avatars/*
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -232,3 +227,8 @@ Temporary Items
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+### project specific ###
+db
+*.env
+!default-avatar.png
