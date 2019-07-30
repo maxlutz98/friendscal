@@ -1,6 +1,6 @@
 from django import forms
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -13,13 +13,12 @@ from django.conf import settings
 
 from .models import Appointment
 
+from users.models import User
+
 import datetime
 
 
 # Create your views here.
-def index(request):
-    return HttpResponse("HELLO FROM FRIENDSCAL")
-
 
 @method_decorator(login_required, name="dispatch")
 class AppointmentCreateView(generic.CreateView):
@@ -97,17 +96,20 @@ class AppointmentListView(generic.ListView):
         return context
     
 
-
+@login_required
 def events(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
-    # user = request.GET.get('user')
-    # if request.user.user_set.filter(pk=user) or request.user == user:
-        # data = Appointment.objects.filter(user=user, end__range=(start, end)).values()          
+    user = request.GET.get('user')
+    user = User.objects.get(pk=int(user))
+    if request.user.user_set.filter(pk=user.id) or request.user == user:
+        data = Appointment.objects.filter(Q(user=user), Q(end__range=(start, end)) | Q(start__range=(start, end))).values()
+    else:
+        data = []
 
-    users = request.user.user_set.all()
+    # users = request.user.user_set.all()
 
-    data = Appointment.objects.filter(Q(user__in=users) | Q(user=request.user), Q(end__range=(start, end)) | Q(start__range=(start, end))).values()
+    # data = Appointment.objects.filter(Q(user__in=users) | Q(user=request.user), Q(end__range=(start, end)) | Q(start__range=(start, end))).values()
 
     data = [item for item in data]
     for counter, element in enumerate(data):
