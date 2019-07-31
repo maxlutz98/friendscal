@@ -109,8 +109,7 @@
             eventSources: [],
 
             eventClick: function (info) {
-                var frame = document.getElementsByTagName('iframe');
-                frame[0].src = "appointment/" + info.event.id + "/detail/"
+                httpGetAsync("/appointment/" + info.event.id + "/json/", fillingDetailModal);
                 var elem = document.getElementById('modal-detail');
                 var instance = M.Modal.getInstance(elem);
                 instance.open();
@@ -139,7 +138,7 @@
                 if (!source) {
                     calendar.addEventSource({
                         id: 'events_' + element.id,
-                        url: 'appointment/events/',
+                        url: '/appointment/events/',
                         extraParams: {
                             user: element.id.replace(/events_/, '')
                         },
@@ -154,7 +153,41 @@
                 }
             }
         }
-    }
+    };
+
+    function httpGetAsync(theUrl, callback) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    };
+
+    function fillingDetailModal (response) {
+        console.log(response);
+        var data = JSON.parse(response);
+        if (!data.description) {
+            data.description = 'Keine Beschreibung angegeben';
+        }
+        if (!data.location) {
+            data.location = 'Keinen Ort angegeben';
+        }
+        var can_edit = data['can_edit'];
+        var edit_button = document.getElementById('event_change');
+        if (!can_edit) {
+            edit_button.style.display = 'none';
+        }
+        else {
+            edit_button.href = '/appointment/' + data.uuid + '/update/';
+        }
+        delete data.uuid;
+        delete data.can_edit;
+        for (name in data) {
+            document.getElementById('event_' + name).innerText = data[name];
+        }
+    };
 </script>
 {% endblock %}
 
@@ -213,12 +246,35 @@
 <!-- Modal Structure - Detail Ansicht -->
 <div id="modal-detail" class="modal">
     <div class="modal-content">
-        <p>
-            <iframe width="1000" height="400" src="" frameborder="0"></iframe>
-        </p>
+        <div class="row">
+            <div class="col s12">
+                <h3 id="event_title"></h3>
+            </div>
+            <div class="col s12">
+                <label>von:</label>
+                <p id="event_user" class="flow-text">{{ object.user }}</p>
+            </div>
+            <div class="col s6">
+                <label>Anfang:</label>
+                <p id="event_start" class="flow-text">{{ object.start | date:"d.m.Y" }} &ensp; {{ object.start | time:"H:i" }}</p>
+            </div>
+            <div class="col s6">
+                <label>Ende:</label>
+                <p id="event_end" class="flow-text">{{ object.end | date:"d.m.Y" }} &ensp; {{ object.end | time:"H:i" }}</p>
+            </div>
+            <div class="col s12">
+                <label>Beschreibung:</label>
+                <p id="event_description" class="flow-text">{{ object.description | default:"Keine Beschreibung angegeben" }}</p>
+            </div>
+            <div class="col s12">
+                <label>Ort:</label>
+                <p id="event_location" class="flow-text">{{ object.location | default:"Kein Ort angegeben" }}</p>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
+        <a id="event_change" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Bearbeiten</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
     </div>
 </div>
 

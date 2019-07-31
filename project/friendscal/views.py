@@ -118,3 +118,22 @@ def events(request):
         del data[counter]['uuid']
     #return JsonResponse(json.dumps(data, ensure_ascii=False), safe=False)
     return JsonResponse(data, safe=False)
+
+@login_required
+def AppointmentJson(request, uuid):
+    appointment = Appointment.objects.get(pk=uuid)
+    
+    data = {
+        'uuid': str(appointment.uuid),
+        'title': appointment.title,
+        'start': '{dt:%d.%m.%Y %H:%M}'.format(dt=appointment.start),
+        'end': '{dt:%d.%m.%Y %H:%M}'.format(dt=appointment.end),
+        'description': appointment.description,
+        'location': appointment.location,
+        'user': appointment.user.get_full_name()
+        }
+
+    if request.user == appointment.user:
+        data['can_edit'] = True
+
+    return JsonResponse(data)

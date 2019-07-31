@@ -47,7 +47,7 @@
         </div>
         <div class="col s11">
             <label>Ort:</label>
-            <p class="flow-text">{{ object.location | default:"Kein Ort angegeben" }}</p>
+            <p class="flow-text">{{ object.location | default:"Keinen Ort angegeben" }}</p>
         </div>
         <div class="col s1 center-align">
             <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
@@ -59,7 +59,7 @@
         </div>
     {% else %}
         <div class="col s12">
-            <label>Termin von:</label>
+            <label>von:</label>
             <p class="flow-text">{{ object.user }}</p>
         </div>
         <div class="col s6">
@@ -76,7 +76,7 @@
         </div>
         <div class="col s12">
             <label>Ort:</label>
-            <p class="flow-text">{{ object.location | default:"Kein Ort angegeben" }}</p>
+            <p class="flow-text">{{ object.location | default:"Keinen Ort angegeben" }}</p>
         </div>
     {% endif %}
 </div>
