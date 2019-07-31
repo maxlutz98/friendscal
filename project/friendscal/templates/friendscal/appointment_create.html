@@ -46,12 +46,12 @@
 </script>
 {% endblock %}
 
-{% block title %}Create Appointment{% endblock %}
+{% block title %}Termin erstellen{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col s12">
-        <h2>Create Appointment</h2>
+        <h2>Termin erstellen</h2>
         <form action="{% url 'friendscal:appointment-create' %}" method="post">
             </div class="row">
                 {% csrf_token %}
@@ -62,7 +62,7 @@
                     {% include "field_snippet.html" with field=field size="s12" %}
                 {% endfor %}
                 <div class="col s12 center-align">
-                    <button class="btn blue lighten-2" type="submit">Create</button>
+                    <button class="btn blue lighten-2" type="submit">Erstellen</button>
                 </div>
             </div>
         </form>

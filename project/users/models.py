@@ -51,11 +51,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), unique=True)
-    first_name = models.CharField(_('first name'), max_length=30)
-    last_name = models.CharField(_('last name'), max_length=30)
-    share = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
-    avatar = models.ImageField(_("profile picture"), upload_to='avatars', default='avatars/default-avatar.png')
+    email = models.EmailField(_('E-Mail Addresse'), unique=True)
+    first_name = models.CharField(_('Vorname'), max_length=30)
+    last_name = models.CharField(_('Nachname'), max_length=30)
+    share = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, verbose_name=_('Freigaben'))
+    avatar = models.ImageField(_("Profilbild"), upload_to='avatars', default='avatars/default-avatar.png')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

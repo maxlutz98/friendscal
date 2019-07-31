@@ -11,7 +11,7 @@
 </script>
 {% endblock %}
 
-{% block title %}Detail{% endblock %}
+{% block title %}Termin Detail{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -28,7 +28,7 @@
             <a href="{% url 'friendscal:appointment-change' pk=object.uuid %}"><i class="material-icons small right">edit</i></a>
         </div>
         <div class="col s6">
-            <label>Beginn:</label>
+            <label>Anfang:</label>
             <p class="flow-text">{{ object.start | date:"d.m.Y" }} &ensp; {{ object.start | time:"H:i" }}</p>
         </div>
         <div class="col s5">

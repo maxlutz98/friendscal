@@ -50,7 +50,7 @@
         <a href="{% url 'users:user-change' %}"><i class="material-icons small right">edit</i></a>
     </div>
     <div class="col s11">
-        <label>Shares:</label>
+        <label>Freigaben:</label>
         <ul>
             {% for share in object.share.all %}
                 <li>{{ share.get_full_name }}</li>

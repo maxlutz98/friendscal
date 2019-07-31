@@ -11,12 +11,12 @@
 </script>
 {% endblock %}
 
-{% block title %}Update{% endblock %}
+{% block title %}Benutzer aktualisieren{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col s12">
-            <h2>Update</h2>
+            <h2>Benutzer aktualisieren</h2>
             <form action="{% url 'users:user-change' %}" method="post" enctype="multipart/form-data">
                 <div class="row">
                     {% csrf_token %}
@@ -24,7 +24,7 @@
                         {{ hidden }}
                     {% endfor %}
                     {% for field in form.visible_fields %}
-                        {% if field.label == 'Profile picture' %}
+                        {% if field.label == 'Profilbild' %}
                             <div class="file-field input-field col s12">
                                 <p>
                                     {{ field.label_tag }}
@@ -41,7 +41,7 @@
                                     {{ field.errors }}
                                 </p>
                             </div>
-                        {% elif field.label == 'Share' %}
+                        {% elif field.label == 'Freigaben' %}
                             <div class="input-field col s12">
                                 <label for="{{ field.id_for_label }}" class="active">{{ field.label }}:</label>
                                 {{ field }}
@@ -57,7 +57,7 @@
                         {% endif %}
                     {% endfor %}
                     <div class="col s12 center-align">
-                        <button class="btn blue lighten-2" type="submit">Update</button>
+                        <button class="btn blue lighten-2" type="submit">Aktualisieren</button>
                     </div>
                 </div>
             </form>
