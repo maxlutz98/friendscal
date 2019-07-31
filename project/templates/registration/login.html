@@ -18,15 +18,15 @@
                     {% include "field_snippet.html" with field=field size="s12" %}
                 {% endfor %}
                 <div class="col s12 center-align">
-                    <button class="btn blue lighten-2" type="submit">Einloggen<i class="material-icons right">send</i></button>
-                    <a class="btn blue lighten-2" href="{% url 'password_reset' %}">Passwort vergessen?</a>
+                    <button class="btn" type="submit">Einloggen<i class="material-icons right">send</i></button>
+                    <a class="btn" href="{% url 'password_reset' %}">Passwort vergessen?</a>
                 </div>
             </div>
         </form>
     </div>
     <div class="col s6 center-align">
         <h2>Noch nicht registriert?</h2>
-        <a class="btn blue lighten-2" href="{% url 'users:user-signup' %}">Registrieren</a>
+        <a class="btn" href="{% url 'users:user-signup' %}">Registrieren</a>
     </div>
 </div>
 

@@ -30,7 +30,7 @@
                                     {{ field.label_tag }}
                                     <br>
                                     <img src="{{ object.avatar.url }}" width=100>
-                                    <div class="btn blue lighten-2">
+                                    <div class="btn">
                                         <span>Datei auswählen</span>
                                         <input id="{{ field.id_for_label }}" type="file" accept="image/*" name="avatar">
                                     </div>
@@ -57,7 +57,7 @@
                         {% endif %}
                     {% endfor %}
                     <div class="col s12 center-align">
-                        <button class="btn blue lighten-2" type="submit">Aktualisieren</button>
+                        <button class="btn" type="submit">Aktualisieren</button>
                     </div>
                 </div>
             </form>

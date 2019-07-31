@@ -20,7 +20,7 @@
                         <div class="file-field input-field col s12">
                             <p>
                                 <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                                <div class="btn blue lighten-2">
+                                <div class="btn">
                                     <span>Datei auswählen</span>
                                     <input id="{{ field.id_for_label }}" type="file" accept="image/*" name="avatar">
                                 </div>
@@ -36,7 +36,7 @@
                     {% endif %}
                 {% endfor %}
                 <div class="col s12 center-align">
-                    <button class="btn blue lighten-2" type="submit">Registrieren</button>
+                    <button class="btn" type="submit">Registrieren</button>
                 </div>
             </div>
         </form>
