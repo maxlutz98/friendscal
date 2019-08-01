@@ -27,4 +27,4 @@ COPY --chown=sass:sass ./docker-entrypoint.sh /work/docker-entrypoint.sh
 USER sass
 
 # run docker-entrypoint.sh
-ENTRYPOINT [ "sh", "/work/docker-entrypoint.sh" ]
+ENTRYPOINT ["/work/docker-entrypoint.sh" ]
