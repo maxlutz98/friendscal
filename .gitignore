@@ -231,4 +231,5 @@ Temporary Items
 ### project specific ###
 db
 *.env
+!example-*.env
 !default-avatar.png
