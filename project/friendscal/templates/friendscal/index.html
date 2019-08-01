@@ -133,7 +133,7 @@
         var element = obj;
 
         if (element.type === 'checkbox') {
-            var source = calendar.getEventSourceById(element.id)
+            var source = calendar.getEventSourceById('events_' + element.id);
             if (element.checked) {
                 if (!source) {
                     calendar.addEventSource({
@@ -147,7 +147,6 @@
                     })
                 }
             } else {
-                var source = calendar.getEventSourceById('events_' + element.id)
                 if (source) {
                     source.remove();
                 }
@@ -166,7 +165,6 @@
     };
 
     function fillingDetailModal (response) {
-        console.log(response);
         var data = JSON.parse(response);
         if (!data.description) {
             data.description = 'Keine Beschreibung angegeben';
@@ -184,7 +182,7 @@
         }
         delete data.uuid;
         delete data.can_edit;
-        for (name in data) {
+        for (var name in data) {
             document.getElementById('event_' + name).innerText = data[name];
         }
     };
@@ -252,23 +250,23 @@
             </div>
             <div class="col s12">
                 <label>von:</label>
-                <p id="event_user" class="flow-text">{{ object.user }}</p>
+                <p id="event_user" class="flow-text"></p>
             </div>
             <div class="col s6">
                 <label>Anfang:</label>
-                <p id="event_start" class="flow-text">{{ object.start | date:"d.m.Y" }} &ensp; {{ object.start | time:"H:i" }}</p>
+                <p id="event_start" class="flow-text"></p>
             </div>
             <div class="col s6">
                 <label>Ende:</label>
-                <p id="event_end" class="flow-text">{{ object.end | date:"d.m.Y" }} &ensp; {{ object.end | time:"H:i" }}</p>
+                <p id="event_end" class="flow-text"></p>
             </div>
             <div class="col s12">
                 <label>Beschreibung:</label>
-                <p id="event_description" class="flow-text">{{ object.description | default:"Keine Beschreibung angegeben" }}</p>
+                <p id="event_description" class="flow-text"></p>
             </div>
             <div class="col s12">
                 <label>Ort:</label>
-                <p id="event_location" class="flow-text">{{ object.location | default:"Kein Ort angegeben" }}</p>
+                <p id="event_location" class="flow-text"></p>
             </div>
         </div>
     </div>

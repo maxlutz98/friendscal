@@ -1,1 +1,1 @@
-/work/dart-sass/sass --watch /src:/src --style compressed
+/work/dart-sass/sass --no-source-map --watch /src:/src --style compressed

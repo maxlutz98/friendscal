@@ -59,7 +59,7 @@
             document.getElementById('id_end_0').value = liste['end'];
             document.getElementById('id_end_1').value = '00:00';
             labels = document.getElementsByTagName('label');
-            for (i = 0; i < labels.length; i++) {
+            for (var i = 0; i < labels.length; i++) {
                 if (labels[i].htmlFor == 'id_start_0' || labels[i].htmlFor == 'id_end_0') {
                     labels[i].className = "active";
                 }
