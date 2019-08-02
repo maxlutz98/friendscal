@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   django:
@@ -10,7 +10,7 @@ services:
       - ./project:/code
     command: python manage.py runserver 0.0.0.0:8000
     networks:
-    - django-network
+      - django-network
     environment:
       DEBUG: 1
       SECRET_KEY: u9)pv@bhz6r0g7-)3kr=kopc6wx07&olo8f5qm1i2y1tr2+cj*
@@ -30,7 +30,7 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data/
     networks:
-    - django-network
+      - django-network
     environment:
       POSTGRES_USER: djangouser
       POSTGRES_PASSWORD: pw4djangouser
@@ -48,10 +48,9 @@ services:
     build: sass-container
     restart: always
     volumes:
-    - ./sass:/src
-    - ./project/static/materialize/css:/dest
+      - ./sass:/src
+      - ./project/static/materialize/css:/dest
     network_mode: "none"
-
 
 networks:
   django-network:

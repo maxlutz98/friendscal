@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   django:
@@ -37,7 +37,6 @@ services:
       - django-network
     depends_on:
       - django
-
 
 networks:
   django-network:
