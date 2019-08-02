@@ -5,9 +5,14 @@ FROM python:3.7-alpine
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
+# build environment variables
+ARG USER=django
+ENV UID=1000
+ENV GID=1000
+
 # set work directory and create user
 WORKDIR /code
-RUN addgroup -S --gid 1000 django && adduser -S -u 1000 django -G django
+RUN addgroup -S --gid ${GID} ${USER} && adduser -S -u ${UID} ${USER} -G ${USER}
 
 # install dependencies
 RUN apk update \
@@ -17,6 +22,8 @@ RUN apk update \
     && pip install --upgrade pip
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt 
+
+# cleanup
 RUN rm requirements.txt \
     && apk del build-deps
 
@@ -24,7 +31,7 @@ RUN rm requirements.txt \
 COPY --chown=django:django docker-entrypoint.sh /docker-entrypoint.sh
 
 # set user
-USER django
+USER ${USER}
 
 # expose port
 EXPOSE 8000
