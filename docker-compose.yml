@@ -49,5 +49,5 @@ networks:
   django-network:
     driver: bridge
   traefik-network:
-    external:
+    external: true
     name: proxy_traefik-network
