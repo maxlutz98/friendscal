@@ -7,7 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 # set work directory and create user
 WORKDIR /code
-RUN addgroup -S django && adduser -S django -G django
+RUN addgroup -S --gid 1000 django && adduser -S -u 1000 django -G django
 
 # install dependencies
 RUN apk update \
