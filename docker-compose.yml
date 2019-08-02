@@ -43,10 +43,11 @@ services:
       - "traefik.backend=web"
       - "traefik.port=80"
       - "traefik.frontend.rule=Host:calendar4friends.ddnss.de"
+      - "traefik.docker.network=proxy_traefik-network"
 
 networks:
   django-network:
     driver: bridge
   traefik-network:
-    external: true
+    external:
     name: proxy_traefik-network
