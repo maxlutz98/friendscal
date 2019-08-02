@@ -12,7 +12,7 @@ ENV GID=1000
 
 # set work directory and create user
 WORKDIR /code
-RUN addgroup -S --gid ${GID} ${USER} && adduser -S -u ${UID} ${USER} -G ${USER}
+# RUN addgroup -S --gid ${GID} ${USER} && adduser -S -u ${UID} ${USER} -G ${USER}
 
 # install dependencies
 RUN apk update \
@@ -31,7 +31,7 @@ RUN rm requirements.txt \
 COPY --chown=django:django docker-entrypoint.sh /docker-entrypoint.sh
 
 # set user
-USER ${USER}
+# USER ${USER}
 
 # expose port
 EXPOSE 8000
