@@ -28,7 +28,7 @@ RUN rm requirements.txt \
     && apk del build-deps
 
 # copy entrypoint.sh
-COPY --chown=django:django docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 # set user
 # USER ${USER}
