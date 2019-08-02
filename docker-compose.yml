@@ -27,17 +27,26 @@ services:
   nginx:
     image: nginx:alpine
     restart: always
-    ports:
-      - "80:80"
+    expose:
+      - "80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./project/staticfiles:/code/staticfiles
       - ./project/media:/code/media
     networks:
       - django-network
+      - traefik-network
     depends_on:
       - django
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=web"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:calendar4friends.ddnss.de"
 
 networks:
   django-network:
     driver: bridge
+  traefik-network:
+    external: true
+    name: proxy_traefik-network
