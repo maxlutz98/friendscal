@@ -30,7 +30,7 @@ services:
     expose:
       - "80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./project/staticfiles:/code/staticfiles
       - ./project/media:/code/media
     networks:
