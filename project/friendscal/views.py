@@ -92,7 +92,7 @@ class AppointmentListView(generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(AppointmentListView, self).get_context_data(*args, **kwargs)
-        context["past_list"] = self.request.user.appointment_set.all().filter(end__lte=datetime.datetime.today()).order_by('-end')
+        context["past_list"] = self.request.user.appointment_set.all().filter(Q(end__lte=datetime.datetime.today()) & Q(end_gte=datetime.datetime.today() - datetime.datetime.timedelta(days=730))).order_by('-end')
         return context
     
 
