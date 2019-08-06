@@ -28,7 +28,6 @@ DEBUG = int(os.environ.get('DEBUG', default=0))
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'calendar4friends.ddnss.de']
 
 # Additional security settings
-# SECURE_HSTS_SECONDS = 518400
 SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', default=518400))
 SECURE_CONTENT_TYPE_NOSNIFF = bool(os.environ.get('SECURE_CONTENT_TYPE_NOSNIFF', default=1))
 SECURE_BROWSER_XSS_FILTER = bool(os.environ.get('SECURE_BROWSER_XSS_FILTER', default=1))
@@ -182,10 +181,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # General user model
 AUTH_USER_MODEL = 'users.User'
 
-# TODO: E-Mail Versand konfigurieren
 # E-mail configuration
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, os.environ.get('EMAIL_FILE_PATH', default='sent_emails'))
+EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS'))
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', default=587))
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

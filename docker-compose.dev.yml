@@ -20,6 +20,8 @@ services:
       CSRF_COOKIE_SECURE: 0
       SESSION_COOKIE_SECURE: 0
       X_FRAME_OPTIONS: SAMEORIGIN
+      EMAIL_BACKEND: django.core.mail.backends.filebased.EmailBackend
+      EMAIL_FILE_PATH: sent_emails
       SQL_ENGINE: django.db.backends.postgresql
       SQL_DATABASE: friendscal_dev
       SQL_USER: djangouser
