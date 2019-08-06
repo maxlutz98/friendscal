@@ -46,12 +46,12 @@
               {% if user.is_authenticated %}
               <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
               <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
-              <li>
+              <!-- <li>
                 <div class="chip">
                   <img src="{{ user.avatar.url }}">
                   Hi {{ user.first_name }}!
                 </div>
-              </li>
+              </li> -->
               <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
               {% else %}
               <li><a href="{% url 'friendscal:description' %}">Was ist das?</a></li>
@@ -68,12 +68,12 @@
     {% if user.is_authenticated %}
       <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
       <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
-      <li>
+      <!-- <li>
         <div class="chip">
           <img src="{{ user.avatar.url }}">
           Hi {{ user.first_name }}!
         </div>
-      </li>
+      </li> -->
       <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
     {% else %}
       <li><a href="{% url 'friendscal:description' %}">Was ist das?</li>
