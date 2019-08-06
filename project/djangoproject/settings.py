@@ -28,14 +28,15 @@ DEBUG = int(os.environ.get('DEBUG', default=0))
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'calendar4friends.ddnss.de']
 
 # Additional security settings
-SECURE_HSTS_SECONDS = 518400
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
+# SECURE_HSTS_SECONDS = 518400
+SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', default=518400))
+SECURE_CONTENT_TYPE_NOSNIFF = bool(os.environ.get('SECURE_CONTENT_TYPE_NOSNIFF', default=1))
+SECURE_BROWSER_XSS_FILTER = bool(os.environ.get('SECURE_BROWSER_XSS_FILTER', default=1))
 
-X_FRAME_OPTIONS = 'DENY'
+X_FRAME_OPTIONS = os.environ.get('X_FRAME_OPTIONS', default='DENY')
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = bool(os.environ.get('CSRF_COOKIE_SECURE', default=1))
+SESSION_COOKIE_SECURE = bool(os.environ.get('SESSION_COOKIE_SECURE', default=1))
 
 
 # Application definition

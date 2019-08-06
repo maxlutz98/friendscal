@@ -14,6 +14,12 @@ services:
     environment:
       DEBUG: 1
       SECRET_KEY: u9)pv@bhz6r0g7-)3kr=kopc6wx07&olo8f5qm1i2y1tr2+cj*
+      SECURE_HSTS_SECONDS: 0
+      SECURE_CONTENT_TYPE_NOSNIFF: 0
+      SECURE_BROWSER_XSS_FILTER: 0
+      CSRF_COOKIE_SECURE: 0
+      SESSION_COOKIE_SECURE: 0
+      X_FRAME_OPTIONS: SAMEORIGIN
       SQL_ENGINE: django.db.backends.postgresql
       SQL_DATABASE: friendscal_dev
       SQL_USER: djangouser
