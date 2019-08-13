@@ -1,10 +1,7 @@
-language: python
+language: minimal
 
 services:
   - docker
-
-install:
-  - pip --version
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
