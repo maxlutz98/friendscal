@@ -2,12 +2,13 @@ version: "3.7"
 
 services:
   django:
-    build: .
+    image: fantasmas/friendscal 
     restart: always
     expose:
       - "8000"
     volumes:
-      - ./project:/code
+      - ./project/media:/code/media
+      - ./project/staticfiles:/code/staticfiles
     command: gunicorn -w 3 djangoproject.wsgi:application --bind 0.0.0.0:8000
     networks:
       - django-network
