@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   django:
-    build: django-container
+    build: .
     restart: always
     ports:
       - "80:8000"

@@ -1,0 +1,11 @@
+language: python
+
+services:
+  - docker
+
+script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t friendscal
+  - docker images
+  - docker tag friendscal $DOCKER_USERNAME/friendscal
+  - docker push $DOCKER_USERNAME/friendscal
