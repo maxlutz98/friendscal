@@ -19,7 +19,7 @@ RUN pip install -r requirements.txt
 
 # cleanup
 RUN rm requirements.txt \
-    && apk del build-deps build-deps2
+    && apk del build-deps
 
 # copy entrypoint.sh
 COPY docker-entrypoint.sh /docker-entrypoint.sh
