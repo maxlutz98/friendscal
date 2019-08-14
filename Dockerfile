@@ -12,7 +12,7 @@ WORKDIR /code
 RUN apk update \
     && apk upgrade \
     && apk add --virtual build-deps gcc python3-dev musl-dev \
-    && apk add --virtual build-deps2 jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev postgresql-dev \
+    && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev postgresql-dev \
     && pip install --upgrade pip
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt 
