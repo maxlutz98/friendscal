@@ -52,7 +52,8 @@
                   Hi {{ user.first_name }}!
                 </div>
               </li> -->
-              <li><a href="{% url 'logout' %}">Abmelden</a></li>
+              <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
+              
               {% else %}
               <li><a href="{% url 'friendscal:description' %}">Was ist das?</a></li>
               <li><a href="{% url 'login' %}">Anmelden</a></li>
@@ -74,7 +75,7 @@
           Hi {{ user.first_name }}!
         </div>
       </li> -->
-      <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
+      <li><a href="{% url 'logout' %}">Abmelden</a></li>
     {% else %}
       <li><a href="{% url 'friendscal:description' %}">Was ist das?</li>
       <li><a href="{% url 'login' %}">Anmelden</a></li>
