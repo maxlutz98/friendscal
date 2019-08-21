@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col s6">
+    <div class="col m6 s12">
         <h2>Einloggen</h2>
         <form action="{% url 'login' %}" method="post">
             <div class="row">
@@ -24,7 +24,7 @@
             </div>
         </form>
     </div>
-    <div class="col s6 center-align">
+    <div class="col m6 s12 center-align">
         <h2>Noch nicht registriert?</h2>
         <a class="btn" href="{% url 'users:user-signup' %}">Registrieren</a>
     </div>
