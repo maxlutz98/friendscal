@@ -55,7 +55,14 @@
             }
         });
         var elems = document.querySelectorAll('.timepicker');
-        var instances = M.Timepicker.init(elems, {twelveHour: false, autoClose: true, defaultTime: '00:00'});
+        var instances = M.Timepicker.init(elems, {
+            twelveHour: false, 
+            autoClose: true, 
+            i18n: { 
+                "cancel": "Abbrechen", 
+                "done": "Fertig"
+            }
+        });
 
         var field = document.getElementById('id_description');
         field.className = "materialize-textarea";

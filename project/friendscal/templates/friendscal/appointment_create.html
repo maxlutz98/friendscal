@@ -53,16 +53,30 @@
                 ],
                 "weekdaysShort": ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
                 "weekdaysAbbrev": ["S", "M", "D", "M", "D", "F", "S"]
+            },
+            onDraw: function(self) {
+                id = self.el.id.replace(/0/, "1");
+                elem = document.getElementById(id)
+                if (!elem.value) {
+                    elem.value = '12:00';
+                }
             }
         });
         var elems = document.querySelectorAll('.timepicker');
-        var instances = M.Timepicker.init(elems, {twelveHour: false, autoClose: true, defaultTime: '00:00'});
+        var instances = M.Timepicker.init(elems, {
+            twelveHour: false, 
+            autoClose: true, 
+            i18n: { 
+                "cancel": "Abbrechen", 
+                "done": "Fertig"
+            }
+        });
 
         if (liste['start'] && liste['end']) {
             document.getElementById('id_start_0').value = liste['start'];
-            document.getElementById('id_start_1').value = '00:00';
+            document.getElementById('id_start_1').value = '12:00';
             document.getElementById('id_end_0').value = liste['end'];
-            document.getElementById('id_end_1').value = '00:00';
+            document.getElementById('id_end_1').value = '12:00';
             labels = document.getElementsByTagName('label');
             for (var i = 0; i < labels.length; i++) {
                 if (labels[i].htmlFor == 'id_start_0' || labels[i].htmlFor == 'id_end_0') {
