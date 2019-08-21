@@ -173,12 +173,18 @@
             data.location = 'Keinen Ort angegeben';
         }
         var can_edit = data['can_edit'];
+        var detail_button = document.getElementById('event_detail');
         var edit_button = document.getElementById('event_change');
+        var delete_form = document.getElementById('form_delete');
         if (!can_edit) {
+            detail_button.style.display = 'none';
             edit_button.style.display = 'none';
+            delete_form.style.display = 'none';
         }
         else {
+            detail_button.href = '/appointment/' + data.uuid + '/detail/';
             edit_button.href = '/appointment/' + data.uuid + '/update/';
+            delete_form.action = '/appointment/' + data.uuid + '/delete/';
         }
         delete data.uuid;
         delete data.can_edit;
@@ -271,9 +277,26 @@
         </div>
     </div>
     <div class="modal-footer">
+        <a href="#modal-delete" class="btn red modal-trigger waves-effect btn-flat">Löschen</a>
         <a id="event_change" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Bearbeiten</a>
+        <a id="event_detail" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Detail</a>
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
     </div>
+</div>
+
+<!-- Modal Structure - Delete -->
+<div id="modal-delete" class="modal">
+    <form id="form_delete" action="#!" method="post">
+        <div class="modal-content">
+            <h4>Termin löschen</h4>
+            <p>Wollen Sie den Termin wirklich löschen?</p>
+            {% csrf_token %}
+        </div>
+        <div class="modal-footer">
+            <a class="btn-flat modal-close" href="#!">Abbrechen</a>
+            <button class="btn-flat red waves-effect waves-light" type="submit">Löschen</button>
+        </div>
+    </form>
 </div>
 
 {% endblock %}
