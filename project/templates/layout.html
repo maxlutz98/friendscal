@@ -46,7 +46,7 @@
               {% if user.is_authenticated %}
               <li><a href="{% url 'friendscal:index' %}">Kalender</a></li>
               <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
-              <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"><span> Hi {{ user.first_name }}!</span></a></li>
+              <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
               <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
               {% else %}
               <li><a href="{% url 'friendscal:description' %}">Was ist das?</a></li>
