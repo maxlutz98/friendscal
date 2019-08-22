@@ -46,13 +46,7 @@
               {% if user.is_authenticated %}
               <li><a href="{% url 'friendscal:index' %}">Kalender</a></li>
               <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
-              <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
-              <!-- <li>
-                <div class="chip">
-                  <img src="{{ user.avatar.url }}">
-                  Hi {{ user.first_name }}!
-                </div>
-              </li> -->
+              <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"><span> Hi {{ user.first_name }}!</span></a></li>
               <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
               {% else %}
               <li><a href="{% url 'friendscal:description' %}">Was ist das?</a></li>
@@ -67,16 +61,18 @@
 
     <ul class="sidenav" id="mobile-demo">
     {% if user.is_authenticated %}
+      <li>
+        <div class="user-view">
+          <div class="background green accent-4">
+          </div>
+          <a href="{% url 'users:user-detail' %}"><img class="circle" src="{{ user.avatar.url }}"></a>
+          <a href="{% url 'users:user-detail' %}"><span class="black-text name">{{ user.get_full_name }}</span></a>
+        </div>
+      </li>
       <li><a href="{% url 'friendscal:index' %}">Kalender</a></li>
       <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
-      <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
-      <!-- <li>
-        <div class="chip">
-          <img src="{{ user.avatar.url }}">
-          Hi {{ user.first_name }}!
-        </div>
-      </li> -->
-      <li><a href="{% url 'logout' %}">Abmelden</a></li>
+      <li><div class="divider"></div></li>
+      <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Abmelden</a></li>
     {% else %}
       <li><a href="{% url 'friendscal:description' %}">Was ist das?</li>
       <li><a href="{% url 'login' %}">Anmelden</a></li>
