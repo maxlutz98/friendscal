@@ -121,7 +121,11 @@
 
         calendar.render();
 
-        document.getElementById('{{ user.first_name }}_{{ user.last_name }}').click();
+        {% for users in request.session.checked %}
+            {{ users }}.click();
+        {% empty %}
+            document.getElementById('{{ user.first_name }}_{{ user.last_name }}').click();
+        {% endfor %}
     });
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -144,11 +148,13 @@
                         },
                         color: eval('color' + element.id.replace(/_/, '')).getColor(), // an option!
                         textColor: 'black' // an option!
-                    })
+                    });
+                    httpPostAsync("{% url 'friendscal:session-add' %}", element.id);
                 }
             } else {
                 if (source) {
                     source.remove();
+                    httpPostAsync("{% url 'friendscal:session-remove' %}", element.id);
                 }
             }
         }
@@ -162,6 +168,19 @@
         }
         xmlHttp.open("GET", theUrl, true); // true for asynchronous 
         xmlHttp.send(null);
+    };
+
+    function httpPostAsync(theUrl, data) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", theUrl, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() { // Call a function when the state changes.
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                // Request finished. Do processing here.
+            }
+        };
+        xhr.send("csrfmiddlewaretoken=" + getCookie("csrftoken") + "&checked=" + data);
     };
 
     function fillingDetailModal (response) {
@@ -192,6 +211,21 @@
             document.getElementById('event_' + name).innerText = data[name];
         }
     };
+
+    function getCookie(c_name) {
+        if (document.cookie.length > 0)
+            {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1)
+            {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            }
+        }
+        return "";
+    }
 </script>
 {% endblock %}
 

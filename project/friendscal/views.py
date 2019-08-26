@@ -94,7 +94,7 @@ class AppointmentListView(generic.ListView):
         context = super(AppointmentListView, self).get_context_data(*args, **kwargs)
         context["past_list"] = self.request.user.appointment_set.all().filter(end__range=(datetime.datetime.today() - datetime.timedelta(days=730), datetime.datetime.today())).order_by('-end')
         return context
-    
+
 
 @login_required
 def events(request):
@@ -108,16 +108,12 @@ def events(request):
     else:
         data = []
 
-    # users = request.user.user_set.all()
-
-    # data = Appointment.objects.filter(Q(user__in=users) | Q(user=request.user), Q(end__range=(start, end)) | Q(start__range=(start, end))).values()
-
     data = [item for item in data]
     for counter, element in enumerate(data):
         data[counter]['id'] = str(element['uuid'])
         del data[counter]['uuid']
-    #return JsonResponse(json.dumps(data, ensure_ascii=False), safe=False)
     return JsonResponse(data, safe=False)
+
 
 @login_required
 def AppointmentJson(request, uuid):
@@ -137,3 +133,37 @@ def AppointmentJson(request, uuid):
         data['can_edit'] = True
 
     return JsonResponse(data)
+
+
+@login_required
+def SessionAdd(request):
+    name = request.POST.get("checked", "")
+    
+    first, last = name.split('_')
+    user = User.objects.get(first_name=first, last_name=last)
+    if user in request.user.user_set.all() or request.user == user:
+        if not "checked" in request.session.keys():
+            thislist = []
+            thislist.append(name)
+            request.session["checked"] = thislist
+        else:
+            if not name in request.session["checked"]:
+                thislist = request.session["checked"]
+                thislist.append(name)
+                request.session["checked"] = thislist
+    print(request.session["checked"])
+    return JsonResponse({})
+
+
+@login_required
+def SessionRemove(request):
+    name = request.POST.get("checked", "")
+
+    if "checked" in request.session.keys():
+        if name in request.session["checked"]:
+            thislist = request.session["checked"]
+            thislist.remove(name)
+            request.session["checked"] = thislist
+    print(request.session["checked"])
+    return JsonResponse({})
+

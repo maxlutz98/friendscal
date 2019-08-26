@@ -13,6 +13,8 @@ urlpatterns = [
     path('appointment/<uuid:pk>/delete/', views.AppointmentDeleteView.as_view(), name='appointment-delete'),
     path('appointment/list/', views.AppointmentListView.as_view(), name='appointment-list'),
     path('appointment/events/', views.events, name='appointment-events'),
+    path('session/add/', views.SessionAdd, name='session-add'),
+    path('session/remove/', views.SessionRemove, name='session-remove'),
     path('description/', TemplateView.as_view(template_name='friendscal/description.html'), name='description'),
     path('impressum/', TemplateView.as_view(template_name='friendscal/impressum.html'), name='impressum'),
     path('privacy/', TemplateView.as_view(template_name='friendscal/privacy.html'), name='privacy'),
