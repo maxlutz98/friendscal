@@ -9,12 +9,12 @@
         var instances = M.Modal.init(elems);
 
         active = document.getElementsByTagName('li');
-        active[2].className = "active";
+        active[3].className = "active";
     });
 </script>
 {% endblock %}
 
-{% block title %}Detail{% endblock %}
+{% block title %}Nutzer{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -48,19 +48,6 @@
     <div class="col s11">
         <label>E-Mail Adresse:</label>
         <p class="flow-text">{{ object.email }}</p>
-    </div>
-    <div class="col s1">
-        <a href="{% url 'users:user-change' %}"><i class="material-icons small right">edit</i></a>
-    </div>
-    <div class="col s11">
-        <label>Freigaben:</label>
-        <ul>
-            {% for share in object.share.all %}
-                <li>{{ share.get_full_name }}</li>
-            {% empty %}
-                <li>Keine Freigaben</li>
-            {% endfor %}
-        </ul>
     </div>
     <div class="col s1">
         <a href="{% url 'users:user-change' %}"><i class="material-icons small right">edit</i></a>

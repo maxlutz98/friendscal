@@ -1,0 +1,41 @@
+<!-- templates/users/shares_detail.html -->
+
+{% extends 'layout.html' %}
+
+{% block head %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+
+        active = document.getElementsByTagName('li');
+        active[2].className = "active";
+    });
+</script>
+{% endblock %}
+
+{% block title %}Nutzer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12">
+        <h3>Freigaben</h3>
+    </div>
+    <div class="col s12">
+    <p class="flow-text">Erteile Nutzern eine Freigabe, wenn du Ihnen erlauben möchtest deinen Kalender einzusehen.</p>
+    <div class="col s12">
+        <label>Freigaben:</label>
+        <ul>
+            {% for share in object.share.all %}
+                <li>{{ share.get_full_name }}</li>
+            {% empty %}
+                <li>Keine Freigaben erteilt.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col s12 center-align">
+        <p><a class="btn" href="{% url 'users:shares-change' %}">Freigaben bearbeiten</a></p>
+    </div>
+</div>
+
+{% endblock %}

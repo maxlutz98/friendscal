@@ -9,7 +9,7 @@
         var instances = M.FormSelect.init(elems);
 
         active = document.getElementsByTagName('li');
-        active[2].className = "active";
+        active[3].className = "active";
     });
 </script>
 {% endblock %}
@@ -43,13 +43,6 @@
                                     {{ field.help_text }}
                                     {{ field.errors }}
                                 </p>
-                            </div>
-                        {% elif field.label == 'Freigaben' %}
-                            <div class="input-field col s12">
-                                <label for="{{ field.id_for_label }}" class="active">{{ field.label }}:</label>
-                                {{ field }}
-                                {{ field.help_text }}
-                                {{ field.errors }}
                             </div>
                         {% elif field.label == 'First name' %}
                             {% include "field_snippet.html" with field=field size="s6" %}

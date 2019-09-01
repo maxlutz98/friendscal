@@ -46,6 +46,7 @@
               {% if user.is_authenticated %}
               <li><a href="{% url 'friendscal:index' %}">Kalender</a></li>
               <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
+              <li><a href="{% url 'users:shares-detail' %}">Freigaben</a></li>
               <li><a href="{% url 'users:user-detail' %}"><img src="{{ user.avatar.url }}" width="30" class="circle"> Hi {{ user.first_name }}!</a></li>
               <li><a href="{% url 'logout' %}"><i class="material-icons right">exit_to_app</i></a></li>
               {% else %}
@@ -71,6 +72,8 @@
       </li>
       <li><a href="{% url 'friendscal:index' %}">Kalender</a></li>
       <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
+      <li><div class="divider"></div></li>
+      <li><a href="{% url 'users:shares-detail' %}">Freigaben</a></li>
       <li><div class="divider"></div></li>
       <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Abmelden</a></li>
     {% else %}
