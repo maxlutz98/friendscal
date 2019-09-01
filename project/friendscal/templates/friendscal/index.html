@@ -61,6 +61,9 @@
             }
         });
         {% endfor %}
+
+        active = document.getElementsByTagName('li');
+        active[0].className = "active";
     });
 
     var calendar = {};

@@ -7,6 +7,9 @@
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
+
+        active = document.getElementsByTagName('li');
+        active[2].className = "active";
     });
 </script>
 {% endblock %}
@@ -16,7 +19,7 @@
 {% block content %}
 <div class="row">
     <div class="col s12">
-        <h2>Detail</h2>
+        <h3>Nutzer</h3>
     </div>
     <div class="col s11">
         <label>Profilbild:</label>
