@@ -1,0 +1,14 @@
+Hallo {{ user.first_name }},
+
+Diese E-Mail wurde aufgrund der Account-Erstellung auf der Website {{ site }} versendet.
+
+Bitte öffnen Sie folgende Seite, um Ihren Account mit dem Benutzernamen {{ user.email }} zu aktivieren:
+
+{{ scheme }}://{{ site }}{% url 'django_registration_activate' activation_key %}
+
+Der Account muss innerhalb der nächsten {{ expiration_days }} aktiviert werden.
+
+Vielen Dank, dass Sie unsere Website benutzen!
+
+Das Team von {{ site }}
+

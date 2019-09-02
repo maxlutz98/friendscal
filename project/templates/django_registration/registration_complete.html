@@ -1,0 +1,24 @@
+<!-- templates/django_registration/registration_complete.html -->
+
+{% extends 'layout.html' %}
+
+{% block head %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        active = document.getElementsByTagName('li');
+        active[2].className = "active";
+    });
+</script>
+{% endblock %}
+
+{% block title %}Registrieren{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12">
+        <h2>Registrierung beendet</h2>
+        <p class="flow-text">Wir haben Ihnen einen Link zur Bestätigung Ihres Accounts zugesendet. Sie sollten in Kürze eine E-Mail erhalten!</p>
+        <a class="btn" href="{% url 'login' %}">Startseite</a>
+    </div>
+</div>
+{% endblock %}

@@ -10,6 +10,11 @@
 
         active = document.getElementsByTagName('li');
         active[2].className = "active";
+
+        errors = document.getElementsByClassName("errorlist");
+        if (errors.length > 0) {
+            Object.values(errors).every(function(error){error.classList.add("red-text");});
+        };
     });
 </script>
 {% endblock %}
@@ -32,7 +37,7 @@
                     <div class="input-field col s12">
                         <label for="{{ form.share.id_for_label }}" class="active">{{ form.share.label }}:</label>
                         {{ form.share }}
-                        {{ form.share.help_text }}
+                        <span class="helper-text">{{ form.share.help_text }}</span>
                         {{ form.share.errors }}
                     </div>
                     <div class="col s12 center-align">

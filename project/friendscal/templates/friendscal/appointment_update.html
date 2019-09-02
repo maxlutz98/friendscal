@@ -5,6 +5,12 @@
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        errors = document.getElementsByClassName("errorlist");
+        if (errors.length > 0) {
+            Object.values(errors).every(function(error){error.classList.add("red-text");});
+        };
+    });
+    document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.datepicker');
         var instances = M.Datepicker.init(elems, {
             format: 'dd.mm.yyyy', 

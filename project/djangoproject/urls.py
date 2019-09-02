@@ -20,13 +20,17 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django_registration.backends.activation.views import RegistrationView
+from users.forms import MyCustomUserForm
+
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('user/', include('users.urls')),
-    path('user/', include('django.contrib.auth.urls')),
+    path('accounts/', include('users.urls')),
+    path('accounts/register/',RegistrationView.as_view(form_class=MyCustomUserForm), name='django_registration_register'),
+    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('friendscal.urls')),
-    path('friendscal/', include('friendscal.urls'))
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,18 @@
+<!-- templates/django_registration/activation_complete.html -->
+
+{% extends 'layout.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block title %}Aktivierung erfolgreich{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12">
+        <h2>Aktivierung erfolgreich</h2>
+        <p class="flow-text">Die Aktivierung des Accountes war erfolgreich. Sie können diesen nun verwenden.</p>
+        <a class="btn" href="{% url 'login' %}">Startseite</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!-- templates/django_registration/activation_failed.html -->
+
+{% extends 'layout.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block title %}Aktivierung fehlgeschlagen{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12">
+        <h2>Aktivierung fehlgeschlagen</h2>
+        <p class="flow-text">Die Aktivierung des Accountes ist fehlgeschlagen.</p>
+        <p class="flow-text"><b>{{ activation_error.message }}</b></p>
+        <a class="btn" href="{% url 'login' %}">Startseite</a>
+    </div>
+</div>
+{% endblock %}

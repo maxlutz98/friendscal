@@ -7,6 +7,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         active = document.getElementsByTagName('li');
         active[2].className = "active";
+
+        errors = document.getElementsByClassName("errorlist");
+        if (errors.length > 0) {
+            Object.values(errors).every(function(error){error.classList.add("red-text");});
+        };
     });
 </script>
 {% endblock %}
@@ -36,7 +41,7 @@
                                 <div class="file-path-wrapper">
                                     <input class="file-path validate" type="text">
                                 </div>
-                                {{ field.help_text }}
+                                <span class="helper-text">{{ field.help_text }}</span>
                                 {{ field.errors }}
                             </p>
                         </div>

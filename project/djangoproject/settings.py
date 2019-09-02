@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_registration',
     'users',
 ]
 
@@ -193,5 +194,8 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = '/user/login'
+LOGIN_URL = '/accounts/login'
+
+# django-registration settings
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 
