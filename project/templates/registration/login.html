@@ -2,6 +2,15 @@
 
 {% extends 'layout.html' %}
 
+{% block head %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        active = document.getElementsByTagName('li');
+        active[1].className = "active";
+    });
+</script>
+{% endblock %}
+
 {% block title %}Login{% endblock %}
 
 {% block content %}

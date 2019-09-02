@@ -2,6 +2,15 @@
 
 {% extends 'layout.html' %}
 
+{% block head %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        active = document.getElementsByTagName('li');
+        active[2].className = "active";
+    });
+</script>
+{% endblock %}
+
 {% block title %}Registrieren{% endblock %}
 
 {% block content %}

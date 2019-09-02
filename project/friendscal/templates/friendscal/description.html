@@ -3,6 +3,12 @@
 {% extends 'layout.html' %}
 
 {% block head %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        active = document.getElementsByTagName('li');
+        active[0].className = "active";
+    });
+</script>
 {% endblock %}
 
 {% block title %}Beschreibung{% endblock %}
