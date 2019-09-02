@@ -1,23 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 
-from .admin import UserCreationForm
 from .models import User
 
 # Create your views here.
-
-
-class SignUp(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'users/user_create.html'
-
 
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(generic.DetailView):
