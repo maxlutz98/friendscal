@@ -32,7 +32,7 @@ class UserSharesDetailView(generic.DetailView):
 @method_decorator(login_required, name='dispatch')
 class UserUpdateView(generic.UpdateView):
     model = User
-    fields = ('avatar', 'first_name', 'last_name', 'email',)
+    fields = ('avatar', 'username', 'first_name', 'last_name', 'email',)
     success_url = reverse_lazy('users:user-detail')
     template_name = 'users/user_update.html'
     
@@ -43,7 +43,7 @@ class UserUpdateView(generic.UpdateView):
 @method_decorator(login_required, name='dispatch')
 class UserSharesUpdateView(generic.UpdateView):
     model = User
-    fields = ('share',)
+    fields = ('shares',)
     success_url = reverse_lazy('users:shares-detail')
     template_name = 'users/shares_update.html'
 
@@ -52,7 +52,7 @@ class UserSharesUpdateView(generic.UpdateView):
 
     def get_form(self, form_class=None):
         form = super(UserSharesUpdateView, self).get_form(form_class)
-        form.fields["share"].queryset = User.objects.exclude(pk=self.request.user.id).order_by('last_name')
+        form.fields["shares"].queryset = User.objects.exclude(pk=self.request.user.id).order_by('last_name')
         return form
 
 

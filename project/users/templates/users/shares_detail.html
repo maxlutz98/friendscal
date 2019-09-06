@@ -23,7 +23,7 @@
     <div class="col s12">
         <label>Freigaben:</label>
         <ul>
-            {% for share in object.share.all %}
+            {% for share in object.shares.all %}
                 <li>{{ share.get_full_name }}</li>
             {% empty %}
                 <li>Keine Freigaben erteilt.</li>

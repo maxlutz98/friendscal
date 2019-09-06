@@ -101,9 +101,8 @@ def events(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
     user = request.GET.get('user')
-    first, last = user.split('_')
-    user = User.objects.get(first_name=first, last_name=last)
-    if user in request.user.user_set.all() or request.user == user:
+    user = User.objects.get(username=user)
+    if user in request.user.shared_by.all() or request.user == user:
         data = Appointment.objects.filter(Q(user=user), Q(end__range=(start, end)) | Q(start__range=(start, end)) | (Q(start__lte=start) & Q(end__gte=end))).values()
     else:
         data = []
@@ -139,9 +138,8 @@ def AppointmentJson(request, uuid):
 def SessionAdd(request):
     name = request.POST.get("checked", "")
     
-    first, last = name.split('_')
-    user = User.objects.get(first_name=first, last_name=last)
-    if user in request.user.user_set.all() or request.user == user:
+    user = User.objects.get(username=name)
+    if user in request.user.shared_by.all() or request.user == user:
         if not "checked" in request.session.keys():
             thislist = []
             thislist.append(name)

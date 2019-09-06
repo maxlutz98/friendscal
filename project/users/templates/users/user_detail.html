@@ -32,6 +32,15 @@
             <a href="{% url 'users:user-change' %}"><i class="material-icons small right">edit</i></a>
         </div>
     </div>
+    <div class="col s11">
+        <label>Nutzername:</label>
+        <p class="flow-text">{{ object.username }}</p>
+    </div>
+    <div class="col s1">
+        <div class="center-align">
+            <a href="{% url 'users:user-change' %}"><i class="material-icons small right">edit</i></a>
+        </div>
+    </div>
     <div class="col s6">
         <label>Vorname:</label>
         <p class="flow-text">{{ object.first_name }}</p>
