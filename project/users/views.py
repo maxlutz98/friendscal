@@ -6,8 +6,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
+from django import forms
 
 from .models import User
+from .forms import InvitationForm
 
 # Create your views here.
 
@@ -83,3 +85,75 @@ def change_password(request):
     return render(request, 'users/user_password_update.html', {
         'form': form
     })
+
+
+@login_required
+def share_calendar(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = InvitationForm(request.POST, request=request)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            username = form.cleaned_data['username']
+            user = User.objects.filter(username=username).first()
+
+            request.user.shares.add(user)
+            request.user.invited.add(user)
+
+            if user in request.user.invitations.all():
+                request.user.invitations.remove(user)
+            # redirect to a new URL:
+            return redirect(reverse_lazy('users:shares-detail'))
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = InvitationForm()
+
+    return render(request, 'users/shares_detail.html', {'form': form})
+
+
+@login_required
+def unshare_calendar(request):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = InvitationForm(request.POST, request=request)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            username = form.cleaned_data['username']
+            user = User.objects.filter(username=username).first()
+
+            request.user.shares.remove(user)
+            request.user.invited.remove(user)
+            # redirect to a new URL:
+            return redirect(reverse_lazy('users:shares-detail'))
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = InvitationForm()
+
+    return render(request, 'users/shares_detail.html', {'form': form})
+
+
+@login_required
+def remove_invitation(request):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = InvitationForm(request.POST, request=request)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            username = form.cleaned_data['username']
+            user = User.objects.filter(username=username).first()
+
+            request.user.invitations.remove(user)
+            # redirect to a new URL:
+            return redirect(reverse_lazy('users:shares-detail'))
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = InvitationForm()
+
+    return render(request, 'users/shares_detail.html', {'form': form})

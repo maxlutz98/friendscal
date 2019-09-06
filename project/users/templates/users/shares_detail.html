@@ -7,6 +7,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         active = document.getElementsByTagName('li');
         active[2].className = "active";
+
+        errors = document.getElementsByClassName("errorlist");
+        if (errors.length > 0) {
+            Object.values(errors).every(function(error){error.classList.add("red-text");});
+        };
     });
 </script>
 {% endblock %}
@@ -18,20 +23,98 @@
     <div class="col s12">
         <h3>Freigaben</h3>
     </div>
-    <div class="col s12">
-    <p class="flow-text">Erteile Nutzern eine Freigabe, wenn du Ihnen erlauben möchtest deinen Kalender einzusehen.</p>
-    <div class="col s12">
-        <label>Freigaben:</label>
-        <ul>
-            {% for share in object.shares.all %}
-                <li>{{ share.get_full_name }}</li>
-            {% empty %}
-                <li>Keine Freigaben erteilt.</li>
-            {% endfor %}
-        </ul>
+</div>
+{% if user.invitations.all %}
+<div class="row">
+    <div class="section">
+        <h5>Informationen</h5>
+        {% for invite in user.invitations.all %}
+        <div class="col s8 offset-s2">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Neue Freigabe</span>
+                    <p>
+                        Du hast eine neue Kalenderfreigabe von <b>{{ invite.username }} ({{ invite.get_full_name }})</b> erhalten.
+                    </p>
+                </div>
+                <div class="card-action right-align">
+                    {% if not invite in request.user.shares.all %}
+                    <form action="{% url "users:shares-detail" %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="username" value={{ invite.username }}>
+                        <button type="submit" class="btn">Kalender freigeben</button>
+                    </form>
+                    {% endif %}
+                    <form action="{% url "users:invitation-remove" %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="username" value={{ invite.username }}>
+                        <button type="submit" class="btn">Schließen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <div class="col s12 center-align">
-        <p><a class="btn" href="{% url 'users:shares-change' %}">Freigaben bearbeiten</a></p>
+</div>
+<div class="divider"></div>
+{% endif %}
+<div class="row">
+    <div class="section">
+        <h5>Freigaben erteilen</h5>
+        <div class="col s12">
+            <p class="flow-text">Erteile Nutzern eine Freigabe, wenn du Ihnen erlauben möchtest deinen Kalender einzusehen.</p>
+        </div>
+        <div class="col s12">
+            <form action="{% url 'users:shares-detail' %}" method="post">
+                <div class="row">
+                    {% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    {% for field in form.visible_fields %}
+                        {% include "field_snippet.html" with field=field size="m10 s12" %}
+                    {% endfor %}
+                    <div class="col m2 s12 center-align">
+                        <button class="btn-floating" type="submit"><i class="material-icons">add</i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="row">
+    <div class="section">
+        <h5>Erteilte Freigaben</h5>
+        <div class="col s12">
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Nutzername</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for share in user.shares.all %}
+                    <tr>
+                        <td>{{ share.get_full_name }}</td>
+                        <td>{{ share.username }}</td>
+                        <td>
+                            <form action="{% url "users:shares-remove" %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="username" value={{ share.username }}>
+                                <button type="submit" class="right btn-floating" style="background: none;"><i class="material-icons" style="color: red;">clear</i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <td colspan="3" class="center-align">Keine Freigaben erteilt.</td>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
