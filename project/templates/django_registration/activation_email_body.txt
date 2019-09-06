@@ -1,8 +1,8 @@
-Hallo {{ user.first_name }},
+Hallo {{ user.get_short_name }},
 
 Diese E-Mail wurde aufgrund der Account-Erstellung auf der Website {{ site }} versendet.
 
-Bitte öffnen Sie folgende Seite, um Ihren Account mit dem Benutzernamen {{ user.email }} zu aktivieren:
+Bitte öffnen Sie folgende Seite, um Ihren Account mit dem Nutzernamen {{ user.username }} zu aktivieren:
 
 {{ scheme }}://{{ site }}{% url 'django_registration_activate' activation_key %}
 

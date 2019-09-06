@@ -24,20 +24,20 @@
 <script src="{% static "fullcalendar/list/main.min.js" %}"></script>
 
 <script>
-    var color{{ user.first_name }}{{ user.last_name }} = {};
-    {% for sharedby in user.user_set.all %}
-    var color{{ sharedby.first_name }}{{ sharedby.last_name }} = {};
+    var color{{ user.username }} = {};
+    {% for sharedby in user.shared_by.all %}
+    var color{{ sharedby.username }} = {};
     {% endfor %}
 
     document.addEventListener('DOMContentLoaded', function () {
-        color{{ user.first_name }}{{ user.last_name }} = new ColorPicker.Material("#color_{{ user.first_name }}_{{ user.last_name }}", {
+        color{{ user.username }} = new ColorPicker.Material("#color_{{ user.username }}", {
             format: 'hex',
             color: '#00c853',
             placement: 'top',
         });
 
-        color{{ user.first_name }}{{ user.last_name }}.on('change', function(color) {
-            source = calendar.getEventSourceById('events_{{ user.first_name }}_{{ user.last_name }}');
+        color{{ user.username }}.on('change', function(color) {
+            source = calendar.getEventSourceById('events_{{ user.username }}');
             if (source) {
                 source.internalEventSource.ui.backgroundColor = color.hex;
                 source.internalEventSource.ui.borderColor = color.hex;
@@ -45,15 +45,15 @@
             }
         });
 
-        {% for sharedby in user.user_set.all %}
-        color{{ sharedby.first_name }}{{ sharedby.last_name }} = new ColorPicker.Material("#color_{{ sharedby.first_name }}_{{ sharedby.last_name }}", {
+        {% for sharedby in user.shared_by.all %}
+        color{{ sharedby.username }} = new ColorPicker.Material("#color_{{ sharedby.username }}", {
             format: 'hex',
             color: '#' + Math.floor(Math.random() * 16777215).toString(16),
             placement: 'top'
         });
 
-        color{{ sharedby.first_name }}{{ sharedby.last_name }}.on('change', function(color) {
-            source = calendar.getEventSourceById('events_{{ sharedby.first_name }}_{{ sharedby.last_name }}');
+        color{{ sharedby.username }}.on('change', function(color) {
+            source = calendar.getEventSourceById('events_{{ sharedby.username }}');
             if (source) {
                 source.internalEventSource.ui.backgroundColor = color.hex;
                 source.internalEventSource.ui.borderColor = color.hex;
@@ -125,9 +125,14 @@
         calendar.render();
 
         {% for users in request.session.checked %}
-            {{ users }}.click();
+            try {
+                {{ users }}.click();
+            }
+            catch (e) {
+                // console.log(e);
+            }
         {% empty %}
-            document.getElementById('{{ user.first_name }}_{{ user.last_name }}').click();
+            document.getElementById('{{ user.username }}').click();
         {% endfor %}
     });
 
@@ -149,7 +154,7 @@
                         extraParams: {
                             user: element.id.replace(/events_/, '')
                         },
-                        color: eval('color' + element.id.replace(/_/, '')).getColor(), // an option!
+                        color: eval('color' + element.id).getColor(), // an option!
                         textColor: 'black' // an option!
                     });
                     httpPostAsync("{% url 'friendscal:session-add' %}", element.id);
@@ -197,7 +202,7 @@
         var can_edit = data['can_edit'];
         var detail_button = document.getElementById('event_detail');
         var edit_button = document.getElementById('event_change');
-        var delete_form = document.getElementById('form_delete');
+        var delete_form = document.getElementById('event_delete');
         if (!can_edit) {
             detail_button.style.display = 'none';
             edit_button.style.display = 'none';
@@ -207,6 +212,9 @@
             detail_button.href = '/appointment/' + data.uuid + '/detail/';
             edit_button.href = '/appointment/' + data.uuid + '/update/';
             delete_form.action = '/appointment/' + data.uuid + '/delete/';
+            detail_button.style.display = '';
+            edit_button.style.display = '';
+            delete_form.style.display = '';
         }
         delete data.uuid;
         delete data.can_edit;
@@ -259,19 +267,19 @@
                     <h4>Anzuzeigende Kalender</h4>
                 </li>
                 <li class="collection-item">
-                    <label for="{{ user.first_name }}_{{ user.last_name }}">
-                        <input type="checkbox" id="{{ user.first_name }}_{{ user.last_name }}" onclick="changeEventSources(this);">
+                    <label for="{{ user.username }}">
+                        <input type="checkbox" id="{{ user.username }}" onclick="changeEventSources(this);">
                         <span><img src="{{ user.avatar.url }}" width="30" class="circle"> {{ user }}</span>
                     </label>
-                    <div id="color_{{ user.first_name }}_{{ user.last_name }}" class="secondary-content colorpicker-custom-anchor colorpicker-circle-anchor"><div class="colorpicker-circle-anchor__color" data-color></div></div>
+                    <div id="color_{{ user.username }}" class="secondary-content colorpicker-custom-anchor colorpicker-circle-anchor"><div class="colorpicker-circle-anchor__color" data-color></div></div>
                 </li>
-                {% for sharedby in user.user_set.all|dictsort:'last_name' %}
+                {% for sharedby in user.shared_by.all|dictsort:'last_name' %}
                     <li class="collection-item">
-                        <label for="{{ sharedby.first_name }}_{{ sharedby.last_name }}">
-                            <input type="checkbox" id="{{ sharedby.first_name }}_{{ sharedby.last_name }}" onclick="changeEventSources(this);">
+                        <label for="{{ sharedby.username }}">
+                            <input type="checkbox" id="{{ sharedby.username }}" onclick="changeEventSources(this);">
                             <span><img src="{{ sharedby.avatar.url }}" width="30" class="circle">{{ sharedby.get_full_name }}</span>
                         </label>
-                        <div id="color_{{ sharedby.first_name }}_{{ sharedby.last_name }}" class="secondary-content colorpicker-custom-anchor colorpicker-circle-anchor"><div class="colorpicker-circle-anchor__color" data-color></div></div>
+                        <div id="color_{{ sharedby.username }}" class="secondary-content colorpicker-custom-anchor colorpicker-circle-anchor"><div class="colorpicker-circle-anchor__color" data-color></div></div>
                     </li>
                 {% empty %}
                     <li class="collection-item">Ihnen hat leider kein weiterer Nutzer eine Freigabe erteilt.</li>
@@ -314,7 +322,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#modal-delete" class="btn red modal-trigger waves-effect btn-flat">Löschen</a>
+        <a id="event_delete" href="#modal-delete" class="btn red modal-trigger waves-effect btn-flat">Löschen</a>
         <a id="event_change" class="btn green accent-4 btn-flat" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Bearbeiten</a>
         <a id="event_detail" class="btn green accent-4 btn-flat" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Detail</a>
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
@@ -323,7 +331,7 @@
 
 <!-- Modal Structure - Delete -->
 <div id="modal-delete" class="modal">
-    <form id="form_delete" action="#!" method="post">
+    <form action="#!" method="post">
         <div class="modal-content">
             <h4>Termin löschen</h4>
             <p>Wollen Sie den Termin wirklich löschen?</p>

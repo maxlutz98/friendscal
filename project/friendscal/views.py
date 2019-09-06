@@ -86,7 +86,6 @@ class AppointmentListView(generic.ListView):
     model = Appointment
 
     def get_queryset(self):
-        # queryset = Appointment.objects.filter(user=self.request.user).filter(end__gte=datetime.datetime.today()).order_by('start')
         queryset = self.request.user.appointment_set.all().filter(end__gte=datetime.datetime.today()).order_by('start')
         return queryset
 
@@ -101,9 +100,8 @@ def events(request):
     start = request.GET.get('start')
     end = request.GET.get('end')
     user = request.GET.get('user')
-    first, last = user.split('_')
-    user = User.objects.get(first_name=first, last_name=last)
-    if user in request.user.user_set.all() or request.user == user:
+    user = User.objects.get(username=user)
+    if user in request.user.shared_by.all() or request.user == user:
         data = Appointment.objects.filter(Q(user=user), Q(end__range=(start, end)) | Q(start__range=(start, end)) | (Q(start__lte=start) & Q(end__gte=end))).values()
     else:
         data = []
@@ -137,33 +135,34 @@ def AppointmentJson(request, uuid):
 
 @login_required
 def SessionAdd(request):
-    name = request.POST.get("checked", "")
-    
-    first, last = name.split('_')
-    user = User.objects.get(first_name=first, last_name=last)
-    if user in request.user.user_set.all() or request.user == user:
-        if not "checked" in request.session.keys():
-            thislist = []
-            thislist.append(name)
-            request.session["checked"] = thislist
-        else:
-            if not name in request.session["checked"]:
-                thislist = request.session["checked"]
+    if request.method == 'POST':
+        name = request.POST.get("checked", "")
+
+        user = User.objects.get(username=name)
+        if user in request.user.shared_by.all() or request.user == user:
+            if not "checked" in request.session.keys():
+                thislist = []
                 thislist.append(name)
                 request.session["checked"] = thislist
-    print(request.session["checked"])
+            else:
+                if not name in request.session["checked"]:
+                    thislist = request.session["checked"]
+                    thislist.append(name)
+                    request.session["checked"] = thislist
+        print(request.session["checked"])
     return JsonResponse({})
 
 
 @login_required
 def SessionRemove(request):
-    name = request.POST.get("checked", "")
+    if request.method == 'POST':
+        name = request.POST.get("checked", "")
 
-    if "checked" in request.session.keys():
-        if name in request.session["checked"]:
-            thislist = request.session["checked"]
-            thislist.remove(name)
-            request.session["checked"] = thislist
-    print(request.session["checked"])
+        if "checked" in request.session.keys():
+            if name in request.session["checked"]:
+                thislist = request.session["checked"]
+                thislist.remove(name)
+                request.session["checked"] = thislist
+        print(request.session["checked"])
     return JsonResponse({})
 
