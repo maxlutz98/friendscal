@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   django:
-    image: fantasmas/friendscal 
+    build: .
     restart: always
     ports:
       - "80:8000"
