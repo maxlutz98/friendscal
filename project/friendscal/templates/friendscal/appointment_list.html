@@ -35,24 +35,26 @@
             <a href="{% url 'friendscal:appointment-create' %}" class="btn">Neuer Termin</a>
         </div>
     </div>
-    
-    {% if past_list %}
-        <div class="col s12">
-            <h5>Vergangene:</h5>
-
-            <ul class="collection">
-                {% for appointment in past_list %}
-                    <li class="collection-item">
-                        <div>
-                            <a href="{% url 'friendscal:appointment-detail' pk=appointment.uuid %}" class="black-text">{{ appointment }}<div class="secondary-content black-text">{{ appointment.start | date:"d.m.Y"  }} - {{ appointment.end | date:"d.m.Y"  }}</div>
-                            </a>
-                        </div>
-                    </li>
-                {% endfor %}
-
-            </ul>
-        </div>
-    {% endif %}
 </div>
+{% if past_list %}
+<div class="divider"></div>
+<div class="row">
+    <div class="col s12">
+        <h5>Vergangene:</h5>
+
+        <ul class="collection">
+            {% for appointment in past_list %}
+                <li class="collection-item">
+                    <div>
+                        <a href="{% url 'friendscal:appointment-detail' pk=appointment.uuid %}" class="black-text">{{ appointment }}<div class="secondary-content black-text">{{ appointment.start | date:"d.m.Y"  }} - {{ appointment.end | date:"d.m.Y"  }}</div>
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}
