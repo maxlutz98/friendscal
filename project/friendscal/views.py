@@ -1,18 +1,15 @@
 from django import forms
-from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
-from django.db.models import Q
-
-from django.contrib.auth.mixins import UserPassesTestMixin
-
-from django.conf import settings
 
 from .models import Appointment
-
 from users.models import User
 
 import datetime
