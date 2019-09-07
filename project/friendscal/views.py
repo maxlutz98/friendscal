@@ -149,7 +149,6 @@ def SessionAdd(request):
                     thislist = request.session["checked"]
                     thislist.append(name)
                     request.session["checked"] = thislist
-        print(request.session["checked"])
     return JsonResponse({})
 
 
@@ -163,6 +162,5 @@ def SessionRemove(request):
                 thislist = request.session["checked"]
                 thislist.remove(name)
                 request.session["checked"] = thislist
-        print(request.session["checked"])
     return JsonResponse({})
 
