@@ -4,6 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.core import validators
 
 
 from django.contrib.auth.base_user import BaseUserManager
@@ -54,7 +55,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('Nachname'), max_length=150)
     shares = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_by', blank=True, verbose_name=_('Freigaben'), help_text='Nutzer, die deinen Kalender einsehen dürfen.')
     invitations = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='invited', verbose_name=_(''))
-    username = models.CharField(_('Nutzername'), unique=True, max_length=150)
+    username = models.CharField(_('Nutzername'), unique=True, max_length=150, help_text=_('Nur Buchstaben, Zahlen und @/./+/-/_ .'),
+        validators=[validators.RegexValidator(r'^[\w.@+-]+$', _('Gib einen gültigen Nutzernamen ein.'), 'invalid')])
     avatar = models.ImageField(_('Profilbild'), upload_to='avatars', default='avatars/default-avatar.png')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
