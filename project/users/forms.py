@@ -42,24 +42,39 @@ class UserChangeForm(forms.ModelForm):
 
 
 class MyCustomUserForm(RegistrationForm):
+    """
+    Anpasung des RegistrationForm:
+    Formular zur Registrierung neuer Nutzer (CustomUser). Beinhaltet alle notwenigen Felder.
+    """
     class Meta(RegistrationForm.Meta):
         model = User
         fields = ('avatar', 'username', 'first_name', 'last_name', 'email',)
 
 
 class InvitationForm(forms.Form):
+    """
+    Formular zum Bearbeiten von Freigaben.
+    """
     username = forms.CharField(label='Nutzername', max_length=150, help_text='Nutzername des Nutzers, welchem du eine Freigabe erteilen möchtest.')
 
     def __init__(self, *args, **kwargs):
+        """
+        Anpassung der __init__-Funktion zur zusätzlichen Übergabe der Anfrage.
+        """
         self.request = kwargs.pop('request', None)
         super(InvitationForm, self).__init__(*args, **kwargs)
 
     def clean(self):
+        """
+        Anpassung der clean-Funktion zum Überprüfen des eingegeben Nutzernamens und Hinzufügen entsprechender Fehlermeldungen.
+        """
         cd = self.cleaned_data
         user = User.objects.filter(username=cd.get('username')).first()
         if not user:
+            # Kein Nutzer
             self.add_error('username', "Nutzername existiert nicht.")
         elif user == self.request.user:
+            # eigener Nutzer (Anfragesteller)
             self.add_error('username', "Es ist nicht möglich sich selbst eine Freigabe zu erteilen.")
         return cd
 

@@ -1,4 +1,5 @@
 <!-- templates/layout.html -->
+{% comment %} Standard Layout - Navigation, Footer, ... {% endcomment %}
 
 <!DOCTYPE html>
 <html>
@@ -25,6 +26,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      {% comment %} Initialisierung der Sidenav (kleinere Displays) {% endcomment %}
       var elems = document.querySelectorAll('.sidenav');
       var instances = M.Sidenav.init(elems);
     });
@@ -43,6 +45,7 @@
             <a href="{% url 'friendscal:index' %}" class="brand-logo">Friendscal</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+              {% comment %} Andere Navigationselemente für eingeloggte User {% endcomment %}
               {% if user.is_authenticated %}
               <li><a href="{% url 'friendscal:index' %}">Kalender</a></li>
               <li><a href="{% url 'friendscal:appointment-list' %}">Deine Termine</a></li>
@@ -60,7 +63,9 @@
       </nav>
     </div>
 
+    <!-- Sidenav für kleine Displays -->
     <ul class="sidenav" id="mobile-demo">
+    {% comment %} Andere Navigationselemente für eingeloggte User {% endcomment %}
     {% if user.is_authenticated %}
       <li>
         <div class="user-view">
@@ -91,6 +96,7 @@
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="page-footer">
     <div class="container">
       <div class="row">

@@ -1,16 +1,20 @@
 <!-- templates/friendscal/appointment_update.html -->
 
 {% extends 'layout.html' %}
+{% comment %} Ändern eines Termins {% endcomment %}
 
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        {% comment %} Fehler Meldungen rot markieren {% endcomment %}
         errors = document.getElementsByClassName("errorlist");
         if (errors.length > 0) {
             Object.values(errors).every(function(error){error.classList.add("red-text");});
         };
     });
+
     document.addEventListener('DOMContentLoaded', function() {
+        {% comment %} Initialisierung der Datepicker {% endcomment %}
         var elems = document.querySelectorAll('.datepicker');
         var instances = M.Datepicker.init(elems, {
             format: 'dd.mm.yyyy', 
@@ -60,6 +64,8 @@
                 "weekdaysAbbrev": ["S", "M", "D", "M", "D", "F", "S"]
             }
         });
+
+        {% comment %} Initialisierung der Timepicker {% endcomment %}
         var elems = document.querySelectorAll('.timepicker');
         var instances = M.Timepicker.init(elems, {
             twelveHour: false, 
@@ -70,6 +76,7 @@
             }
         });
 
+        {% comment %} Erklärung Feld zu einem textarea-Feld machen. {% endcomment %}
         var field = document.getElementById('id_description');
         field.className = "materialize-textarea";
     });
@@ -82,6 +89,7 @@
 <div class="row">
     <div class="col s12">
         <h2>Termin aktualisieren</h2>
+        {% comment %} Formular zum Ändern eines Termins {% endcomment %}
         <form action="{% url 'friendscal:appointment-change' pk=object.uuid %}" method="post">
             <div class="row">
             {% csrf_token %}

@@ -1,13 +1,16 @@
 <!-- templates/users/shares_detail.html -->
 
 {% extends 'layout.html' %}
+{% comment %} Anzeige und Bearbeiten der Freigaben. {% endcomment %}
 
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        {% comment %} navbar Element aktiv setzen {% endcomment %}
         active = document.getElementsByTagName('li');
         active[2].className = "active";
 
+        {% comment %} Fehler Meldungen rot markieren {% endcomment %}
         errors = document.getElementsByClassName("errorlist");
         if (errors.length > 0) {
             Object.values(errors).every(function(error){error.classList.add("red-text");});
@@ -24,10 +27,13 @@
         <h3>Freigaben</h3>
     </div>
 </div>
+{% comment %} Teil der Seite nur darstellen, wenn Einladungen für den Nutzer existieren.  {% endcomment %}
 {% if user.invitations.all %}
+<!-- Bereich - Einladungen -->
 <div class="row">
     <div class="section">
         <h5>Informationen</h5>
+        {% comment %} Eine Einladungskarte für jede Einladung erstellen. {% endcomment %}
         {% for invite in user.invitations.all %}
         <div class="col s8 offset-s2">
             <div class="card">
@@ -38,13 +44,16 @@
                     </p>
                 </div>
                 <div class="card-action right-align">
+                    {% comment %} Nur wenn der einladende Nutzer nicht bereits eine Freigabe erhalten hat. {% endcomment %}
                     {% if not invite in request.user.shares.all %}
+                    {% comment %} Formular zum Freigeben des Kalenders für den einladenden Nutzer. {% endcomment %}
                     <form action="{% url "users:shares-detail" %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="username" value={{ invite.username }}>
                         <button type="submit" class="btn">Kalender freigeben</button>
                     </form>
                     {% endif %}
+                    {% comment %} Formular zum Entfernen  {% endcomment %}
                     <form action="{% url "users:invitation-remove" %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="username" value={{ invite.username }}>
@@ -58,6 +67,7 @@
 </div>
 <div class="divider"></div>
 {% endif %}
+<!-- Bereich - Freigaben erteilen -->
 <div class="row">
     <div class="section">
         <h5>Freigaben erteilen</h5>
@@ -65,6 +75,7 @@
             <p class="flow-text">Erteile Nutzern eine Freigabe, wenn du Ihnen erlauben möchtest deinen Kalender einzusehen.</p>
         </div>
         <div class="col s12">
+            {% comment %} Formular um Freigaben per Nutzername zu erteilen. {% endcomment %}
             <form action="{% url 'users:shares-detail' %}" method="post">
                 <div class="row">
                     {% csrf_token %}
@@ -83,6 +94,7 @@
     </div>
 </div>
 <div class="divider"></div>
+<!-- Bereich - Erteilte Freigaben -->
 <div class="row">
     <div class="section">
         <h5>Erteilte Freigaben</h5>
@@ -95,13 +107,14 @@
                         <th></th>
                     </tr>
                 </thead>
-
                 <tbody>
+                {% comment %} Tabelle aller Freigaben mit ganzem Namen und Nutzernamen. {% endcomment %}
                 {% for share in user.shares.all %}
                     <tr>
                         <td>{{ share.get_full_name }}</td>
                         <td>{{ share.username }}</td>
                         <td>
+                            {% comment %} Formular zum Entfernen der Freigabe des zugehörigen Nutzers. {% endcomment %}
                             <form action="{% url "users:shares-remove" %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="username" value={{ share.username }}>

@@ -5,6 +5,7 @@
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        {% comment %} navbar Element aktiv setzen {% endcomment %}
         active = document.getElementsByTagName('li');
         active[0].className = "active";
     });

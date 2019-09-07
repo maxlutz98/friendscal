@@ -1,10 +1,12 @@
 <!-- templates/friendscal/appointment_detail.html -->
 
 {% extends 'layout.html' %}
+{% comment %} Detail Anzeige eines Termins {% endcomment %}
 
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        {% comment %} Initialisierung der Modal {% endcomment %}
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
     });
@@ -19,7 +21,9 @@
         <h3>{{ object.title }}</h3>
     </div>
 
+    {% comment %} Anfragesteller ist Eigentümer des Termins {% endcomment %}
     {% if object.user == user %}
+        {% comment %} Termininformationen mit Links zur Bearbeitungsseite {% endcomment %}
         <div class="col s11">
             <label>von:</label>
             <p class="flow-text">{{ object.user }}</p>
@@ -58,6 +62,7 @@
             <p><a class="btn red modal-trigger" href="#modal-delete">Termin löschen</a></p>
         </div>
     {% else %}
+    {% comment %} Nur Nutzerinformationen {% endcomment %}
         <div class="col s12">
             <label>von:</label>
             <p class="flow-text">{{ object.user }}</p>
@@ -81,8 +86,9 @@
     {% endif %}
 </div>
 
-<!-- Modal Structure -->
+<!-- Delete Modal Structure -->
 <div id="modal-delete" class="modal">
+    {% comment %} Formular zum Löschen des Termins {% endcomment %}
     <form action="{% url 'friendscal:appointment-delete' pk=object.uuid %}" method="post">
         <div class="modal-content">
             <h4>Termin löschen</h4>

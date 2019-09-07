@@ -1,16 +1,16 @@
 <!-- templates/users/user_update.html -->
 
 {% extends 'layout.html' %}
+{% comment %} Nutzer bearbeiten {% endcomment %}
 
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
-
+        {% comment %} navbar Element aktiv setzen {% endcomment %}
         active = document.getElementsByTagName('li');
         active[3].className = "active";
 
+        {% comment %} Fehler Meldungen rot markieren {% endcomment %}
         errors = document.getElementsByClassName("errorlist");
         if (errors.length > 0) {
             Object.values(errors).every(function(error){error.classList.add("red-text");});
@@ -25,38 +25,33 @@
     <div class="row">
         <div class="col s12">
             <h3>Nutzer aktualisieren</h3>
+            {% comment %} Formular zum Bearbeiten der Nutzerinformationen {% endcomment %}
             <form action="{% url 'users:user-change' %}" method="post" enctype="multipart/form-data">
                 <div class="row">
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
                     {% endfor %}
-                    {% for field in form.visible_fields %}
-                        {% if field.label == 'Profilbild' %}
-                            <div class="file-field input-field col s12">
-                                <p>
-                                    {{ field.label_tag }}
-                                    <br>
-                                    <img src="{{ object.avatar.url }}" width=100>
-                                    <div class="btn">
-                                        <span>Datei auswählen</span>
-                                        <input id="{{ field.id_for_label }}" type="file" accept="image/*" name="avatar">
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text">
-                                    </div>
-                                    <span class="helper-text">{{ field.help_text }}</span>
-                                    {{ field.errors }}
-                                </p>
+                    <div class="file-field input-field col s12">
+                        <p>
+                            {{ form.avatar.label_tag }}
+                            <br>
+                            <img src="{{ object.avatar.url }}" width=100>
+                            <div class="btn">
+                                <span>Datei auswählen</span>
+                                <input id="{{ form.avatar.id_for_label }}" type="file" accept="image/*" name="avatar">
                             </div>
-                        {% elif field.label == 'First name' %}
-                            {% include "field_snippet.html" with field=field size="s6" %}
-                        {% elif field.label == 'Last name' %}
-                            {% include "field_snippet.html" with field=field size="s6" %}
-                        {% else %}
-                            {% include "field_snippet.html" with field=field size="s12" %}
-                        {% endif %}
-                    {% endfor %}
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                            <span class="helper-text">{{ form.avatar.help_text }}</span>
+                            {{ form.avatar.errors }}
+                        </p>
+                    </div>
+                    {% include "field_snippet.html" with field=form.first_name size="s6" %}
+                    {% include "field_snippet.html" with field=form.last_name size="s6" %}
+                    {% include "field_snippet.html" with field=form.username size="s12" %}
+                    {% include "field_snippet.html" with field=form.email size="s12" %}
                     <div class="col s12 center-align">
                         <button class="btn" type="submit">Aktualisieren</button>
                     </div>
