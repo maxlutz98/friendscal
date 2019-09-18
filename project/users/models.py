@@ -1,20 +1,16 @@
-from django.db import models
-from django.core.mail import send_mail
-from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core import validators
-
-
-from django.contrib.auth.base_user import BaseUserManager
+from django.core.mail import send_mail
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, password=None):
+    def create_user(self, email, first_name, last_name, username, password=None):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email and password.
         """
         if not email:
             raise ValueError('Users must have an email address')
@@ -27,13 +23,14 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email),
             first_name=first_name,
             last_name=last_name,
+            username=username,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password):
+    def create_superuser(self, email, first_name, last_name, username, password):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -43,6 +40,7 @@ class UserManager(BaseUserManager):
             password=password,
             first_name=first_name,
             last_name=last_name,
+            username=username,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -50,6 +48,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    Angepasster Nutzer mit E-Mail als Anmeldeinformation.
+    """
     email = models.EmailField(_('E-Mail Addresse'), unique=True)
     first_name = models.CharField(_('Vorname'), max_length=150)
     last_name = models.CharField(_('Nachname'), max_length=150)

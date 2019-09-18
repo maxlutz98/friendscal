@@ -1,9 +1,8 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
-
-from django.conf import settings
-
 from django.utils.translation import gettext_lazy as _
+
 import uuid
 
 # Create your models here.
@@ -17,12 +16,14 @@ class Appointment(models.Model):
     description = models.TextField(_('Beschreibung'), blank=True)
     location = models.CharField(_('Ort'), max_length=250, blank=True)
 
-#    class Meta:
-#        verbose_name = _("Appointment")
-#        verbose_name_plural = _("s")
-
     def __str__(self):
+        """
+        Standard Rückgabe des Models.
+        """
         return self.title
 
     def get_absolute_url(self):
+        """
+        Funktion zur Generierung einer absoluten URL für das Appointment.
+        """
         return reverse('friendscal:appointment-detail', kwargs={"pk": self.pk})

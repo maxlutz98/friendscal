@@ -5,9 +5,11 @@
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        {% comment %} navbar Element aktiv setzen {% endcomment %}
         active = document.getElementsByTagName('li');
         active[2].className = "active";
 
+        {% comment %} Fehler Meldungen rot markieren {% endcomment %}
         errors = document.getElementsByClassName("errorlist");
         if (errors.length > 0) {
             Object.values(errors).every(function(error){error.classList.add("red-text");});
@@ -22,6 +24,7 @@
 <div class="row">
     <div class="col s12">
         <h2>Registrieren</h2>
+        {% comment %} Formular zum Registrieren eines Accounts {% endcomment %}
         <form action="{% url 'django_registration_register' %}" method="post" enctype="multipart/form-data">
             <div class="row">
                 {% csrf_token %}
@@ -29,9 +32,9 @@
                     {{ hidden }}
                 {% endfor %}
                 {% include "field_snippet.html" with field=form.email size="s12" %}
-                {% include "field_snippet.html" with field=form.username size="s12" %}
                 {% include "field_snippet.html" with field=form.first_name size="m6 s12" %}
                 {% include "field_snippet.html" with field=form.last_name size="m6 s12" %}
+                {% include "field_snippet.html" with field=form.username size="s12" %}
                 <div class="file-field input-field col s12">
                     <p>
                         <label for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}:</label>

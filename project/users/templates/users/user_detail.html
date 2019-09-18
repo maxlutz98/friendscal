@@ -1,13 +1,16 @@
 <!-- templates/users/user_detail.html -->
 
 {% extends 'layout.html' %}
+{% comment %} Anzeige der Nutzerinformationen {% endcomment %}
 
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        {% comment %} navbar Element aktiv setzen {% endcomment %}
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
 
+        {% comment %} Fehler Meldungen rot markieren {% endcomment %}
         active = document.getElementsByTagName('li');
         active[3].className = "active";
     });
@@ -24,7 +27,7 @@
     <div class="col s11">
         <label>Profilbild:</label>
         <p>
-            <img src="{{ object.avatar.url }}" width=100>
+            <img src="{{ object.avatar.url }}" width="100">
         </p>
     </div>
     <div class="col s1">
@@ -72,8 +75,9 @@
     </div>
 </div>
 
-<!-- Modal Structure -->
+<!-- Modal Structure - Delete View-->
 <div id="modal-delete" class="modal">
+    {% comment %} Formular zum Löschen des Nutzers. {% endcomment %}
     <form action="{% url 'users:user-delete' %}" method="post">
         <div class="modal-content">
             <h4>Account löschen</h4>

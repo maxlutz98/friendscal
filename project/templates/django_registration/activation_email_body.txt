@@ -1,3 +1,5 @@
+{% comment %} Aktiverungs E-Mail Text {% endcomment %}
+
 Hallo {{ user.get_short_name }},
 
 Diese E-Mail wurde aufgrund der Account-Erstellung auf der Website {{ site }} versendet.

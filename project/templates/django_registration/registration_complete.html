@@ -1,10 +1,12 @@
 <!-- templates/django_registration/registration_complete.html -->
 
 {% extends 'layout.html' %}
+{% comment %} Aktivierungs Prozess E-Mail Versand Bestätigung {% endcomment %}
 
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        {% comment %} navbar Element aktiv setzen {% endcomment %}
         active = document.getElementsByTagName('li');
         active[2].className = "active";
     });

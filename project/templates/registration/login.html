@@ -5,6 +5,7 @@
 {% block head %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        {% comment %} navbar Element aktiv setzen {% endcomment %}
         active = document.getElementsByTagName('li');
         active[1].className = "active";
     });
@@ -16,6 +17,7 @@
 {% block content %}
 <div class="row">
     <div class="col l6 m12">
+        <!-- Bereich - Login -->
         <h2>Einloggen</h2>
         <form action="{% url 'login' %}" method="post">
             <div class="row">
@@ -33,11 +35,13 @@
             </div>
         </form>
     </div>
+    <!-- Bereich - Registrieren -->
     <div class="col l6 m12 center-align">
         <h2>Noch nicht registriert?</h2>
         <a class="btn" href="{% url 'django_registration_register' %}">Registrieren</a>
     </div>
     <div class="col s12 divider"></div>
+    <!-- Bereich - Erklärung -->
     <div class="col l8 m12 offset-l2 center-align">
         <h2>Was soll das hier überhaupt?</h2>
         <a class="btn" href="{% url 'friendscal:description' %}">Erklärung</a>

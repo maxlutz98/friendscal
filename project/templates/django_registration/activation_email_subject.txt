@@ -1,1 +1,3 @@
+{% comment %} Aktivierungs E-Mail Betreff {% endcomment %}
+
 Account-Aktivierung auf {{ site }}
