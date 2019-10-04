@@ -232,7 +232,7 @@
         {% comment %} Initialisierung der Bearbeitungsschaltflächen {% endcomment %}
         var detail_button = document.getElementById('event_detail');
         var edit_button = document.getElementById('event_change');
-        var delete_form = document.getElementById('event_delete');
+        var delete_form = document.getElementById('form_delete');
         if (!can_edit) {
             {% comment %} Nutzer darf Temrin nicht bearbeiten -> Schaltflächen verstecken {% endcomment %}
             detail_button.style.display = 'none';
@@ -373,7 +373,7 @@
 <!-- Modal Structure - Delete -->
 <div id="modal-delete" class="modal">
     {% comment %} Formular zum Löschen eines Termins {% endcomment %}
-    <form action="#!" method="post">
+    <form id="form_delete" action="#!" method="post">
         <div class="modal-content">
             <h4>Termin löschen</h4>
             <p>Wollen Sie den Termin wirklich löschen?</p>
