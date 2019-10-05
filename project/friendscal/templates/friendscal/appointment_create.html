@@ -70,6 +70,14 @@
                 if (!elem.value) {
                     elem.value = '12:00';
                 }
+            },
+            onClose: function () {
+                var elems = document.querySelectorAll('.datepicker');
+                var instance_start = M.Datepicker.getInstance(elems[0]);
+                var instance_end = M.Datepicker.getInstance(elems[1]);
+                var buffer = instance_start.toString();
+                buffer = buffer.split(".").reverse();
+                instance_end.gotoDate(new Date(buffer[0], buffer[1] - 1, buffer[2]));
             }
         });
 
