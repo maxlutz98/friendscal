@@ -86,9 +86,9 @@
         {% comment %} Übertragene Daten/Zeiten in Felder eintragen, wenn vorhanden {% endcomment %}
         if (liste['start'] && liste['end']) {
             document.getElementById('id_start_0').value = liste['start'];
-            document.getElementById('id_start_1').value = '12:00';
+            document.getElementById('id_start_1').value = '00:00';
             document.getElementById('id_end_0').value = liste['end'];
-            document.getElementById('id_end_1').value = '12:00';
+            document.getElementById('id_end_1').value = '00:00';
             // Labels aktiv setzen, dass sie aus dem Feld sliden
             labels = document.getElementsByTagName('label');
             for (var i = 0; i < labels.length; i++) {
