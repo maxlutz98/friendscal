@@ -11,6 +11,7 @@ then
     echo "PostgreSQL started"
 fi
 
+yarn build-dev
 python manage.py migrate
 python manage.py clearsessions
 python manage.py collectstatic --no-input --clear
