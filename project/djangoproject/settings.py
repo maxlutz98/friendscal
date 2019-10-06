@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_registration',
+    'webpack_loader',
     'users',
 ]
 
@@ -170,6 +171,7 @@ TIME_INPUT_FORMATS = [
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'assets'),
 ]
 
 STATIC_URL = '/static/'
@@ -199,3 +201,22 @@ LOGIN_URL = '/accounts/login'
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 
+# webpack-loader settings
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundles/dev/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'assets/bundles/dev/stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
+
+if not DEBUG:
+    WEBPACK_LOADER.update({
+        'DEFAULT': {
+            'BUNDLE_DIR_NAME': 'bundles/',
+            'STATS_FILE': os.path.join(BASE_DIR, 'assets/bundles/stats.json')
+        }
+    })
