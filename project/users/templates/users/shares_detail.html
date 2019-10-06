@@ -54,7 +54,7 @@
                     </form>
                     {% endif %}
                     {% comment %} Formular zum Entfernen  {% endcomment %}
-                    <form action="{% url "users:invitation-remove" %}" method="post">
+                    <form action="{% url "users:invitation-remove" %}" method="post" style="margin-top: 5px;">
                         {% csrf_token %}
                         <input type="hidden" name="username" value={{ invite.username }}>
                         <button type="submit" class="btn">Schließen</button>

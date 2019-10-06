@@ -3,6 +3,7 @@ from django_registration.forms import RegistrationForm
 
 from .models import User
 
+
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
@@ -46,6 +47,7 @@ class MyCustomUserForm(RegistrationForm):
     Anpasung des RegistrationForm:
     Formular zur Registrierung neuer Nutzer (CustomUser). Beinhaltet alle notwenigen Felder.
     """
+
     class Meta(RegistrationForm.Meta):
         model = User
         fields = ('avatar', 'username', 'first_name', 'last_name', 'email',)
@@ -55,7 +57,8 @@ class InvitationForm(forms.Form):
     """
     Formular zum Bearbeiten von Freigaben.
     """
-    username = forms.CharField(label='Nutzername', max_length=150, help_text='Nutzername des Nutzers, welchem du eine Freigabe erteilen möchtest.')
+    username = forms.CharField(label='Nutzername', max_length=150,
+                               help_text='Nutzername des Nutzers, welchem du eine Freigabe erteilen möchtest.')
 
     def __init__(self, *args, **kwargs):
         """
@@ -77,4 +80,3 @@ class InvitationForm(forms.Form):
             # eigener Nutzer (Anfragesteller)
             self.add_error('username', "Es ist nicht möglich sich selbst eine Freigabe zu erteilen.")
         return cd
-
