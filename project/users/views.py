@@ -1,4 +1,3 @@
-from django import forms
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -8,8 +7,9 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 
-from .models import User
 from .forms import InvitationForm
+from .models import User
+
 
 # Create your views here.
 
@@ -37,7 +37,7 @@ class UserUpdateView(generic.UpdateView):
     fields = ('avatar', 'username', 'first_name', 'last_name', 'email',)
     success_url = reverse_lazy('users:user-detail')
     template_name = 'users/user_update.html'
-    
+
     def get_object(self):
         """
         Anpassung der get_object-Funktion zum automatischen Erhalten des aktuellen Nutzers

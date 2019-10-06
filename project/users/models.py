@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.core import validators
 from django.core.mail import send_mail
 from django.db import models
@@ -14,10 +14,9 @@ class UserManager(BaseUserManager):
         """
         if not email:
             raise ValueError('Users must have an email address')
-        
+
         if not first_name or not last_name:
             raise ValueError('Users must have a name')
-
 
         user = self.model(
             email=self.normalize_email(email),
@@ -54,10 +53,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('E-Mail Addresse'), unique=True)
     first_name = models.CharField(_('Vorname'), max_length=150)
     last_name = models.CharField(_('Nachname'), max_length=150)
-    shares = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_by', blank=True, verbose_name=_('Freigaben'), help_text='Nutzer, die deinen Kalender einsehen dürfen.')
+    shares = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_by', blank=True,
+                                    verbose_name=_('Freigaben'),
+                                    help_text='Nutzer, die deinen Kalender einsehen dürfen.')
     invitations = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='invited', verbose_name=_(''))
-    username = models.CharField(_('Nutzername'), unique=True, max_length=150, help_text=_('Nur Buchstaben, Zahlen und @/./+/-/_ .'),
-        validators=[validators.RegexValidator(r'^[\w.@+-]+$', _('Gib einen gültigen Nutzernamen ein.'), 'invalid')])
+    username = models.CharField(_('Nutzername'), unique=True, max_length=150,
+                                help_text=_('Nur Buchstaben, Zahlen und @/./+/-/_ .'),
+                                validators=[
+                                    validators.RegexValidator(r'^[\w.@+-]+$', _('Gib einen gültigen Nutzernamen ein.'),
+                                                              'invalid')])
     avatar = models.ImageField(_('Profilbild'), upload_to='avatars', default='avatars/default-avatar.png')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -85,7 +89,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         Returns the first_name plus the last_name, with a space in between.
         '''
         return self.first_name + " " + self.last_name
-    
+
     def get_short_name(self):
         '''
         Returns the short name for the user.
