@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -28,15 +27,15 @@ DEBUG = int(os.environ.get('DEBUG', default=0))
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'calendar4friends.ddnss.de']
 
 # Additional security settings
-SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', default=518400))
-SECURE_CONTENT_TYPE_NOSNIFF = bool(os.environ.get('SECURE_CONTENT_TYPE_NOSNIFF', default=1))
-SECURE_BROWSER_XSS_FILTER = bool(os.environ.get('SECURE_BROWSER_XSS_FILTER', default=1))
+if not DEBUG:
+    SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', default=518400))
+    SECURE_CONTENT_TYPE_NOSNIFF = bool(os.environ.get('SECURE_CONTENT_TYPE_NOSNIFF', default=1))
+    SECURE_BROWSER_XSS_FILTER = bool(os.environ.get('SECURE_BROWSER_XSS_FILTER', default=1))
 
-X_FRAME_OPTIONS = os.environ.get('X_FRAME_OPTIONS', default='DENY')
+    X_FRAME_OPTIONS = os.environ.get('X_FRAME_OPTIONS', default='DENY')
 
-CSRF_COOKIE_SECURE = bool(os.environ.get('CSRF_COOKIE_SECURE', default=1))
-SESSION_COOKIE_SECURE = bool(os.environ.get('SESSION_COOKIE_SECURE', default=1))
-
+    CSRF_COOKIE_SECURE = bool(os.environ.get('CSRF_COOKIE_SECURE', default=1))
+    SESSION_COOKIE_SECURE = bool(os.environ.get('SESSION_COOKIE_SECURE', default=1))
 
 # Application definition
 
@@ -82,7 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoproject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -96,7 +94,6 @@ DATABASES = {
         'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -116,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -132,37 +128,37 @@ USE_TZ = True
 
 # Input formats
 DATE_INPUT_FORMATS = [
-    '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y', # '2006-10-25', '10/25/2006', '10/25/06'
-    '%b %d %Y', '%b %d, %Y',            # 'Oct 25 2006', 'Oct 25, 2006'
-    '%d %b %Y', '%d %b, %Y',            # '25 Oct 2006', '25 Oct, 2006'
-    '%B %d %Y', '%B %d, %Y',            # 'October 25 2006', 'October 25, 2006'
-    '%d %B %Y', '%d %B, %Y',            # '25 October 2006', '25 October, 2006'
-    '%d.%m.%Y', '%d.%m.%y',             # '25.10.2006', '25.10.19'
+    '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y',  # '2006-10-25', '10/25/2006', '10/25/06'
+    '%b %d %Y', '%b %d, %Y',  # 'Oct 25 2006', 'Oct 25, 2006'
+    '%d %b %Y', '%d %b, %Y',  # '25 Oct 2006', '25 Oct, 2006'
+    '%B %d %Y', '%B %d, %Y',  # 'October 25 2006', 'October 25, 2006'
+    '%d %B %Y', '%d %B, %Y',  # '25 October 2006', '25 October, 2006'
+    '%d.%m.%Y', '%d.%m.%y',  # '25.10.2006', '25.10.19'
 ]
 
 DATETIME_INPUT_FORMATS = [
-    '%Y-%m-%d %H:%M:%S',     # '2006-10-25 14:30:59'
+    '%Y-%m-%d %H:%M:%S',  # '2006-10-25 14:30:59'
     '%Y-%m-%d %H:%M:%S.%f',  # '2006-10-25 14:30:59.000200'
-    '%Y-%m-%d %H:%M',        # '2006-10-25 14:30'
-    '%Y-%m-%d',              # '2006-10-25'
-    '%m/%d/%Y %H:%M:%S',     # '10/25/2006 14:30:59'
+    '%Y-%m-%d %H:%M',  # '2006-10-25 14:30'
+    '%Y-%m-%d',  # '2006-10-25'
+    '%m/%d/%Y %H:%M:%S',  # '10/25/2006 14:30:59'
     '%m/%d/%Y %H:%M:%S.%f',  # '10/25/2006 14:30:59.000200'
-    '%m/%d/%Y %H:%M',        # '10/25/2006 14:30'
-    '%m/%d/%Y',              # '10/25/2006'
-    '%m/%d/%y %H:%M:%S',     # '10/25/06 14:30:59'
+    '%m/%d/%Y %H:%M',  # '10/25/2006 14:30'
+    '%m/%d/%Y',  # '10/25/2006'
+    '%m/%d/%y %H:%M:%S',  # '10/25/06 14:30:59'
     '%m/%d/%y %H:%M:%S.%f',  # '10/25/06 14:30:59.000200'
-    '%m/%d/%y %H:%M',        # '10/25/06 14:30'
-    '%m/%d/%y',              # '10/25/06'
-    '%d.%m.%Y %H:%M:%S',     # '25.10.2006 14:30:59'
+    '%m/%d/%y %H:%M',  # '10/25/06 14:30'
+    '%m/%d/%y',  # '10/25/06'
+    '%d.%m.%Y %H:%M:%S',  # '25.10.2006 14:30:59'
     '%d.%m.%Y %H:%M:%S.%f',  # '25.10.2006 14:30:59.000200'
-    '%d.%m.%Y %H:%M',        # '25.10.2006 14:30'
-    '%d.%m.%Y',              # '25.10.2006'
+    '%d.%m.%Y %H:%M',  # '25.10.2006 14:30'
+    '%d.%m.%Y',  # '25.10.2006'
 ]
 
 TIME_INPUT_FORMATS = [
-    '%H:%M:%S',     # '14:30:59'
+    '%H:%M:%S',  # '14:30:59'
     '%H:%M:%S.%f',  # '14:30:59.000200'
-    '%H:%M',        # '14:30'
+    '%H:%M',  # '14:30'
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -197,5 +193,4 @@ LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login'
 
 # django-registration settings
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
-
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
