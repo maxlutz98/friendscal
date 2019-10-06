@@ -193,6 +193,21 @@
         }
     };
 
+    document.addEventListener('DOMContentLoaded', function(){
+        {% comment %} Responsives Aussehen hinzufügen {% endcomment %}
+        document.querySelector('.fc-toolbar').style.display = 'inline';
+        document.querySelector('.fc-toolbar').classList.add('center-align', 'col', 's12');
+        document.querySelector('.fc-left').classList.add('col', 's12', 'm5');
+        document.querySelector('.fc-left').style.marginBottom = '5px';
+        document.querySelector('.fc-left').style.marginTop = '-5px';
+        document.querySelector('.fc-button-group').style.marginTop = '5px';
+        document.querySelector('.fc-addButton-button').style.marginTop = '5px';
+        document.querySelector('.fc-center').classList.add('col', 's12', 'm4');
+        document.querySelector('.fc-center').style.marginBottom = '5px';
+        document.querySelector('.fc-right').classList.add('col', 's12', 'm3');
+        document.querySelector('.fc-right').style.marginBottom = '5px';
+    });
+
     {% comment %} JavaScript HTTP-GET-Methode {% endcomment %}
     function httpGetAsync(theUrl, callback) {
         var xmlHttp = new XMLHttpRequest();
