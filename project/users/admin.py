@@ -1,11 +1,10 @@
-from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
-from django.utils.translation import gettext_lazy as _
 
-from .models import User
 from .forms import UserChangeForm, UserCreationForm
+from .models import User
+
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -28,11 +27,12 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'username', 'first_name', 'last_name', 'password1', 'password2')}
-        ),
+         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
+
 
 # Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)

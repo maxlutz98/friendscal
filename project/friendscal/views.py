@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
@@ -36,8 +35,12 @@ class AppointmentCreateView(generic.CreateView):
         form = super(AppointmentCreateView, self).get_form(form_class)
         form.fields['start'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
         form.fields['end'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
-        form.fields["start"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
-        form.fields["end"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
+        form.fields["start"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M',
+                                                                date_attrs={"class": "datepicker"},
+                                                                time_attrs={"class": "timepicker"})
+        form.fields["end"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M',
+                                                              date_attrs={"class": "datepicker"},
+                                                              time_attrs={"class": "timepicker"})
         return form
 
     def form_valid(self, form):
@@ -86,8 +89,12 @@ class AppointmentUpdateView(UserPassesTestMixin, generic.UpdateView):
         form = super(AppointmentUpdateView, self).get_form(form_class)
         form.fields['start'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
         form.fields['end'] = forms.SplitDateTimeField(input_date_formats=settings.DATE_INPUT_FORMATS)
-        form.fields["start"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
-        form.fields["end"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M', date_attrs={"class": "datepicker"}, time_attrs={"class": "timepicker"})
+        form.fields["start"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M',
+                                                                date_attrs={"class": "datepicker"},
+                                                                time_attrs={"class": "timepicker"})
+        form.fields["end"].widget = forms.SplitDateTimeWidget(date_format='%d.%m.%Y', time_format='%H:%M',
+                                                              date_attrs={"class": "datepicker"},
+                                                              time_attrs={"class": "timepicker"})
         return form
 
     def form_valid(self, form):
@@ -138,7 +145,9 @@ class AppointmentListView(generic.ListView):
         - alle vergangen Appointments des Nutzers in den letzten 2 Jahren
         """
         context = super(AppointmentListView, self).get_context_data(*args, **kwargs)
-        context["past_list"] = self.request.user.appointment_set.all().filter(end__range=(datetime.datetime.today() - datetime.timedelta(days=730), datetime.datetime.today())).order_by('-end')
+        context["past_list"] = self.request.user.appointment_set.all().filter(
+            end__range=(datetime.datetime.today() - datetime.timedelta(days=730), datetime.datetime.today())).order_by(
+            '-end')
         return context
 
 
@@ -154,7 +163,8 @@ def events(request):
     user = User.objects.get(username=user)
     # Appointment mithilfe der Parameter filtern (Zeitraum und Nutzer)
     if user in request.user.shared_by.all() or request.user == user:
-        data = Appointment.objects.filter(Q(user=user), Q(end__range=(start, end)) | Q(start__range=(start, end)) | (Q(start__lte=start) & Q(end__gte=end))).values()
+        data = Appointment.objects.filter(Q(user=user), Q(end__range=(start, end)) | Q(start__range=(start, end)) | (
+                    Q(start__lte=start) & Q(end__gte=end))).values()
     else:
         data = []
 
@@ -176,7 +186,7 @@ def AppointmentJson(request, uuid):
     """
     # Appointment erhalten
     appointment = Appointment.objects.get(pk=uuid)
-    
+
     # Appointment Informationen in ein Dictionary packen
     data = {
         'uuid': str(appointment.uuid),
@@ -186,7 +196,7 @@ def AppointmentJson(request, uuid):
         'description': appointment.description,
         'location': appointment.location,
         'user': appointment.user.get_full_name()
-        }
+    }
 
     # Hinzufügen eines 'can_edit' Attributs, falls der anfragende Nutzer Inhaber des Appointments ist
     if request.user == appointment.user:
@@ -249,4 +259,3 @@ def SessionRemove(request):
                 request.session["checked"] = thislist
     # leere Rückgabe, da eine Rückgabe benötigt wird
     return JsonResponse({})
-
