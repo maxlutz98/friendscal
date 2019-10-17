@@ -1,4 +1,4 @@
-name: Deploy Docker Image on Push
+name: Deploy Docker Image on schedule
 
 on:
   schedule:
