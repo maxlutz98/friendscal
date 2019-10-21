@@ -1,6 +1,8 @@
-name: Deploy Docker Image on Push
+name: Deploy Docker Image on schedule
 
-on: [push]
+on:
+  schedule:
+    - cron: '0 3 * * 0'
 
 jobs:
   build:

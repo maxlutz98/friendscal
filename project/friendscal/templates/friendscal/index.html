@@ -53,7 +53,7 @@
         {% for sharedby in user.shared_by.all %}
         color{{ sharedby.username }} = new ColorPicker.Material("#color_{{ sharedby.username }}", {
             format: 'hex',
-            color: '#' + Math.floor(Math.random() * 16777215).toString(16),
+            color: '#' + Math.floor(Math.random() * (16777215 - 6579300) + 6579300).toString(16),
             placement: 'top'
         });
 
