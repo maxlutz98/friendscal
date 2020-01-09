@@ -41,7 +41,7 @@ services:
       - django
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.friendscal.rule=Host(`calendar4friends.ddnss.de`,`friends.lutz.fyi`)"
+      - "traefik.http.routers.friendscal.rule=Host(`friends.lutz.fyi`)"
       - "traefik.http.routers.friendscal.entrypoints=web-secure"
       - "traefik.http.routers.friendscal.tls.certresolver=letsencrypt"
       - "traefik.http.services.friendscal.loadbalancer.server.port=80"
