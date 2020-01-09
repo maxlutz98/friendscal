@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'calendar4friends.ddnss.de', 'friends.lutz.fyi']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'friends.lutz.fyi']
 
 # Additional security settings
 if not DEBUG:
