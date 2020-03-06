@@ -41,6 +41,9 @@ services:
       - django
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.friendscal-insecure.rule=Host(`friends.lutz.fyi`)"
+      - "traefik.http.routers.friendscal-insecure.entrypoints=web"
+      - "traefik.http.routers.friendscal-insecure.middlewares=httpsredirect@file"
       - "traefik.http.routers.friendscal.rule=Host(`friends.lutz.fyi`)"
       - "traefik.http.routers.friendscal.entrypoints=web-secure"
       - "traefik.http.routers.friendscal.tls.certresolver=letsencrypt"
