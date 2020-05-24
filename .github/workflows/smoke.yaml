@@ -10,11 +10,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Log into Docker registry
+      run: |
+        echo "${DOCKER_PASSWORD}" | docker login -u ${DOCKER_USERNAME} --password-stdin
+        echo "Logged in"
     - name: Set up docker environment
       run: |
         BRANCH=$(echo "${GITHUB_REF}" | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g")
-        echo ${BRANCH}
-        echo "${DOCKER_PASSWORD}" | docker login -u ${DOCKER_USERNAME} --password-stdin
+        echo "${BRANCH}"
         docker-compose.yml -f "docker-compose.test.yml" up -d --build
     - name: Check accessibility
       run: curl -f localhost:8080
