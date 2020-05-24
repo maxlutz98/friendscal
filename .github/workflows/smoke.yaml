@@ -23,4 +23,6 @@ jobs:
         echo "${BRANCH}"
         docker-compose -f "docker-compose.test.yml" up -d --build
     - name: Check accessibility
-      run: curl -f localhost:8080
+      run: |
+        sleep 10s
+        curl -f localhost:8080
