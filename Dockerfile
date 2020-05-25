@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8.2-alpine
+FROM python:3.8.3-alpine
 
 # set environment variables
 ENV PYTHONUNBUFFERED 1
@@ -25,6 +25,10 @@ RUN rm requirements.txt \
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY project /code
 
+# create additional user
+RUN adduser -D django
+# set created user as used
+USER django
 
 # expose port
 EXPOSE 8000
