@@ -16,7 +16,7 @@ updates:
   reviewers:
   - maxlutz98
 
-- package-ecosystem: pipenv
+- package-ecosystem: pip
   directory: "/project"
   schedule:
     interval: weekly
