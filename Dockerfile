@@ -11,15 +11,14 @@ WORKDIR /code
 
 # install dependencies
 RUN apk update \
-    && apk upgrade \
-    && apk add --virtual build-deps gcc python3-dev musl-dev \
-    && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev postgresql-dev \
+    && apk upgrade --no-cache \
+    && apk add --no-cache --virtual build-deps gcc python3-dev musl-dev \
+    && apk add --no-cache jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev postgresql-dev \
     && pip install --upgrade pip \
     && pip install pipenv \
-    && pipenv install --system --deploy --ignore-pipfile
-
-# cleanup
-RUN apk del build-deps
+    && pipenv install --system --deploy --ignore-pipfile \
+    # cleanup
+    && apk del build-deps
 
 # copy entrypoint.sh
 COPY docker-entrypoint.sh /docker-entrypoint.sh
