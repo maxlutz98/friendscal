@@ -4,7 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core import validators
 from django.core.mail import send_mail
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -50,6 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     Angepasster Nutzer mit E-Mail als Anmeldeinformation.
     """
+    id = models.BigAutoField(primary_key=True)
     email = models.EmailField(_('E-Mail Addresse'), unique=True)
     first_name = models.CharField(_('Vorname'), max_length=150)
     last_name = models.CharField(_('Nachname'), max_length=150)
