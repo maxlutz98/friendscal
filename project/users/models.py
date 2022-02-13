@@ -50,6 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     Angepasster Nutzer mit E-Mail als Anmeldeinformation.
     """
+    id = models.BigAutoField(primary_key=True)
     email = models.EmailField(_('E-Mail Addresse'), unique=True)
     first_name = models.CharField(_('Vorname'), max_length=150)
     last_name = models.CharField(_('Nachname'), max_length=150)
