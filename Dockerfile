@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.10.3-alpine
+FROM python:3.10.4-alpine
 
 # set environment variables
 ENV PYTHONUNBUFFERED 1
