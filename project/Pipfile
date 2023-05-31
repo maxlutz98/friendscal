@@ -13,4 +13,4 @@ Pillow = "<10.0.0,>=8.1.1"
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.12"
